@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "747740940142",
+    "firebase_url": "https://fantasy-portal-92666532-default-rtdb.firebaseio.com",
+    "project_id": "fantasy-portal-92666532",
+    "storage_bucket": "fantasy-portal-92666532.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:747740940142:android:74b129372bb90e70c2a37f",
+        "android_client_info": {
+          "package_name": "com.CompanyCompany.FantasyPortal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "747740940142-1srk7vpaspgdcrvqucm2dnvrlsp86352.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB4Jf6k0ILTNh-Q-1GZNQhBtDH_pVJpcU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "747740940142-1srk7vpaspgdcrvqucm2dnvrlsp86352.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

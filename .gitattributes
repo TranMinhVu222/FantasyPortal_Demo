@@ -1,0 +1,2 @@
+*.s* filter=lfs diff=lfs merge=lfs -text
+*.bundl* filter=lfs diff=lfs merge=lfs -text
