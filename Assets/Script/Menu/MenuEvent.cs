@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class MenuEvent : MonoBehaviour
 {
     private int starOwns;
-    public Text starOwnsText,text;
+    public Text starOwnsText;
     public int starTool, tempMana, tempUp, starAds,boosterTotal;
     public GameObject loadingPanel,holdingPanel, FTUE, startButton, optionButton, storeButton, exitGameButton;
     public bool effect, checkDone;
@@ -55,16 +55,6 @@ public class MenuEvent : MonoBehaviour
 
     private void Update()
     {
-        
-        if (FTUE.activeSelf)
-        {
-            text.text = PlayerPrefs.GetInt("Complete Menu FTUE") + " " ;    
-        }
-
-        if (!FTUE.activeSelf)
-        {
-            text.text = "false";
-        }
         if (loadingPanel.activeInHierarchy)
         {
             effect = true;

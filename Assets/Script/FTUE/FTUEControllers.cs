@@ -27,8 +27,7 @@ public class FTUEControllers : MonoBehaviour
     public PickUpItem pickUpItem;
     public ObstacleController monster;
     public PlayerController playerController;
-    public Energy energy;
-    
+
     public State currentState = State.Welcome;
 
     public IsTouchUI isTouchUI;
@@ -376,7 +375,6 @@ public class FTUEControllers : MonoBehaviour
                 switch (countNext)
                 {
                     case 1:
-                        energy.completeCastSpell = 0;
                         nextMonsterTuto = true;
                         unTrajectory.SetActive(true);
                         tutorialText.text = "This is monsters, don't let them hit you";
@@ -406,20 +404,16 @@ public class FTUEControllers : MonoBehaviour
                             TapToNext.gameObject.SetActive(false);
                             tutorialPanel.gameObject.SetActive(false);
                         }
-                        Debug.Log(energy.completeCastSpell);
                         if (enterPortal.activeSelf && entryPortal.activeSelf)
                         {
                             if (!target3.activeSelf && !target4.activeSelf)
                             {
-                                Debug.Log("VAR2");
                                 tutorialPanel.gameObject.SetActive(true);
                                 countNext = 4;
                             }
                             
                             else if (target3.activeSelf || target4.activeSelf)
                             {
-                                Debug.Log("VAR3");
-                                energy.completeCastSpell = 0;
                                 target3.SetActive(true);
                                 target4.SetActive(true);
                                 enterPortal.SetActive(false);
