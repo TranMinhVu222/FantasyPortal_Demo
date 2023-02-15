@@ -11,7 +11,7 @@ public class MenuFTUE : MonoBehaviour
     public GameObject systemButton, totalMana, nextUpgrade, upgradeButton, boosterButton, exitButton, level1Panel, systemPanel,
         levelMenu,levelButton,holdingPanel, watchAdsButton, startButton, optionButton, storeButton, exitGameButton,exitLevelPanel, exitLevel1, nextButton;
     public State currentState = State.SystemButton;
-
+    
     // Start is called before the first frame update
     
     public enum State
@@ -135,12 +135,9 @@ public class MenuFTUE : MonoBehaviour
                 startButton.SetActive(true);
                 pointer.transform.position = Vector3.MoveTowards(pointer.transform.position, 
                     startButton.transform.position, pointerSpeed * Time.deltaTime);
-                if (pointer.transform.position == startButton.transform.position)
+                if (levelMenu.activeSelf)
                 {
-                    if (levelMenu.activeSelf)
-                    {
-                        ChangeState(State.LevelButton);
-                    }
+                    ChangeState(State.LevelButton);
                 }
                 break;
             case State.LevelButton:
