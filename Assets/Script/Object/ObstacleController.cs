@@ -45,8 +45,8 @@ public class ObstacleController : MonoBehaviour
                 }
             }    
         }
-        Debug.DrawRay(groundDetection.position, Vector2.down * distanceGround);
-        Debug.DrawRay(groundDetection.position, transform.right * distance);
+        // Debug.DrawRay(groundDetection.position, Vector2.down * distanceGround);
+        // Debug.DrawRay(groundDetection.position, transform.right * distance);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -76,8 +76,6 @@ public class ObstacleController : MonoBehaviour
             {
                 playerController.GameOver();
             }
-
-            Debug.Log("----" + angle);
         }
         if (other.gameObject.CompareTag("Item"))
         {

@@ -10,7 +10,6 @@ public class Energy : MonoBehaviour
 {
     public int countPortal;
     public int completeCastSpell;
-    public bool destroyTarget2, destroyTarget3;
     public Portal currentPortal = Portal.EnterPortal;
     public GameObject entryPortalAnim;
     public GameObject enterPortalAnim;
@@ -40,8 +39,6 @@ public class Energy : MonoBehaviour
         countPortal = 0;
         entryPosition = entryPortal.transform.Find("Exit Position");
         enterPosition = enterPortal.transform.Find("Enter Position");
-        destroyTarget2 = false;
-        destroyTarget3 = false;
     }
 
     private void Update()
@@ -120,7 +117,6 @@ public class Energy : MonoBehaviour
         direction = other.GetContact(0).normal;
         if (other.transform.CompareTag("tilemap"))
         {
-            completeCastSpell += 1;
             angle = Mathf.Abs(Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
             if (88f <= angle && angle <= 91f)
             {
@@ -174,12 +170,10 @@ public class Energy : MonoBehaviour
 
             if (other.CompareTag("Target2"))
             {
-                destroyTarget2 = true;
                 GameObject.FindWithTag("Target2").SetActive(false);
             }
             if (other.CompareTag("Target3"))
             {
-                destroyTarget3 = true;
                 GameObject.FindWithTag("Target3").SetActive(false);
             }
         }

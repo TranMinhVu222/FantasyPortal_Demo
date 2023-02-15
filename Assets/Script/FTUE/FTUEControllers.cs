@@ -15,7 +15,7 @@ public class FTUEControllers : MonoBehaviour
     public float speedFill, pointerSpeed, height, timeSE, speedShow;
     protected float time;
     private bool moveRightButton, moveLeftButton, monsterQuest, magicQuest, upButton, nextMonsterTuto, checkNextGrab, checkTouch, 
-        canMove, checks, checkss, destroyTarget;
+        canMove, destroyTarget;
     public Vector2 startVector, endVector;
     private int countNext, countGrab, countDestroy;
     public GameObject upPanel, movePanel, manaBar, monsterStatus, magicShardStatus, pauseButton,winPanel, noButton,target1,target2,target3, target4, 
