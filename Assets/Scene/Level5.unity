@@ -6260,7 +6260,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: 2078004ca52c44bfda746cf1dcdbc34c, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 7
 --- !u!1 &396059928
 GameObject:
@@ -11210,6 +11210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countPortal: 0
+  completeCastSpell: 0
   currentPortal: 0
   entryPortalAnim: {fileID: 1654736548465310}
   enterPortalAnim: {fileID: 1654736050929362}
@@ -11217,7 +11218,6 @@ MonoBehaviour:
   enterPortal: {fileID: 1530102124}
   enterPosition: {fileID: 1223215942}
   entryPosition: {fileID: 1918056766}
-  playerController: {fileID: 1420595346}
   angle: 0
   direction: {x: 0, y: 0}
 --- !u!95 &986593955
@@ -13785,7 +13785,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1339924850}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.6374354, y: 0.24019408, z: -10}
+  m_LocalPosition: {x: 4.6374364, y: 0.24077678, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -14608,7 +14608,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 5
-  completeCastSpell: 0
   poolEnergy: {fileID: 1470362940}
   energyPos: {x: 0, y: 0, z: 0}
   UI: {fileID: 242454542}
