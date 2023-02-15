@@ -9,6 +9,7 @@ using UnityEngine;
 public class Energy : MonoBehaviour
 {
     public int countPortal;
+    public int completeCastSpell;
     public Portal currentPortal = Portal.EnterPortal;
     public GameObject entryPortalAnim;
     public GameObject enterPortalAnim;
@@ -16,6 +17,7 @@ public class Energy : MonoBehaviour
     public GameObject enterPortal;
     public Transform enterPosition;
     public Transform entryPosition;
+    
     // public PlayerController playerController;
     public float angle;
     public Vector2 direction;
