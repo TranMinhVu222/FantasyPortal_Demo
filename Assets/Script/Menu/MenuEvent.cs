@@ -14,6 +14,7 @@ public class MenuEvent : MonoBehaviour
     public GameObject loadingPanel,holdingPanel, FTUE, startButton, optionButton, storeButton, exitGameButton;
     public bool effect, checkDone;
     public CanvasGroup uiElement;
+    public Energy energy;
     
     public void LoadLevel(int index)
     {

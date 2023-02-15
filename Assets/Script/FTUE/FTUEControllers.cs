@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.XR;
 using System;
 using System.Text;
+using Unity.Mathematics;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
@@ -13,14 +14,15 @@ public class FTUEControllers : MonoBehaviour
 {
     public float speedFill, pointerSpeed, height, timeSE, speedShow;
     protected float time;
-    private bool moveRightButton, moveLeftButton, monsterQuest, magicQuest, upButton, nextMonsterTuto, checkNextGrab, checkTouch, canMove, checks, checkss;
+    private bool moveRightButton, moveLeftButton, monsterQuest, magicQuest, upButton, nextMonsterTuto, checkNextGrab, checkTouch, 
+        canMove, checks, checkss, destroyTarget;
     public Vector2 startVector, endVector;
-    private int countNext, countGrab;
+    private int countNext, countGrab, countDestroy;
     public GameObject upPanel, movePanel, manaBar, monsterStatus, magicShardStatus, pauseButton,winPanel, noButton,target1,target2,target3, target4, 
-        rightButton, leftButton, magicShards, grabButton, victoryZone, menuButton, unTrajectory,jumpPlant,exitMenu,nextButton,replayButton,watchAdsButton;
+        rightButton, leftButton, magicShards, grabButton, victoryZone, menuButton, unTrajectory,jumpPlant,exitMenu,nextButton,replayButton,watchAdsButton, enterPortal, entryPortal;
     public Image welcomeImg, blurImg, pointer, tutorialPanel;
     public Text TapToNext;
-    public Trajectory trajectory;
+    // public Trajectory trajectory;
     public MagicShard magicShard;
     public PickUpItem pickUpItem;
     public ObstacleController monster;
@@ -82,6 +84,7 @@ public class FTUEControllers : MonoBehaviour
         nextMonsterTuto = false;
         target1.SetActive(false);
         target2.SetActive(false);
+        countDestroy = 1;
         if (!PlayerPrefs.HasKey("Completed FTUE"))
         {
             PlayerPrefs.SetInt("Completed FTUE",0);    
@@ -103,25 +106,6 @@ public class FTUEControllers : MonoBehaviour
             {
                 isTouchUI.checkTouch = true;
                 
-            }
-            if (EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId))
-            {
-                checks = true;
-            }
-
-            if (!EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId))
-            {
-                checks = false;
-            }
-
-            if (unTrajectory.activeSelf)
-            {
-                checkss = true;
-            }
-
-            if (!unTrajectory.activeSelf)
-            {
-                checkss = false;
             }
         }
 
@@ -208,6 +192,7 @@ public class FTUEControllers : MonoBehaviour
                                     TapToNext.gameObject.SetActive(false);
                                     target1.SetActive(true);
                                     target2.SetActive(true);
+                                    tutorialPanel.gameObject.SetActive(true);
                                     ChangeState(State.CastSpell);
                                 }
                             }
@@ -218,7 +203,6 @@ public class FTUEControllers : MonoBehaviour
             case State.CastSpell:
                 tutorialText.text = "Swipe the screen to shoot the energy to open the portal at the arrow position";
                 pointer.gameObject.SetActive(true);
-                tutorialPanel.gameObject.SetActive(true);
                 time += Time.deltaTime;
                 time %= timeSE;
                 pointer.gameObject.transform.position = Parabola(startVector, endVector * 10f, height, time / timeSE);
@@ -229,11 +213,6 @@ public class FTUEControllers : MonoBehaviour
                     pointer.gameObject.SetActive(false);
                 }
 
-                if (trajectory.completeCastSpell)
-                {
-                    tutorialPanel.gameObject.SetActive(false);
-                }
-                
                 if (!target1.activeSelf && !target2.activeSelf)
                 {
                     TapToNext.gameObject.SetActive(true);
@@ -375,7 +354,7 @@ public class FTUEControllers : MonoBehaviour
                         break;
                     case 3:
                         pointer.transform.position = Vector3.MoveTowards(pointer.transform.position, 
-                            grabButton.transform.position, pointerSpeed  * Time.deltaTime);
+                            grabButton.transform.position, pointerSpeed * 2f * Time.deltaTime);
                         tutorialText.text = "This button will appear when you get close to Object. Re-click this button to uncontrolled object";
                         if (pickUpItem.completeGrab)
                         {
@@ -386,9 +365,10 @@ public class FTUEControllers : MonoBehaviour
                 }
                 break;
             case State.Monster:
+                destroyTarget = false;
                 pointer.gameObject.SetActive(true);
                 pointer.transform.position = Vector3.MoveTowards(pointer.transform.position, 
-                    monster.transform.position, pointerSpeed * Time.deltaTime);
+                    monster.transform.position, pointerSpeed * 2f * Time.deltaTime);
                 if (pointer.transform.position == monster.transform.position && !nextMonsterTuto)
                 {
                     countNext = 1;
@@ -396,6 +376,7 @@ public class FTUEControllers : MonoBehaviour
                 switch (countNext)
                 {
                     case 1:
+                        energy.completeCastSpell = 0;
                         nextMonsterTuto = true;
                         unTrajectory.SetActive(true);
                         tutorialText.text = "This is monsters, don't let them hit you";
@@ -412,38 +393,56 @@ public class FTUEControllers : MonoBehaviour
                         {
                             target3.SetActive(true);
                             target4.SetActive(true);
+                            enterPortal.SetActive(false);
+                            entryPortal.SetActive(false);
                             countNext = 3;
                         }
                         break;
                     case 3:
-                        tutorialText.text = "Shoot at two arrows to continue";
+                        tutorialText.text = "Create a portal above the monster's head. Shoot at two arrows to continue";
                         unTrajectory.SetActive(false);
-                        if (Input.touchCount > 2 || Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
+                        if (Input.touchCount > 2 || Input.GetMouseButtonDown(0))
                         {
                             TapToNext.gameObject.SetActive(false);
                             tutorialPanel.gameObject.SetActive(false);
                         }
-                        if (!target3.activeSelf && !target4.activeSelf)
+                        Debug.Log(energy.completeCastSpell);
+                        if (enterPortal.activeSelf && entryPortal.activeSelf)
                         {
-                            tutorialPanel.gameObject.SetActive(true);
-                            countNext = 4;
+                            if (!target3.activeSelf && !target4.activeSelf)
+                            {
+                                Debug.Log("VAR2");
+                                tutorialPanel.gameObject.SetActive(true);
+                                countNext = 4;
+                            }
+                            
+                            else if (target3.activeSelf || target4.activeSelf)
+                            {
+                                Debug.Log("VAR3");
+                                energy.completeCastSpell = 0;
+                                target3.SetActive(true);
+                                target4.SetActive(true);
+                                enterPortal.SetActive(false);
+                                entryPortal.SetActive(false);
+                                tutorialPanel.gameObject.SetActive(true);
+                            }
                         }
                         break;
                     case 4:
-                        tutorialText.text = "Control this Jumping Plant, creat a portal above the monster's head and try to throw this object through portal when the monster comes under the gate";
+                        tutorialText.text = "Control this Jumping Plant and try to throw this object through portal when the monster comes under the gate";
                         canMove = true;
                         if (Input.touchCount > 3 || Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
                         {
                             tutorialPanel.gameObject.SetActive(false);
                             TapToNext.gameObject.SetActive(false);
                         }
+                        if (monster.completeMonster)
+                        {
+                            pointer.gameObject.SetActive(false);
+                            NextState(State.Win); 
+                            victoryZone.SetActive(true);
+                        }
                         break;
-                }
-                if (monster.completeMonster)
-                {
-                    pointer.gameObject.SetActive(false);
-                    NextState(State.Win); 
-                    victoryZone.SetActive(true);
                 }
                 break;
             case State.Win:

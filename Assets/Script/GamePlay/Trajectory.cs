@@ -8,8 +8,7 @@ using UnityEngine.UI;
 public class Trajectory: MonoBehaviour
 {
     public float power = 5f;
-    public bool completeCastSpell;
-    
+
     LineRenderer lr;
     Rigidbody2D rb;
     Vector2 startDragPos;
@@ -28,7 +27,6 @@ public class Trajectory: MonoBehaviour
         manaBar.fillAmount = 1f;
         manaTotal = PlayerPrefs.GetInt("Total Mana");
         currentMana = manaTotal;
-        completeCastSpell = false;
     }
 
     private float currentMana;
@@ -88,7 +86,6 @@ public class Trajectory: MonoBehaviour
 
             if (Input.GetMouseButtonUp(0) && UI.GetComponent<IsTouchUI>().countTouchUI == 2 && !cancelSkill.checkCancel)
             {
-                completeCastSpell = true;
                 audioManager.PlaySFX("CastingSpell");
                 enegryPortal.gameObject.SetActive(true);
                 cancelButton.SetActive(false);
