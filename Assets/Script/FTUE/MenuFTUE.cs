@@ -120,15 +120,12 @@ public class MenuFTUE : MonoBehaviour
                 exitButton.SetActive(true);
                 pointer.transform.position = Vector3.MoveTowards(pointer.transform.position, 
                     exitButton.transform.position, pointerSpeed * Time.deltaTime);
-                if (pointer.transform.position == exitButton.transform.position)
-                {
-                    tutorialText.text = "Click here";
-                    tutorialPanel.gameObject.SetActive(true);
-                    if (!systemPanel.activeSelf)
-                    {
-                        tutorialPanel.gameObject.SetActive(false);
-                        ChangeState(State.StartButton);
-                    }
+                tutorialText.text = "Click here";
+                tutorialPanel.gameObject.SetActive(true);
+                if (!systemPanel.activeSelf) 
+                { 
+                    tutorialPanel.gameObject.SetActive(false);
+                    ChangeState(State.StartButton);
                 }
                 break;
             case State.StartButton:
