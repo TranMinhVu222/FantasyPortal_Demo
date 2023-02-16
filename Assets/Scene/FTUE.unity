@@ -10523,7 +10523,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 385191475}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -15752,8 +15752,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countPortal: 0
-  destroyTarget2: 0
-  destroyTarget3: 0
+  completeCastSpell: 0
   currentPortal: 0
   entryPortalAnim: {fileID: 1654736548465310}
   enterPortalAnim: {fileID: 1654736050929362}
@@ -15761,7 +15760,6 @@ MonoBehaviour:
   enterPortal: {fileID: 1530102124}
   enterPosition: {fileID: 1223215942}
   entryPosition: {fileID: 1918056766}
-  trajectory: {fileID: 0}
   angle: 0
   direction: {x: 0, y: 0}
 --- !u!95 &986593955
@@ -18308,7 +18306,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1339924850}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3816733, y: 0.24831688, z: -10}
+  m_LocalPosition: {x: 0.5899205, y: 0.25237596, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -19194,7 +19192,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 5
-  completeCastSpell: 0
   poolEnergy: {fileID: 1470362940}
   energyPos: {x: 0, y: 0, z: 0}
   UI: {fileID: 242454542}
@@ -28227,12 +28224,10 @@ MonoBehaviour:
   pointer: {fileID: 1426098080}
   tutorialPanel: {fileID: 889846008}
   TapToNext: {fileID: 1677093207}
-  trajectory: {fileID: 1420595348}
   magicShard: {fileID: 1168679944}
   pickUpItem: {fileID: 1325706914}
   monster: {fileID: 1400892482}
   playerController: {fileID: 1420595346}
-  energy: {fileID: 986593954}
   currentState: 0
   isTouchUI: {fileID: 242454547}
   tutorialText: {fileID: 1961287190}
