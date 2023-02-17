@@ -11,11 +11,16 @@ public class MenuEvent : MonoBehaviour
     private int starOwns;
     public Text starOwnsText;
     public int starTool, tempMana, tempUp, starAds,boosterTotal;
-    public GameObject loadingPanel,holdingPanel, FTUE, startButton, optionButton, storeButton, exitGameButton;
+    public GameObject loadingPanel,holdingPanel, FTUE, startButton, optionButton, storeButton, exitGameButton, watchAds;
     public bool effect, checkDone;
     public CanvasGroup uiElement;
     public Energy energy;
-    
+
+    private void Awake()
+    {
+        
+    }
+
     public void LoadLevel(int index)
     {
         SceneManager.LoadScene(index);
@@ -47,6 +52,7 @@ public class MenuEvent : MonoBehaviour
             startButton.SetActive(true);
             optionButton.SetActive(true);
             storeButton.SetActive(true);
+            watchAds.SetActive(true);
             exitGameButton.SetActive(true);
         }
         effect = false;
