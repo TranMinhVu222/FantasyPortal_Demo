@@ -14,15 +14,15 @@ public class FTUEControllers : MonoBehaviour
 {
     public float speedFill, pointerSpeed, height, timeSE, speedShow;
     protected float time;
-    private bool moveRightButton, moveLeftButton, monsterQuest, magicQuest, upButton, nextMonsterTuto, checkNextGrab, checkTouch, 
-        canMove, destroyTarget;
+    private bool moveRightButton, moveLeftButton, monsterQuest, magicQuest, upButton, nextMonsterTuto, checkNextGrab, checkTouch, delayCast,
+        canMove;
     public Vector2 startVector, endVector;
-    private int countNext, countGrab, countDestroy;
+    private int countNext, countGrab;
     public GameObject upPanel, movePanel, manaBar, monsterStatus, magicShardStatus, pauseButton,winPanel, noButton,target1,target2,target3, target4, 
         rightButton, leftButton, magicShards, grabButton, victoryZone, menuButton, unTrajectory,jumpPlant,exitMenu,nextButton,replayButton,watchAdsButton, enterPortal, entryPortal;
     public Image welcomeImg, blurImg, pointer, tutorialPanel;
     public Text TapToNext;
-    // public Trajectory trajectory;
+    
     public MagicShard magicShard;
     public PickUpItem pickUpItem;
     public ObstacleController monster;
@@ -80,10 +80,10 @@ public class FTUEControllers : MonoBehaviour
         monsterQuest = true;
         checkNextGrab = false;
         canMove = false;
+        delayCast = false;
         nextMonsterTuto = false;
         target1.SetActive(false);
         target2.SetActive(false);
-        countDestroy = 1;
         if (!PlayerPrefs.HasKey("Completed FTUE"))
         {
             PlayerPrefs.SetInt("Completed FTUE",0);    
@@ -93,7 +93,6 @@ public class FTUEControllers : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
         {
             checkTouch = true;
@@ -188,7 +187,6 @@ public class FTUEControllers : MonoBehaviour
                                 if (Input.touchCount > 0 || Input.GetMouseButtonDown(0))
                                 {
                                     pointer.gameObject.SetActive(false);
-                                    TapToNext.gameObject.SetActive(false);
                                     target1.SetActive(true);
                                     target2.SetActive(true);
                                     tutorialPanel.gameObject.SetActive(true);
@@ -205,11 +203,13 @@ public class FTUEControllers : MonoBehaviour
                 time += Time.deltaTime;
                 time %= timeSE;
                 pointer.gameObject.transform.position = Parabola(startVector, endVector * 10f, height, time / timeSE);
-                if (Input.touchCount > 1 ||  Input.GetMouseButton(0) || Input.GetMouseButtonDown(0))
+                StartCoroutine(Delay());
+                if ((Input.touchCount > 1 ||  Input.GetMouseButton(0) || Input.GetMouseButtonDown(0)) && delayCast)
                 {
                     unTrajectory.SetActive(false);
                     tutorialPanel.gameObject.SetActive(false);
                     pointer.gameObject.SetActive(false);
+                    TapToNext.gameObject.SetActive(false);
                 }
 
                 if (!target1.activeSelf && !target2.activeSelf)
@@ -364,7 +364,6 @@ public class FTUEControllers : MonoBehaviour
                 }
                 break;
             case State.Monster:
-                destroyTarget = false;
                 pointer.gameObject.SetActive(true);
                 pointer.transform.position = Vector3.MoveTowards(pointer.transform.position, 
                     monster.transform.position, pointerSpeed * 2f * Time.deltaTime);
@@ -528,5 +527,11 @@ public class FTUEControllers : MonoBehaviour
         var mid = Vector2.Lerp(start, end, t);
 
         return new Vector2(mid.x, f(t) + Mathf.Lerp(start.y, end.y, t));
+    }
+
+    private IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(1f);
+        delayCast = true;
     }
 }

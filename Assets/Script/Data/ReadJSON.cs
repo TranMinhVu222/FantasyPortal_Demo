@@ -19,7 +19,7 @@ public class ReadJSON : MonoBehaviour
     public const string SaveDirectory = "/SaveData";
     public const string FileName = "PurchaseMetaData.sav";
     
-    private string fileDataTemp;
+    private string fileDataTemp, fullPath;
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private double progress;
@@ -84,7 +84,7 @@ public class ReadJSON : MonoBehaviour
                 }
                 else
                 {
-                    string fullPath = Application.persistentDataPath + SaveDirectory + FileName;
+                    fullPath = Application.persistentDataPath + SaveDirectory + FileName;
                     if (File.Exists(fullPath))
                     {
                         progressBar.fillAmount = 1f;
@@ -123,16 +123,16 @@ public class ReadJSON : MonoBehaviour
 
         if (unityWebRequest.result == UnityWebRequest.Result.Success)
         {
-            if (unityWebRequest.isNetworkError || unityWebRequest.isHttpError)
+            if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError || unityWebRequest.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log("Error: " + unityWebRequest.error);
             }
             else
             {
-                progressBar.fillAmount = 1f;
-                downloadingText.text = "Downloading " + totalBytes + "KB" + "/" + totalBytes +"KB";
-                progressPercent.text = "100.00%";
-                StartCoroutine(FinishLoading());
+                // progressBar.fillAmount = 1f;
+                // downloadingText.text = "Downloading " + totalBytes + "KB" + "/" + totalBytes +"KB";
+                // progressPercent.text = "100.00%";
+               
                 fileDataTemp = unityWebRequest.downloadHandler.text;
                 var dir = Application.persistentDataPath + SaveDirectory;
                 if (!Directory.Exists(dir))
@@ -141,7 +141,7 @@ public class ReadJSON : MonoBehaviour
                 }
                 tempUpgradeList = JsonUtility.FromJson<UpgradeList>(fileDataTemp);
                 GUIUtility.systemCopyBuffer = dir;
-                string fullPath = Application.persistentDataPath + SaveDirectory + FileName;
+                fullPath = Application.persistentDataPath + SaveDirectory + FileName;
                 if (!File.Exists(fullPath))
                 {
                     File.WriteAllText(dir + FileName, fileDataTemp);
@@ -170,10 +170,12 @@ public class ReadJSON : MonoBehaviour
                             PlayerPrefs.SetString("Present Version", upgradeList.upgrade[0].version);
                             break;
                         case -1:
+                            StartCoroutine(FinishLoading());
                             json = File.ReadAllText(fullPath);
                             upgradeList = JsonUtility.FromJson<UpgradeList>(json);
                             break;
                         case 0:
+                            StartCoroutine(FinishLoading());
                             json = File.ReadAllText(fullPath);
                             upgradeList = JsonUtility.FromJson<UpgradeList>(json);
                             break;
@@ -181,6 +183,7 @@ public class ReadJSON : MonoBehaviour
                             break;
                     }
                 }
+                StartCoroutine(FinishLoading());
             }
         }
     }
@@ -205,8 +208,8 @@ public class ReadJSON : MonoBehaviour
     }
     IEnumerator FinishLoading()
     {
-        yield return new WaitForSeconds(2f);
-        if (PlayerPrefs.GetInt("Completed FTUE") == 0)
+        yield return new WaitForSeconds(1f);
+        if (!PlayerPrefs.HasKey("Completed FTUE") || PlayerPrefs.GetInt("Completed FTUE") == 0)
         {
             SceneManager.LoadScene(1);
             FTUE.SetActive(true);

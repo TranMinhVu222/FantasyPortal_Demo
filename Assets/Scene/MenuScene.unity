@@ -869,7 +869,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 79, y: -325.99994}
+  m_AnchoredPosition: {x: 79, y: -340}
   m_SizeDelta: {x: 175.8213, y: 101.4407}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &118698419
@@ -899,7 +899,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 189
-    m_Alignment: 0
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -5556,7 +5556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.06421325, g: 0.3490566, b: 0.3458917, a: 1}
+  m_Color: {r: 0.06421325, g: 0.3490566, b: 0.3458917, a: 0.93333334}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11186,10 +11186,10 @@ MonoBehaviour:
   optionButton: {fileID: 1070283555}
   storeButton: {fileID: 222454294}
   exitGameButton: {fileID: 1508341338}
+  watchAds: {fileID: 2047694928}
   effect: 0
   checkDone: 0
   uiElement: {fileID: 1700170757}
-  energy: {fileID: 0}
 --- !u!114 &844351927
 MonoBehaviour:
   m_ObjectHideFlags: 0
