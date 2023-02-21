@@ -8,8 +8,10 @@ using Firebase.Storage;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using System.Net;
 using Firebase;
 using Firebase.Extensions;
+using JetBrains.Annotations;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -18,14 +20,16 @@ public class ReadJSON : MonoBehaviour
 {
     public const string SaveDirectory = "/SaveData";
     public const string FileName = "PurchaseMetaData.sav";
-    
     private string fileDataTemp, fullPath;
+    private string SceneGameToLoadAB;
+    public string[] scene;
+    private double progress, totalBytes, bytes;
+    public Text downloadingText, progressPercent;
+    
     private FirebaseStorage storage;
     private StorageReference storageReference;
-    private double progress;
-    private double totalBytes;
-    private double bytes;
-    public Text downloadingText, progressPercent;
+
+    AssetBundle assetBundle;
     
     public Image progressBar;
     public GameObject loadingPanel, warningPanel,FTUE;
@@ -76,7 +80,7 @@ public class ReadJSON : MonoBehaviour
         //get reference of .json
         StorageReference fileJSON = storageReference.Child("PurchaseDatas.json");
         //Get the download link of file
-        fileJSON.GetDownloadUrlAsync().ContinueWithOnMainThread(task =>
+            fileJSON.GetDownloadUrlAsync().ContinueWithOnMainThread(task =>
             {
                 if (!task.IsFaulted && !task.IsCanceled)
                 {
@@ -87,13 +91,23 @@ public class ReadJSON : MonoBehaviour
                     fullPath = Application.persistentDataPath + SaveDirectory + FileName;
                     if (File.Exists(fullPath))
                     {
-                        progressBar.fillAmount = 1f;
-                        progressPercent.text = "100.00%";
                         string json = File.ReadAllText(fullPath);
                         upgradeList = JsonUtility.FromJson<UpgradeList>(json);
-                        StartCoroutine(FinishLoading());
+                        StartCoroutine(FinishLoading());    
+                        if (!File.Exists(Application.persistentDataPath + "/AB/scenes"))
+                        {
+                            warningPanel.SetActive(true);
+                        }
+                        else
+                        {
+                            StartCoroutine(FinishLoading());    
+                        }
                     }
                     else if(!File.Exists(fullPath))
+                    {
+                        warningPanel.SetActive(true);
+                    }
+                    else if(!File.Exists(Application.persistentDataPath + "/AB/scenes"))
                     {
                         warningPanel.SetActive(true);
                     }
@@ -129,10 +143,6 @@ public class ReadJSON : MonoBehaviour
             }
             else
             {
-                // progressBar.fillAmount = 1f;
-                // downloadingText.text = "Downloading " + totalBytes + "KB" + "/" + totalBytes +"KB";
-                // progressPercent.text = "100.00%";
-               
                 fileDataTemp = unityWebRequest.downloadHandler.text;
                 var dir = Application.persistentDataPath + SaveDirectory;
                 if (!Directory.Exists(dir))
@@ -170,12 +180,10 @@ public class ReadJSON : MonoBehaviour
                             PlayerPrefs.SetString("Present Version", upgradeList.upgrade[0].version);
                             break;
                         case -1:
-                            StartCoroutine(FinishLoading());
                             json = File.ReadAllText(fullPath);
                             upgradeList = JsonUtility.FromJson<UpgradeList>(json);
                             break;
                         case 0:
-                            StartCoroutine(FinishLoading());
                             json = File.ReadAllText(fullPath);
                             upgradeList = JsonUtility.FromJson<UpgradeList>(json);
                             break;
@@ -183,11 +191,87 @@ public class ReadJSON : MonoBehaviour
                             break;
                     }
                 }
-                StartCoroutine(FinishLoading());
+                StartCoroutine(DelayLoadAssetBundle());
             }
         }
     }
+    
+    public IEnumerator DownLoadAsset()
+    {
+        string url = "https://firebasestorage.googleapis.com/v0/b/fantasy-portal-92666532.appspot.com/o/scenebundle?alt=media&token=a2eaaef4-edf0-4070-aab6-98210ad5c1ba";
+        UnityWebRequest unityWebRequest = UnityWebRequest.Get(url);
+        unityWebRequest.SendWebRequest();
+        if (unityWebRequest.result == UnityWebRequest.Result.Success)
+        {
+            if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError ||
+                unityWebRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                warningPanel.SetActive(true);
+                Debug.Log("VAR");
+            }
+        }
 
+        if (!Directory.Exists(Application.persistentDataPath + "/AB"))
+        {
+            Directory.CreateDirectory(Application.persistentDataPath + "/AB");
+        }
+        if (!File.Exists(Path.Combine(Application.persistentDataPath, "AB/scenes")))
+        {
+            Uri uri = new Uri(url);
+
+            WebClient client = new WebClient();
+
+            client.DownloadProgressChanged += Client_DownloadProgressChanged;
+
+            client.DownloadFileAsync(uri, Application.persistentDataPath + "/AB/scenes");
+
+            while (client.IsBusy)
+                        yield return null;
+            Debug.Log("downloading...");
+        }
+        while (!Caching.ready)
+        {
+            yield return null;
+        }
+        try
+        {
+            assetBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/scenes"));
+            if (assetBundle != null)
+            {
+                assetBundle.Unload(false); //scene is unload from here
+            }
+            else
+            {
+                scene = assetBundle.GetAllScenePaths();
+                Debug.Log("Scene.Lenght: " + scene.Length);
+                foreach(string scenename in scene)
+                {
+                    SceneGameToLoadAB = Path.GetFileNameWithoutExtension(scenename).ToString();
+                    Debug.Log("SceneNameInPath(foreach):: " + Path.GetFileNameWithoutExtension(scenename));
+                }
+            
+                StartCoroutine(FinishLoading());    
+            }
+        }
+        catch (Exception e)
+        {
+            File.Delete(Application.persistentDataPath + "/AB/scenes");
+            StartCoroutine(DownLoadAsset());
+        }
+    }
+
+    //Create your ProgressChanged "Listener"
+    private void Client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+    {
+        //Show download progress
+        Debug.Log(" " + Math.Round(e.BytesReceived/1048576f,2) + "/"+ Math.Round(e.TotalBytesToReceive/1048576f,2));
+        
+        progress = Math.Round(e.BytesReceived * 100f / e.TotalBytesToReceive,2);
+        progressBar.fillAmount = (float)Math.Round(progress/100f,0);
+
+        progressPercent.text = progress + "%";
+        downloadingText.text = "Downloading "+ Math.Round(e.BytesReceived/1048576f,2) + "MB" + "/" + Math.Round(e.TotalBytesToReceive/1048576f,2) + "MB";
+    }
     public int CompareVersion(string version1, string version2)
     {
         string[] s1 = version1.Split('.'); 
@@ -206,9 +290,18 @@ public class ReadJSON : MonoBehaviour
         }
         return 0;
     }
+
+    [NotNull]
+    IEnumerator DelayLoadAssetBundle()
+    {
+        progressBar.fillAmount = 1f;
+        progressPercent.text = "100%";
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(DownLoadAsset());
+    }
     IEnumerator FinishLoading()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0);
         if (!PlayerPrefs.HasKey("Completed FTUE") || PlayerPrefs.GetInt("Completed FTUE") == 0)
         {
             SceneManager.LoadScene(1);

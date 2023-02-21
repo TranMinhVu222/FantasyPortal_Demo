@@ -103,7 +103,6 @@ public class FTUEControllers : MonoBehaviour
             else
             {
                 isTouchUI.checkTouch = true;
-                
             }
         }
 
