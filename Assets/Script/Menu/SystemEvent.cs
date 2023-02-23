@@ -10,7 +10,6 @@ public class SystemEvent : MonoBehaviour
     private int starOwns,totalMana,starsToUpgrade, totalUpgrade;
     public int manaIncreased, upgradeCount;
     public Text starOwnsText, totalManaText, upgradeText, manaIncreasedText;
-    public ReadJSON readJson;
 
     private void Start()
     {
@@ -24,8 +23,8 @@ public class SystemEvent : MonoBehaviour
     {
         upgradeCount = PlayerPrefs.GetInt("The number of upgrades");
         starsToUpgrade = PlayerPrefs.GetInt("Star To Upgrade",1);
-        upgradeText.text = " Upgrade x " + readJson.upgradeList.upgrade[upgradeCount].star;
-        manaIncreased = readJson.upgradeList.upgrade[upgradeCount].mana;
+        upgradeText.text = " Upgrade x " + GameManager.Ins.upgradeList.upgrade[upgradeCount].star;
+        manaIncreased = GameManager.Ins.upgradeList.upgrade[upgradeCount].mana;
         manaIncreasedText.text = " " + manaIncreased;
         totalMana = PlayerPrefs.GetInt("Total Mana",10);
         totalManaText.text = "" + PlayerPrefs.GetInt("Total Mana",10);
@@ -37,20 +36,20 @@ public class SystemEvent : MonoBehaviour
     
     public void Upgrade()
     {
-        if (starOwns >= readJson.upgradeList.upgrade[upgradeCount].star && starOwns > 0)
+        if (starOwns >= GameManager.Ins.upgradeList.upgrade[upgradeCount].star && starOwns > 0)
         {
-            starOwns -= readJson.upgradeList.upgrade[upgradeCount].star;
-            totalUpgrade += readJson.upgradeList.upgrade[upgradeCount].star;
+            starOwns -= GameManager.Ins.upgradeList.upgrade[upgradeCount].star;
+            totalUpgrade += GameManager.Ins.upgradeList.upgrade[upgradeCount].star;
             PlayerPrefs.SetInt("Total Upgrade", totalUpgrade);
-            totalMana += readJson.upgradeList.upgrade[upgradeCount].mana;
+            totalMana += GameManager.Ins.upgradeList.upgrade[upgradeCount].mana;
             PlayerPrefs.SetInt("Total Mana",totalMana);
-            if (upgradeCount < readJson.upgradeList.upgrade.Length - 1)
+            if (upgradeCount < GameManager.Ins.upgradeList.upgrade.Length - 1)
             {
                 upgradeCount += 1;
             }
             else
             {
-                upgradeCount = readJson.upgradeList.upgrade.Length - 1;
+                upgradeCount = GameManager.Ins.upgradeList.upgrade.Length - 1;
             }
             PlayerPrefs.SetInt("The number of upgrades", upgradeCount);
         }

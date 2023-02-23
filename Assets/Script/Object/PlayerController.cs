@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.IO;
 using UnityEngine.SceneManagement;
 //NOTE: gravityScale anh huong toi trajectory
 public class PlayerController : MonoBehaviour
@@ -18,8 +19,10 @@ public class PlayerController : MonoBehaviour
     private int layerIndex, magicShardes;
     public bool checkGrab, checkGround, checkWin, dead, moveLeft, moveRight, pointingButton, pressKey, pressSpace, completeWin, deathFTUE, checkColliderObj;
     public Level unlockLevel;
-    public string nameScene, sceneNextLevel;
+    public string nameScene, sceneNextLevel, SceneGameToLoadAB;
     public AudioManager audioManager;
+    public GameManager gameManager;
+    private string[] scene;
     [HideInInspector] public Vector3 pos
     {
         get { return transform.position;  }
@@ -37,6 +40,7 @@ public class PlayerController : MonoBehaviour
     
     void Start()
     {
+        gameManager = GameManager.Ins;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         layerIndex = LayerMask.NameToLayer("Item");
@@ -47,6 +51,7 @@ public class PlayerController : MonoBehaviour
         completeWin = false;
         deathFTUE = false;
         checkColliderObj = false;
+        // assetBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/scenes"));
     }
 
     // Update is called once per frame
@@ -229,7 +234,7 @@ public class PlayerController : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("Completed FTUE") == 1)
         {
-            SceneManager.LoadScene(nameScene);
+            GameManager.Ins.LoadScene(PlayerPrefs.GetInt("Present Level"));
         }
     }
 
@@ -237,7 +242,14 @@ public class PlayerController : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("Completed FTUE") == 1)
         {
-            SceneManager.LoadScene(sceneNextLevel);    
+            if (PlayerPrefs.GetInt("Present Level") == GameManager.Ins.scene.Length - 1)
+            {
+                SceneManager.LoadScene("MenuScene");
+            }
+            else
+            {
+                GameManager.Ins.LoadScene(PlayerPrefs.GetInt("Present Level" + 1));
+            }
         }
     }
 

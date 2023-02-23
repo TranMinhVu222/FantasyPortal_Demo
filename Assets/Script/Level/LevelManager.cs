@@ -13,7 +13,15 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        levelsUnlocked = PlayerPrefs.GetInt("levelsUnlocked", 1);
+        if (!PlayerPrefs.HasKey("Star List Level Count"))
+        {
+            PlayerPrefs.SetInt("Star List Level Count", 1);
+        }
+        if (!PlayerPrefs.HasKey("levelsUnlocked"))
+        {
+            PlayerPrefs.SetInt("levelsUnlocked", 1);
+        }
+        levelsUnlocked = PlayerPrefs.GetInt("levelsUnlocked");
         for (int i = 0; i < buttons.Length; i++)
         {
             buttons[i].interactable = false;

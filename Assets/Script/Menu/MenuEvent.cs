@@ -1,4 +1,4 @@
-using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
@@ -14,16 +14,18 @@ public class MenuEvent : MonoBehaviour
     public GameObject loadingPanel,holdingPanel, FTUE, startButton, optionButton, storeButton, exitGameButton, watchAds;
     public bool effect, checkDone;
     public CanvasGroup uiElement;
-    public Energy energy;
-
     private void Awake()
     {
-        
+        if (!PlayerPrefs.HasKey("Present Level"))
+        {
+            PlayerPrefs.SetInt("Present Level", 0);
+        }
     }
 
     public void LoadLevel(int index)
     {
-        SceneManager.LoadScene(index);
+        PlayerPrefs.SetInt("Present Level",index);
+        GameManager.Ins.LoadScene(index);
         if (PlayerPrefs.GetInt("Used booster") == 2)
         {
             boosterTotal = PlayerPrefs.GetInt("Booster total");
@@ -33,6 +35,9 @@ public class MenuEvent : MonoBehaviour
 
     private void Start()
     {
+        //-----Start DownLoad--------
+        GameManager.Ins.DownLoadFileJson();
+        
         checkDone = false;
         starTool = 0;
         for (int i = 1; i <= PlayerPrefs.GetInt("Star List Level Count"); i++)

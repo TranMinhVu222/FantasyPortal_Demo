@@ -9,10 +9,10 @@ public class Level : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("Completed FTUE") == 1)
         {
-            int currentLevel = SceneManager.GetActiveScene().buildIndex;
-            if (currentLevel >= PlayerPrefs.GetInt("levelsUnlocked"))
+            int currentLevel =  PlayerPrefs.GetInt("levelsUnlocked");
+            if (PlayerPrefs.GetInt("Present Level") + 1 == PlayerPrefs.GetInt("levelsUnlocked"))
             {
-                PlayerPrefs.SetInt("levelsUnlocked",currentLevel);
+                PlayerPrefs.SetInt("levelsUnlocked",currentLevel + 1);
                 int countStarList = PlayerPrefs.GetInt("Star List Level Count");
                 PlayerPrefs.SetInt("Star List Level Count",countStarList + 1);
             }    

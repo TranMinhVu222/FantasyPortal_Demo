@@ -1905,7 +1905,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -8127,7 +8127,6 @@ MonoBehaviour:
   totalManaText: {fileID: 129453597}
   upgradeText: {fileID: 617895965}
   manaIncreasedText: {fileID: 123930387}
-  readJson: {fileID: 854926994}
 --- !u!1 &653950338
 GameObject:
   m_ObjectHideFlags: 0
@@ -8698,7 +8697,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -9909,7 +9908,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -11190,7 +11189,6 @@ MonoBehaviour:
   effect: 0
   checkDone: 0
   uiElement: {fileID: 1700170757}
-  energy: {fileID: 0}
 --- !u!114 &844351927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11369,36 +11367,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 854926995}
-  - component: {fileID: 854926994}
   m_Layer: 0
   m_Name: ReaderData
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &854926994
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 854926993}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef4f6b23c57c54dffaba1472a38d771d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  downloadingText: {fileID: 1621854104}
-  progressPercent: {fileID: 2026035296}
-  progressBar: {fileID: 52690200}
-  loadingPanel: {fileID: 2034282023}
-  warningPanel: {fileID: 490402835}
-  FTUE: {fileID: 1575770064}
-  upgradeList:
-    upgrade: []
-  tempUpgradeList:
-    upgrade: []
+  m_IsActive: 0
 --- !u!4 &854926995
 Transform:
   m_ObjectHideFlags: 0
@@ -16282,7 +16257,6 @@ GameObject:
   - component: {fileID: 1398237142}
   - component: {fileID: 1398237141}
   - component: {fileID: 1398237144}
-  - component: {fileID: 1398237145}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -16388,19 +16362,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &1398237145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1398237140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08a1df45434994bc484dc12eb9d7440a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  url: https://firebasestorage.googleapis.com/v0/b/fantasy-portal-92666532.appspot.com/o/scenebundle?alt=media&token=a2eaaef4-edf0-4070-aab6-98210ad5c1ba
 --- !u!1 &1402523401
 GameObject:
   m_ObjectHideFlags: 0
@@ -16559,6 +16520,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1409334099}
   m_CullTransparentMesh: 1
+--- !u!1 &1409737256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1409737258}
+  - component: {fileID: 1409737257}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1409737257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409737256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3b84a8f679254e87b1ff85ca757511a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scene: []
+  downloadingText: {fileID: 1621854104}
+  progressPercent: {fileID: 2026035296}
+  progressBar: {fileID: 52690200}
+  loadingPanel: {fileID: 2034282023}
+  warningPanel: {fileID: 490402835}
+  FTUE: {fileID: 1575770064}
+  upgradeList:
+    upgrade: []
+  tempUpgradeList:
+    upgrade: []
+--- !u!4 &1409737258
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409737256}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1480, y: 740.6792, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1417198256
 GameObject:
   m_ObjectHideFlags: 0
@@ -16648,7 +16663,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 6
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -29527,7 +29542,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

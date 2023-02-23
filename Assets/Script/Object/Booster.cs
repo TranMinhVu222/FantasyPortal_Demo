@@ -32,7 +32,6 @@ public class Booster : MonoBehaviour
     {
         boosterTotalText.text = "" + PlayerPrefs.GetInt("Booster total");
         boosterTotal = PlayerPrefs.GetInt("Booster total");
-        Debug.Log(PlayerPrefs.GetInt("Used booster"));
     }
 
     public void UseBooster()
