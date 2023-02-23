@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,6 +9,11 @@ using UnityEngine.UI;
 
 public class MenuEvent : MonoBehaviour
 {
+    
+    private double progress, totalBytes, bytes;
+    public Text downloadingText, progressPercent;
+    public Image progressBar;
+    public GameObject warningPanel;
     private int starOwns;
     public Text starOwnsText;
     public int starTool, tempMana, tempUp, starAds,boosterTotal;
@@ -16,6 +22,7 @@ public class MenuEvent : MonoBehaviour
     public CanvasGroup uiElement;
     private void Awake()
     {
+        loadingPanel.SetActive(true);
         if (!PlayerPrefs.HasKey("Present Level"))
         {
             PlayerPrefs.SetInt("Present Level", 0);
@@ -25,7 +32,7 @@ public class MenuEvent : MonoBehaviour
     public void LoadLevel(int index)
     {
         PlayerPrefs.SetInt("Present Level",index);
-        GameManager.Ins.LoadScene(index);
+        ReadJSON.LoadScene(index);
         if (PlayerPrefs.GetInt("Used booster") == 2)
         {
             boosterTotal = PlayerPrefs.GetInt("Booster total");
@@ -36,8 +43,6 @@ public class MenuEvent : MonoBehaviour
     private void Start()
     {
         //-----Start DownLoad--------
-        GameManager.Ins.DownLoadFileJson();
-        
         checkDone = false;
         starTool = 0;
         for (int i = 1; i <= PlayerPrefs.GetInt("Star List Level Count"); i++)
@@ -115,6 +120,8 @@ public class MenuEvent : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
+        progressBar.fillAmount = 1f;
+        progressPercent.text = 100 + "%";
         checkDone = true ;
         effect = false;
         Debug.Log("Done");

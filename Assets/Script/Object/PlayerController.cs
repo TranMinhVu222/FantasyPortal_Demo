@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour
     public Level unlockLevel;
     public string nameScene, sceneNextLevel, SceneGameToLoadAB;
     public AudioManager audioManager;
-    public GameManager gameManager;
     private string[] scene;
     [HideInInspector] public Vector3 pos
     {
@@ -40,7 +39,6 @@ public class PlayerController : MonoBehaviour
     
     void Start()
     {
-        gameManager = GameManager.Ins;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         layerIndex = LayerMask.NameToLayer("Item");
@@ -234,7 +232,7 @@ public class PlayerController : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("Completed FTUE") == 1)
         {
-            GameManager.Ins.LoadScene(PlayerPrefs.GetInt("Present Level"));
+            ReadJSON.LoadScene(PlayerPrefs.GetInt("Present Level"));
         }
     }
 
@@ -242,13 +240,14 @@ public class PlayerController : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("Completed FTUE") == 1)
         {
-            if (PlayerPrefs.GetInt("Present Level") == GameManager.Ins.scene.Length - 1)
+            if (PlayerPrefs.GetInt("Present Level") == ReadJSON.scene.Length - 1)
             {
                 SceneManager.LoadScene("MenuScene");
             }
             else
             {
-                GameManager.Ins.LoadScene(PlayerPrefs.GetInt("Present Level" + 1));
+                Debug.Log("Present Level: " + PlayerPrefs.GetInt("Present Level"));
+                ReadJSON.LoadScene(PlayerPrefs.GetInt("Present Level" + 1));
             }
         }
     }

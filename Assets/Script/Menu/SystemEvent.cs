@@ -23,8 +23,8 @@ public class SystemEvent : MonoBehaviour
     {
         upgradeCount = PlayerPrefs.GetInt("The number of upgrades");
         starsToUpgrade = PlayerPrefs.GetInt("Star To Upgrade",1);
-        upgradeText.text = " Upgrade x " + GameManager.Ins.upgradeList.upgrade[upgradeCount].star;
-        manaIncreased = GameManager.Ins.upgradeList.upgrade[upgradeCount].mana;
+        upgradeText.text = " Upgrade x " + ReadJSON.upgradeList.upgrade[upgradeCount].star;
+        manaIncreased = ReadJSON.upgradeList.upgrade[upgradeCount].mana;
         manaIncreasedText.text = " " + manaIncreased;
         totalMana = PlayerPrefs.GetInt("Total Mana",10);
         totalManaText.text = "" + PlayerPrefs.GetInt("Total Mana",10);
@@ -36,20 +36,20 @@ public class SystemEvent : MonoBehaviour
     
     public void Upgrade()
     {
-        if (starOwns >= GameManager.Ins.upgradeList.upgrade[upgradeCount].star && starOwns > 0)
+        if (starOwns >= ReadJSON.upgradeList.upgrade[upgradeCount].star && starOwns > 0)
         {
-            starOwns -= GameManager.Ins.upgradeList.upgrade[upgradeCount].star;
-            totalUpgrade += GameManager.Ins.upgradeList.upgrade[upgradeCount].star;
+            starOwns -= ReadJSON.upgradeList.upgrade[upgradeCount].star;
+            totalUpgrade += ReadJSON.upgradeList.upgrade[upgradeCount].star;
             PlayerPrefs.SetInt("Total Upgrade", totalUpgrade);
-            totalMana += GameManager.Ins.upgradeList.upgrade[upgradeCount].mana;
+            totalMana += ReadJSON.upgradeList.upgrade[upgradeCount].mana;
             PlayerPrefs.SetInt("Total Mana",totalMana);
-            if (upgradeCount < GameManager.Ins.upgradeList.upgrade.Length - 1)
+            if (upgradeCount < ReadJSON.upgradeList.upgrade.Length - 1)
             {
                 upgradeCount += 1;
             }
             else
             {
-                upgradeCount = GameManager.Ins.upgradeList.upgrade.Length - 1;
+                upgradeCount = ReadJSON.upgradeList.upgrade.Length - 1;
             }
             PlayerPrefs.SetInt("The number of upgrades", upgradeCount);
         }
