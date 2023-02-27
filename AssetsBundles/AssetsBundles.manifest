@@ -1,7 +1,11 @@
 ManifestFileVersion: 0
-CRC: 1144597573
+CRC: 4102471440
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
       Name: scenebundle
+      Dependencies:
+        Dependency_0: audioclip
+    Info_1:
+      Name: audioclip
       Dependencies: {}

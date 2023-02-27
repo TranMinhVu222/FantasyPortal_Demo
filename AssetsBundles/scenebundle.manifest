@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 4290690870
+CRC: 3100527096
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: b7fe0ef13f8fdaa12bce097429291a13
+    Hash: df8098ef1451c97767f43d295487f055
   TypeTreeHash:
     serializedVersion: 2
-    Hash: a6ba349a733c381e051ded407b6e0a79
+    Hash: 01fa2f800c7fb5845e275d17e8743579
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -52,11 +52,11 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
 - Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 101143e76fdf5420eb6c841c1a205ab3, type: 3}
 - Class: 114
@@ -158,4 +158,5 @@ Assets:
 - Assets/Scene/Level5.unity
 - Assets/Scene/Level1.unity
 - Assets/Scene/Level4.unity
-Dependencies: []
+Dependencies:
+- /Users/gearinc/InternProject/FantasyPortal_Demo/Assets/../AssetsBundles/audioclip

@@ -246,8 +246,10 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Debug.Log("Present Level: " + PlayerPrefs.GetInt("Present Level"));
-                ReadJSON.LoadScene(PlayerPrefs.GetInt("Present Level" + 1));
+                Debug.Log("Present Level: " + PlayerPrefs.GetInt("Present Level") + 1) ;
+                int nextLevel = PlayerPrefs.GetInt("Present Level") + 1;
+                PlayerPrefs.SetInt("Present Level", nextLevel);
+                ReadJSON.LoadScene(nextLevel);
             }
         }
     }

@@ -28,15 +28,18 @@ public class MenuFTUE : MonoBehaviour
     }
     void Start()
     {
-        startButton.SetActive(false);
-        optionButton.SetActive(false);
-        storeButton.SetActive(false);
-        exitGameButton.SetActive(false);
-        pointer.gameObject.SetActive(false);
-        tutorialPanel.gameObject.SetActive(false);
-        nextButton.SetActive(false);
-        exitLevel1.SetActive(false);
-        exitLevelPanel.SetActive(false);
+        if (PlayerPrefs.GetInt("Complete Menu FTUE") == 0)
+        {
+            startButton.SetActive(false);
+            optionButton.SetActive(false);
+            storeButton.SetActive(false);
+            exitGameButton.SetActive(false);
+            pointer.gameObject.SetActive(false);
+            tutorialPanel.gameObject.SetActive(false);
+            nextButton.SetActive(false);
+            exitLevel1.SetActive(false);
+            exitLevelPanel.SetActive(false);    
+        }
         currentState = State.SystemButton;
     }
 
@@ -170,6 +173,8 @@ public class MenuFTUE : MonoBehaviour
                 }
                 break;
             case State.Done:
+                exitLevel1.SetActive(true);
+                exitLevelPanel.SetActive(true);
                 pointer.gameObject.SetActive(false);
                 tutorialPanel.gameObject.SetActive(false);
                 break;

@@ -201,7 +201,6 @@ public class ReadJSON : MonoBehaviour
     
     private void DownLoadAsset()
     {
-        // string url = "https://firebasestorage.googleapis.com/v0/b/pc-api-9010550443197454918-196.appspot.com/o/scenebundle?alt=media&token=da5634ea-35d7-4b32-81d8-ad8750c17b3d";
         //initialize storage reference
         storage = FirebaseStorage.DefaultInstance;
         storageReference = storage.GetReferenceFromUrl("gs://fantasy-portal-92666532.appspot.com");
@@ -230,15 +229,18 @@ public class ReadJSON : MonoBehaviour
 
     IEnumerator LoadFileAssetBundle(string url)
     {
-        UnityWebRequest unityWebRequest = UnityWebRequest.Get(url);
+        string urlDownload = url;
+        UnityWebRequest unityWebRequest = UnityWebRequest.Get(urlDownload);
         unityWebRequest.SendWebRequest();
         while (!unityWebRequest.isDone)
         {
             yield return null;
         }
+
         if (unityWebRequest.result == UnityWebRequest.Result.Success)
         {
-            if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError || unityWebRequest.result == UnityWebRequest.Result.ProtocolError)
+            if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError ||
+                unityWebRequest.result == UnityWebRequest.Result.ProtocolError)
             {
                 warningPanel.SetActive(true);
             }
@@ -248,9 +250,10 @@ public class ReadJSON : MonoBehaviour
                 {
                     Directory.CreateDirectory(Application.persistentDataPath + "/AB");
                 }
+
                 if (!File.Exists(Path.Combine(Application.persistentDataPath, "AB/scenes")))
                 {
-                    Uri uri = new Uri(url);
+                    Uri uri = new Uri(urlDownload);
 
                     WebClient client = new WebClient();
 
@@ -262,25 +265,25 @@ public class ReadJSON : MonoBehaviour
                         yield return null;
                     Debug.Log("downloading...");
                 }
+
                 try
                 {
                     if (assetBundle != null)
-                    { 
-                        //scene is unload from here
+                    {
                         Debug.Log("da co assetbundle");
-                        StartCoroutine(FinishLoading());   
+                        StartCoroutine(FinishLoading());
                     }
                     else
                     {
                         assetBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/scenes"));
                         scene = assetBundle.GetAllScenePaths();
                         Debug.Log("Scene.Lenght: " + scene.Length);
-                        foreach(string sceneName in scene)
+                        foreach (string sceneName in scene)
                         {
                             SceneGameToLoadAB = Path.GetFileNameWithoutExtension(sceneName).ToString();
                             Debug.Log("SceneNameInPath(foreach):: " + Path.GetFileNameWithoutExtension(sceneName));
                         }
-                        StartCoroutine(FinishLoading());    
+                        StartCoroutine(FinishLoading());
                     }
                 }
                 catch (Exception e)
@@ -292,7 +295,7 @@ public class ReadJSON : MonoBehaviour
             }
         }
     }
-
+    
     //Create your ProgressChanged "Listener"
     private void Client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
     {

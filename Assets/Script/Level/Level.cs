@@ -12,7 +12,10 @@ public class Level : MonoBehaviour
             int currentLevel =  PlayerPrefs.GetInt("levelsUnlocked");
             if (PlayerPrefs.GetInt("Present Level") + 1 == PlayerPrefs.GetInt("levelsUnlocked"))
             {
-                PlayerPrefs.SetInt("levelsUnlocked",currentLevel + 1);
+                if (PlayerPrefs.GetInt("levelsUnlocked") < ReadJSON.scene.Length)
+                {
+                    PlayerPrefs.SetInt("levelsUnlocked",currentLevel + 1);    
+                }
                 int countStarList = PlayerPrefs.GetInt("Star List Level Count");
                 PlayerPrefs.SetInt("Star List Level Count",countStarList + 1);
             }    
