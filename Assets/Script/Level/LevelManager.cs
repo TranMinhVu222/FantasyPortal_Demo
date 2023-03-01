@@ -26,8 +26,9 @@ public class LevelManager : MonoBehaviour
         {
             buttons[i].interactable = false;
         }
-
-        for (int i = 0; i < levelsUnlocked; i++)
+        
+        //FIX: them -1 28/02
+        for (int i = 0; i < levelsUnlocked-1; i++)
         {
             buttons[i].interactable = true;
             locks[i].SetActive(false);

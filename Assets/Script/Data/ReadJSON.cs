@@ -12,6 +12,7 @@ using System.Net;
 using Firebase;
 using Firebase.Extensions;
 using JetBrains.Annotations;
+using Unity.Mathematics;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -38,6 +39,11 @@ public class ReadJSON : MonoBehaviour
     public static UpgradeList upgradeList = new UpgradeList();
     public static UpgradeList tempUpgradeList = new UpgradeList();
     
+    public double temp, totalByteDownload, byteDownloaded, saveByteDownloaded;
+
+    public List<double> sizeList = new List<double>();
+
+    public string urlDownload;
     // Start is called before the first frame update
     [System.Serializable]
     public class Upgrade
@@ -52,7 +58,16 @@ public class ReadJSON : MonoBehaviour
     {
         public Upgrade[] upgrade;
     }
+    
+    public enum TypeOfAssetBundle
+    {
+        SCENE,
+        AUDIOCLIP,
+        PREFAB,
+        MATERIAL
+    }
 
+    private TypeOfAssetBundle stateAssetBundle = TypeOfAssetBundle.SCENE;
     private void Awake()
     {
         if (!PlayerPrefs.HasKey("Complete Menu FTUE"))
@@ -65,11 +80,11 @@ public class ReadJSON : MonoBehaviour
 
     void Start()
     {
-       
+        
         Firebase.AppOptions appOptions = new Firebase.AppOptions();
         appOptions.ApiKey = "AIzaSyAB4Jf6k0ILTNh-Q-1GZNQhBtDH_pVJpcU";
         appOptions.AppId = "1:747740940142:android:74b129372bb90e70c2a37f";
-        appOptions.MessageSenderId = "XXXXXXXXXXXXX";
+        appOptions.MessageSenderId = "";
         appOptions.ProjectId = "fantasy-portal-92666532";
         appOptions.StorageBucket = "fantasy-portal-92666532.appspot.com";
     
@@ -114,10 +129,10 @@ public class ReadJSON : MonoBehaviour
                  }
              }
          );
+        DownloadMultipleFileAssetBundle();
     }
     private IEnumerator LoadFileJSON(string url)
     {
-        Debug.Log("link json " + url);
         UnityWebRequest unityWebRequest = UnityWebRequest.Get(url);
         unityWebRequest.SendWebRequest();
         while (!unityWebRequest.isDone)
@@ -226,7 +241,132 @@ public class ReadJSON : MonoBehaviour
             }
         });
     }
+    
+    //TODO: Get size before download multiple files ------------------------------------------------------
 
+    private void DownloadMultipleFileAssetBundle()
+    {
+        string[] bundleArray = new string[] {"scenebundle","audioclip","energybundle","materialbundle"};
+        for (int i = 0; i < bundleArray.Length; i++)
+        {
+            //initialize storage reference
+            storage = FirebaseStorage.DefaultInstance;
+            storageReference = storage.GetReferenceFromUrl("gs://fantasy-portal-92666532.appspot.com");
+            //get reference of assetbundle
+            StorageReference multipleFileAssetBundle = storageReference.Child(bundleArray[i]);
+            // Get the download link of file
+            multipleFileAssetBundle.GetDownloadUrlAsync().ContinueWithOnMainThread(task =>
+            {
+                if (!task.IsFaulted && !task.IsCanceled)
+                {
+                    StartCoroutine(GetFileSize(Convert.ToString(task.Result), 
+                        (size) =>
+                            {
+                                temp += size;
+                                sizeList.Add(temp);
+                                Debug.Log("total size trong GetFileSize " + temp); //Has got total size to be downloaded in all assetbundle
+                            },
+                        (byteAssetBundles) =>
+                            {
+                                Debug.Log("dung luong tai " + multipleFileAssetBundle + ": " +" "+ byteAssetBundles);
+                            }
+                        ));
+                }
+                else
+                {
+                    Debug.LogWarning("LOI");
+                }
+            });
+        }
+    }
+    
+    IEnumerator GetFileSize(string url, Action<double> results, Action<double>byteAssetBundles)
+    {
+        UnityWebRequest uwr = UnityWebRequest.Head(url);
+        yield return uwr.SendWebRequest();
+        string size =  uwr.GetResponseHeader("Content-Length");
+        if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.ProtocolError)
+        {
+            Debug.Log("Error While Getting Length: " + uwr.error);
+            if (results != null)
+                results(-1);
+
+            yield return null;
+        }
+        else
+        {
+            if (results != null)
+                results(Math.Round((double)Convert.ToInt64(size) / 1048576,2));
+        }
+        
+        if (uwr.result == UnityWebRequest.Result.Success)
+        {
+            switch (stateAssetBundle)
+            {
+                case TypeOfAssetBundle.SCENE:
+                    urlDownload = "scenebundle";
+                    DownLoadedAssetBundle(urlDownload);
+                    break;
+                case TypeOfAssetBundle.PREFAB:
+                    urlDownload = "energybundle";
+                    DownLoadedAssetBundle(urlDownload);
+                    break;
+                case TypeOfAssetBundle.MATERIAL:
+                    urlDownload = "materialbundle";
+                    DownLoadedAssetBundle(urlDownload);
+                    break;
+                case TypeOfAssetBundle.AUDIOCLIP:
+                    urlDownload = "audioclip";
+                    DownLoadedAssetBundle(urlDownload);
+                    break;
+                default:
+                    break;
+            }
+            UnityWebRequest unityWebRequests = UnityWebRequest.Get(url);
+            unityWebRequests.SendWebRequest();
+            while (!unityWebRequests.isDone)
+            {
+                totalByteDownload = Math.Round(unityWebRequests.downloadedBytes / 1048576f, 2);
+                byteAssetBundles(totalByteDownload);
+                yield return null;
+            }
+
+            if (unityWebRequests.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("vua lay xong progress cua: "+unityWebRequests.url);
+                if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.ProtocolError)
+                {
+                    Debug.Log("Error: " + unityWebRequests.error);
+                    Debug.Log("khong co mang");
+                }
+            }
+        }
+    }
+
+    private void DownLoadedAssetBundle(string urlDownload)
+    {
+        //initialize storage reference
+        storage = FirebaseStorage.DefaultInstance;
+        storageReference = storage.GetReferenceFromUrl("gs://fantasy-portal-92666532.appspot.com");
+        //get reference of assetbundle
+        StorageReference fileAssetBundle = storageReference.Child(urlDownload);
+        // Get the download link of file
+        fileAssetBundle.GetDownloadUrlAsync().ContinueWithOnMainThread(task =>
+        {
+            if (!task.IsFaulted && !task.IsCanceled)
+            {
+
+            }
+            else
+            {
+
+            }
+        });
+    }
+    
+    
+
+    //TODO: Finish check size asset bundle before download ---------------------------------------------------------
     IEnumerator LoadFileAssetBundle(string url)
     {
         string urlDownload = url;
