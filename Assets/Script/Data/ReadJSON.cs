@@ -21,8 +21,8 @@ public class ReadJSON : MonoBehaviour
     private string fileDataTemp, fullPath;
     public static string sceneGameToLoadAB;
     private double progress, totalBytes, bytes;
-    public int count;
-    public Text downloadingText, progressPercent;
+    public int count, countFinish, countFinalize;
+    public Text downloadingText, progressPercent, downloadAssetBundleText;
     
     private FirebaseStorage storage;
     private StorageReference storageReference;
@@ -304,6 +304,12 @@ public class ReadJSON : MonoBehaviour
         {
             if (!task.IsFaulted && !task.IsCanceled)
             {
+                StartCoroutine(GetSizeToUpdated(Convert.ToString(task.Result), results =>
+                {
+                    temp += results;
+                    downloadAssetBundleText.text = temp + "MB"; 
+                    Debug.Log("total size" + temp);
+                }));
                 StartCoroutine(DownLoadedMultipleFileAssetBundle(Convert.ToString(task.Result), urlDownload));
             }
             else
@@ -362,11 +368,22 @@ public class ReadJSON : MonoBehaviour
                 
                 try
                 {
+                    countFinish += 1;
+                    Debug.Log("check" + fileToUpdatedList.Count);
+                    if (fileToUpdatedList.Count - 1 == countFinish && fileToUpdatedList.Count > 1)
+                    {
+                        StartCoroutine(FinishLoading());
+                    }
+
+                    if (bundleArray.Length == countFinish)
+                    {
+                        StartCoroutine(FinishLoading());
+                    }
                     AssetBundleManager.UseAssetBundle(urlDownload);
                 }
                 catch (Exception e)
                 {
-                    Debug.Log(e);
+                    Debug.LogWarning(e);
                     warningPanel.gameObject.SetActive(true);
                 }
             }
@@ -376,6 +393,7 @@ public class ReadJSON : MonoBehaviour
     //Create your ProgressChanged "Listener"
     private void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
     {
+        downloadingText.gameObject.SetActive(false);
         //Show download progress
         Debug.Log(" " + Math.Round(e.BytesReceived/1048576f,2) + "/"+ Math.Round(e.TotalBytesToReceive/1048576f,2));
         
@@ -446,7 +464,7 @@ public class ReadJSON : MonoBehaviour
                     if (CompareDate(PlayerPrefs.GetString("date scenebundle"), date))
                     {
                         fileToUpdatedList.Add(name);
-                        if (!File.Exists(Path.Combine(Application.persistentDataPath, "AB/" + name)))
+                        if (File.Exists(Path.Combine(Application.persistentDataPath, "AB/" + name)))
                         {
                             File.Delete(Application.persistentDataPath + "/AB/"+name);    
                         }
@@ -455,6 +473,8 @@ public class ReadJSON : MonoBehaviour
                     }
                     else
                     {
+                        countFinalize += 1;
+                        FinishLoadingAsset(countFinalize);
                         Debug.Log("khong co file can update ten " + name );
                     }
                 } 
@@ -470,7 +490,7 @@ public class ReadJSON : MonoBehaviour
                     if (CompareDate(PlayerPrefs.GetString("date audioclip"), date))
                     {
                         fileToUpdatedList.Add(name);
-                        if (!File.Exists(Path.Combine(Application.persistentDataPath, "AB/" + name)))
+                        if (File.Exists(Path.Combine(Application.persistentDataPath, "AB/" + name)))
                         {
                             File.Delete(Application.persistentDataPath + "/AB/"+name);    
                         }
@@ -479,6 +499,8 @@ public class ReadJSON : MonoBehaviour
                     }
                     else
                     {
+                        countFinalize += 1;
+                        FinishLoadingAsset(countFinalize);
                         Debug.Log("khong co file can update ten " + name );
                     }
                 }
@@ -494,7 +516,7 @@ public class ReadJSON : MonoBehaviour
                     if (CompareDate(PlayerPrefs.GetString("date energybundle"), date))
                     {
                         fileToUpdatedList.Add(name);
-                        if (!File.Exists(Path.Combine(Application.persistentDataPath, "AB/" + name)))
+                        if (File.Exists(Path.Combine(Application.persistentDataPath, "AB/" + name)))
                         {
                             File.Delete(Application.persistentDataPath + "/AB/"+name);    
                         }
@@ -503,6 +525,8 @@ public class ReadJSON : MonoBehaviour
                     }
                     else
                     {
+                        countFinalize += 1;
+                        FinishLoadingAsset(countFinalize);
                         Debug.Log("khong co file can update ten " + name );
                     }
                 }
@@ -518,7 +542,7 @@ public class ReadJSON : MonoBehaviour
                     if (CompareDate(PlayerPrefs.GetString("date materialbundle"), date))
                     {
                         fileToUpdatedList.Add(name);
-                        if (!File.Exists(Path.Combine(Application.persistentDataPath, "AB/" + name)))
+                        if (File.Exists(Path.Combine(Application.persistentDataPath, "AB/" + name)))
                         {
                             File.Delete(Application.persistentDataPath + "/AB/"+name);    
                         }
@@ -527,6 +551,8 @@ public class ReadJSON : MonoBehaviour
                     }
                     else
                     {
+                        countFinalize += 1;
+                        FinishLoadingAsset(countFinalize);
                         Debug.Log("khong co file can update ten " + name );
                     }
                 }
@@ -545,5 +571,32 @@ public class ReadJSON : MonoBehaviour
             return true;
         }
         return false;
+    }
+    IEnumerator GetSizeToUpdated(string url, Action<double> results)
+    {
+        UnityWebRequest uwr = UnityWebRequest.Head(url);
+        yield return uwr.SendWebRequest();
+        string size =  uwr.GetResponseHeader("Content-Length");
+        if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.ProtocolError)
+        {
+            if (results != null)
+                results(0);
+            yield return null;
+        }
+        if (uwr.result == UnityWebRequest.Result.Success)
+        {
+            if (results != null)
+            {
+                results(Math.Round((double)Convert.ToInt64(size) / 1048576, 2));
+            }
+        }
+    }
+
+    public void FinishLoadingAsset(int count)
+    {
+        if (bundleArray.Length == count)
+        {
+            StartCoroutine( FinishLoading());
+        }
     }
 }
