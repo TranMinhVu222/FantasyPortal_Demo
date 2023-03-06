@@ -12,7 +12,7 @@ public class Level : MonoBehaviour
             int currentLevel =  PlayerPrefs.GetInt("levelsUnlocked");
             if (PlayerPrefs.GetInt("Present Level") + 1 == PlayerPrefs.GetInt("levelsUnlocked"))
             {
-                if (PlayerPrefs.GetInt("levelsUnlocked") < ReadJSON.scene.Length)
+                if (PlayerPrefs.GetInt("levelsUnlocked") < AssetBundleManager.scene.Length)
                 {
                     PlayerPrefs.SetInt("levelsUnlocked",currentLevel + 1);    
                 }

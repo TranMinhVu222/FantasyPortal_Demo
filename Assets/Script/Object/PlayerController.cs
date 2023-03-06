@@ -232,7 +232,7 @@ public class PlayerController : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("Completed FTUE") == 1)
         {
-            ReadJSON.LoadScene(PlayerPrefs.GetInt("Present Level"));
+            AssetBundleManager.LoadScene(PlayerPrefs.GetInt("Present Level"));
         }
     }
 
@@ -240,7 +240,7 @@ public class PlayerController : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("Completed FTUE") == 1)
         {
-            if (PlayerPrefs.GetInt("Present Level") == ReadJSON.scene.Length - 1)
+            if (PlayerPrefs.GetInt("Present Level") == AssetBundleManager.scene.Length - 1)
             {
                 SceneManager.LoadScene("MenuScene");
             }
@@ -249,7 +249,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Present Level: " + PlayerPrefs.GetInt("Present Level") + 1) ;
                 int nextLevel = PlayerPrefs.GetInt("Present Level") + 1;
                 PlayerPrefs.SetInt("Present Level", nextLevel);
-                ReadJSON.LoadScene(nextLevel);
+                AssetBundleManager.LoadScene(nextLevel);
             }
         }
     }

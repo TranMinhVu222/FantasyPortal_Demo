@@ -5536,7 +5536,7 @@ RectTransform:
   - {fileID: 2049694702}
   - {fileID: 1736152745}
   m_Father: {fileID: 844351925}
-  m_RootOrder: 10
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11149,9 +11149,9 @@ RectTransform:
   - {fileID: 857636887}
   - {fileID: 475816877}
   - {fileID: 1700170754}
-  - {fileID: 490402836}
   - {fileID: 1575770065}
   - {fileID: 2034282024}
+  - {fileID: 490402836}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11397,6 +11397,17 @@ MonoBehaviour:
   loadingPanel: {fileID: 2034282023}
   warningPanel: {fileID: 490402835}
   FTUE: {fileID: 1575770064}
+  temp: 0
+  totalByteDownload: 0
+  byteDownloaded: 0
+  saveByteDownloaded: 0
+  sizeList: []
+  bundleArray:
+  - scenebundle
+  - audioclip
+  - energybundle
+  - materialbundle
+  urlDownload: 
 --- !u!4 &854926995
 Transform:
   m_ObjectHideFlags: 0
@@ -23606,7 +23617,7 @@ RectTransform:
   - {fileID: 469243769}
   - {fileID: 471712535}
   m_Father: {fileID: 844351925}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -28658,7 +28669,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2034282024
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28674,7 +28685,7 @@ RectTransform:
   - {fileID: 1621854103}
   - {fileID: 2026035295}
   m_Father: {fileID: 844351925}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

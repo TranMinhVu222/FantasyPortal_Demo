@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Firebase.Storage;
@@ -11,10 +12,6 @@ using UnityEngine.Networking;
 using System.Net;
 using Firebase;
 using Firebase.Extensions;
-using JetBrains.Annotations;
-using Unity.Mathematics;
-using UnityEngine.InputSystem.Controls;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public class ReadJSON : MonoBehaviour
@@ -22,9 +19,9 @@ public class ReadJSON : MonoBehaviour
     public const string SaveDirectory = "/SaveData";
     public const string FileName = "PurchaseMetaData.sav";
     private string fileDataTemp, fullPath;
-    private string SceneGameToLoadAB;
-    public static string[] scene;
+    public static string sceneGameToLoadAB;
     private double progress, totalBytes, bytes;
+    public int count;
     public Text downloadingText, progressPercent;
     
     private FirebaseStorage storage;
@@ -42,6 +39,8 @@ public class ReadJSON : MonoBehaviour
     public double temp, totalByteDownload, byteDownloaded, saveByteDownloaded;
 
     public List<double> sizeList = new List<double>();
+    public List<string> fileToUpdatedList = new List<string>{"null"};
+    public string[] bundleArray = {"scenebundle","audioclip","energybundle","materialbundle"};
 
     public string urlDownload;
     // Start is called before the first frame update
@@ -59,15 +58,6 @@ public class ReadJSON : MonoBehaviour
         public Upgrade[] upgrade;
     }
     
-    public enum TypeOfAssetBundle
-    {
-        SCENE,
-        AUDIOCLIP,
-        PREFAB,
-        MATERIAL
-    }
-
-    private TypeOfAssetBundle stateAssetBundle = TypeOfAssetBundle.SCENE;
     private void Awake()
     {
         if (!PlayerPrefs.HasKey("Complete Menu FTUE"))
@@ -80,7 +70,6 @@ public class ReadJSON : MonoBehaviour
 
     void Start()
     {
-        
         Firebase.AppOptions appOptions = new Firebase.AppOptions();
         appOptions.ApiKey = "AIzaSyAB4Jf6k0ILTNh-Q-1GZNQhBtDH_pVJpcU";
         appOptions.AppId = "1:747740940142:android:74b129372bb90e70c2a37f";
@@ -109,27 +98,36 @@ public class ReadJSON : MonoBehaviour
                      {
                          string json = File.ReadAllText(fullPath);
                          upgradeList = JsonUtility.FromJson<UpgradeList>(json);
-                         if (!File.Exists(Application.persistentDataPath + "/AB/scenes"))
+                         for (int i = 0; i < bundleArray.Length; i++)
                          {
-                             warningPanel.SetActive(true);
-                         }
-                         else
-                         {
-                             StartCoroutine(FinishLoading());    
+                             if (!File.Exists(Application.persistentDataPath + "/AB/" + bundleArray[i]))
+                             {
+                                 warningPanel.SetActive(true);
+                             }
+                             else
+                             {
+                                 AssetBundleManager.AssetBundleAvailable();
+                                 StartCoroutine(FinishLoading());
+                             }    
                          }
                      }
                      else if(!File.Exists(fullPath))
                      {
                          warningPanel.SetActive(true);
                      }
-                     else if(!File.Exists(Application.persistentDataPath + "/AB/scenes"))
+                     else
                      {
-                         warningPanel.SetActive(true);
+                         for (int i = 0; i < bundleArray.Length; i++)
+                         {
+                             if (!File.Exists(Application.persistentDataPath + "/AB/" + bundleArray[i]))
+                             {
+                                 warningPanel.SetActive(true);
+                             }
+                         }
                      }
                  }
              }
          );
-        DownloadMultipleFileAssetBundle();
     }
     private IEnumerator LoadFileJSON(string url)
     {
@@ -138,9 +136,9 @@ public class ReadJSON : MonoBehaviour
         while (!unityWebRequest.isDone)
         {
             progress = Math.Round(unityWebRequest.downloadProgress * 100f,2);
-            Debug.Log(progress +"%");
+            // Debug.Log(progress +"%");
             bytes = Math.Round(unityWebRequest.downloadedBytes/1024f,2);
-            Debug.Log(bytes + "bytes");
+            // Debug.Log(bytes + "bytes");
             if (progress > 0)
             {
                 totalBytes = Math.Round((bytes * 100f / progress), 2);
@@ -153,17 +151,20 @@ public class ReadJSON : MonoBehaviour
 
         if (unityWebRequest.result == UnityWebRequest.Result.Success)
         {
+         
+            // Tai xong va khong co mang
             if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError || unityWebRequest.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log("Error: " + unityWebRequest.error);
                 warningPanel.SetActive(true);
-                Debug.Log("khong co mang");
             }
+            // tai xong va co ket noi mang
             else
             {
                 fileDataTemp = unityWebRequest.downloadHandler.text;
                 var dir = Application.persistentDataPath + SaveDirectory;
-                if (!Directory.Exists(dir))
+                
+                if (!Directory.Exists(dir)) // CHECK => lan dau tai file JSON nen can tao thu muc de luu
                 {
                     Directory.CreateDirectory(dir);
                 }
@@ -180,7 +181,7 @@ public class ReadJSON : MonoBehaviour
                         PlayerPrefs.SetString("Present Version", upgradeList.upgrade[0].version);
                     }
                 }
-                else
+                else // CHECK => da tai File JSON truoc do roi
                 {
                     if (!PlayerPrefs.HasKey("Present Version"))
                     {
@@ -209,24 +210,101 @@ public class ReadJSON : MonoBehaviour
                             break;
                     }
                 }
+                // Da doc duoc file JSON -> Tai assetbundle
                 StartCoroutine(DelayLoadAssetBundle());
             }
         }
     }
     
-    private void DownLoadAsset()
+    //TODO: Get size before download multiple files ------------------------------------------------------
+
+    private void DownloadMultipleFileAssetBundle()
     {
+        for (int i = 0; i < bundleArray.Length; i++)
+        {
+            //Check => chua co file Asset bundle
+            if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "AB/" + bundleArray[i])))
+            {
+                //initialize storage reference
+                storage = FirebaseStorage.DefaultInstance;
+                storageReference = storage.GetReferenceFromUrl("gs://fantasy-portal-92666532.appspot.com");
+                //get reference of assetbundle
+                StorageReference multipleFileAssetBundle = storageReference.Child(bundleArray[i]);
+                // Get the download link of file
+                multipleFileAssetBundle.GetDownloadUrlAsync().ContinueWithOnMainThread(task =>
+                {
+                    if (!task.IsFaulted && !task.IsCanceled)
+                    {
+                        StartCoroutine(GetFileSize(Convert.ToString(task.Result), 
+                            (size) =>
+                            {
+                                temp += size;
+                                sizeList.Add(temp);
+                                // Debug.Log("total size trong GetFileSize " + temp); //Has got total size to be downloaded in all assetbundle
+                            },
+                            bundleArray, count += 1
+                        ));
+                    }
+                    else
+                    {
+                        warningPanel.SetActive(true);
+                    }
+                });    
+            }
+        }
+    }
+    
+    IEnumerator GetFileSize(string url, Action<double> results, string[] bundleArray,int order)
+    {
+        UnityWebRequest uwr = UnityWebRequest.Head(url);
+        yield return uwr.SendWebRequest();
+        string size =  uwr.GetResponseHeader("Content-Length");
+        string date = uwr.GetResponseHeader("Last-Modified");
+        if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.ProtocolError)
+        {
+            if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "AB/" + bundleArray[order - 1])))
+            {
+                warningPanel.SetActive(true);
+            }
+            else
+            {
+                AssetBundleManager.AssetBundleAvailable();
+                StartCoroutine(FinishLoading());
+            }
+            Debug.Log("Error While Getting Length: " + uwr.error);
+            if (results != null)
+                results(-1);
+            yield return null;
+        }
+        if (uwr.result == UnityWebRequest.Result.Success)
+        {
+            if (results != null)
+            {
+                results(Math.Round((double)Convert.ToInt64(size) / 1048576, 2));
+            }
+            CheckVersion(bundleArray, date,order-1);
+        }
+        else
+        {
+            AssetBundleManager.AssetBundleAvailable();
+            StartCoroutine(FinishLoading());
+        }
+    }
+    
+    private void SaveMultipleAssetBundle(string urlDownload)
+    {
+        Debug.Log(urlDownload);
         //initialize storage reference
         storage = FirebaseStorage.DefaultInstance;
         storageReference = storage.GetReferenceFromUrl("gs://fantasy-portal-92666532.appspot.com");
         //get reference of assetbundle
-        StorageReference fileAssetBundle = storageReference.Child("scenebundle");
+        StorageReference fileAssetBundle = storageReference.Child(urlDownload);
         // Get the download link of file
         fileAssetBundle.GetDownloadUrlAsync().ContinueWithOnMainThread(task =>
         {
             if (!task.IsFaulted && !task.IsCanceled)
             {
-                StartCoroutine(LoadFileAssetBundle(Convert.ToString(task.Result)));
+                StartCoroutine(DownLoadedMultipleFileAssetBundle(Convert.ToString(task.Result), urlDownload));
             }
             else
             {
@@ -242,133 +320,9 @@ public class ReadJSON : MonoBehaviour
         });
     }
     
-    //TODO: Get size before download multiple files ------------------------------------------------------
-
-    private void DownloadMultipleFileAssetBundle()
+    IEnumerator DownLoadedMultipleFileAssetBundle(string url, string nameFile)
     {
-        string[] bundleArray = new string[] {"scenebundle","audioclip","energybundle","materialbundle"};
-        for (int i = 0; i < bundleArray.Length; i++)
-        {
-            //initialize storage reference
-            storage = FirebaseStorage.DefaultInstance;
-            storageReference = storage.GetReferenceFromUrl("gs://fantasy-portal-92666532.appspot.com");
-            //get reference of assetbundle
-            StorageReference multipleFileAssetBundle = storageReference.Child(bundleArray[i]);
-            // Get the download link of file
-            multipleFileAssetBundle.GetDownloadUrlAsync().ContinueWithOnMainThread(task =>
-            {
-                if (!task.IsFaulted && !task.IsCanceled)
-                {
-                    StartCoroutine(GetFileSize(Convert.ToString(task.Result), 
-                        (size) =>
-                            {
-                                temp += size;
-                                sizeList.Add(temp);
-                                Debug.Log("total size trong GetFileSize " + temp); //Has got total size to be downloaded in all assetbundle
-                            },
-                        (byteAssetBundles) =>
-                            {
-                                Debug.Log("dung luong tai " + multipleFileAssetBundle + ": " +" "+ byteAssetBundles);
-                            }
-                        ));
-                }
-                else
-                {
-                    Debug.LogWarning("LOI");
-                }
-            });
-        }
-    }
-    
-    IEnumerator GetFileSize(string url, Action<double> results, Action<double>byteAssetBundles)
-    {
-        UnityWebRequest uwr = UnityWebRequest.Head(url);
-        yield return uwr.SendWebRequest();
-        string size =  uwr.GetResponseHeader("Content-Length");
-        if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.ProtocolError)
-        {
-            Debug.Log("Error While Getting Length: " + uwr.error);
-            if (results != null)
-                results(-1);
-
-            yield return null;
-        }
-        else
-        {
-            if (results != null)
-                results(Math.Round((double)Convert.ToInt64(size) / 1048576,2));
-        }
-        
-        if (uwr.result == UnityWebRequest.Result.Success)
-        {
-            switch (stateAssetBundle)
-            {
-                case TypeOfAssetBundle.SCENE:
-                    urlDownload = "scenebundle";
-                    DownLoadedAssetBundle(urlDownload);
-                    break;
-                case TypeOfAssetBundle.PREFAB:
-                    urlDownload = "energybundle";
-                    DownLoadedAssetBundle(urlDownload);
-                    break;
-                case TypeOfAssetBundle.MATERIAL:
-                    urlDownload = "materialbundle";
-                    DownLoadedAssetBundle(urlDownload);
-                    break;
-                case TypeOfAssetBundle.AUDIOCLIP:
-                    urlDownload = "audioclip";
-                    DownLoadedAssetBundle(urlDownload);
-                    break;
-                default:
-                    break;
-            }
-            UnityWebRequest unityWebRequests = UnityWebRequest.Get(url);
-            unityWebRequests.SendWebRequest();
-            while (!unityWebRequests.isDone)
-            {
-                totalByteDownload = Math.Round(unityWebRequests.downloadedBytes / 1048576f, 2);
-                byteAssetBundles(totalByteDownload);
-                yield return null;
-            }
-
-            if (unityWebRequests.result == UnityWebRequest.Result.Success)
-            {
-                Debug.Log("vua lay xong progress cua: "+unityWebRequests.url);
-                if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.ProtocolError)
-                {
-                    Debug.Log("Error: " + unityWebRequests.error);
-                    Debug.Log("khong co mang");
-                }
-            }
-        }
-    }
-
-    private void DownLoadedAssetBundle(string urlDownload)
-    {
-        //initialize storage reference
-        storage = FirebaseStorage.DefaultInstance;
-        storageReference = storage.GetReferenceFromUrl("gs://fantasy-portal-92666532.appspot.com");
-        //get reference of assetbundle
-        StorageReference fileAssetBundle = storageReference.Child(urlDownload);
-        // Get the download link of file
-        fileAssetBundle.GetDownloadUrlAsync().ContinueWithOnMainThread(task =>
-        {
-            if (!task.IsFaulted && !task.IsCanceled)
-            {
-
-            }
-            else
-            {
-
-            }
-        });
-    }
-    
-    
-
-    //TODO: Finish check size asset bundle before download ---------------------------------------------------------
-    IEnumerator LoadFileAssetBundle(string url)
-    {
+        Debug.Log(nameFile +" co tai ");
         string urlDownload = url;
         UnityWebRequest unityWebRequest = UnityWebRequest.Get(urlDownload);
         unityWebRequest.SendWebRequest();
@@ -391,63 +345,49 @@ public class ReadJSON : MonoBehaviour
                     Directory.CreateDirectory(Application.persistentDataPath + "/AB");
                 }
 
-                if (!File.Exists(Path.Combine(Application.persistentDataPath, "AB/scenes")))
+                if (!File.Exists(Path.Combine(Application.persistentDataPath, "AB/" + nameFile)))
                 {
+                    Debug.Log("check co tai file " + nameFile);
                     Uri uri = new Uri(urlDownload);
 
                     WebClient client = new WebClient();
-
-                    client.DownloadProgressChanged += Client_DownloadProgressChanged;
-
-                    client.DownloadFileAsync(uri, Application.persistentDataPath + "/AB/scenes");
+                    
+                    client.DownloadProgressChanged += DownloadProgressChanged;
+                   
+                    client.DownloadFileAsync(uri, Application.persistentDataPath + "/AB/"+ nameFile);
 
                     while (client.IsBusy)
                         yield return null;
-                    Debug.Log("downloading...");
                 }
-
+                
                 try
                 {
-                    if (assetBundle != null)
-                    {
-                        Debug.Log("da co assetbundle");
-                        StartCoroutine(FinishLoading());
-                    }
-                    else
-                    {
-                        assetBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/scenes"));
-                        scene = assetBundle.GetAllScenePaths();
-                        Debug.Log("Scene.Lenght: " + scene.Length);
-                        foreach (string sceneName in scene)
-                        {
-                            SceneGameToLoadAB = Path.GetFileNameWithoutExtension(sceneName).ToString();
-                            Debug.Log("SceneNameInPath(foreach):: " + Path.GetFileNameWithoutExtension(sceneName));
-                        }
-                        StartCoroutine(FinishLoading());
-                    }
+                    AssetBundleManager.UseAssetBundle(urlDownload);
                 }
                 catch (Exception e)
                 {
                     Debug.Log(e);
-                    // File.Delete(Application.persistentDataPath + "/AB/scenes");
-                    // StartCoroutine(DownLoadAsset());
+                    warningPanel.gameObject.SetActive(true);
                 }
             }
         }
     }
     
     //Create your ProgressChanged "Listener"
-    private void Client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+    private void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
     {
         //Show download progress
         Debug.Log(" " + Math.Round(e.BytesReceived/1048576f,2) + "/"+ Math.Round(e.TotalBytesToReceive/1048576f,2));
         
         progress = Math.Round(e.BytesReceived * 100f / e.TotalBytesToReceive,2);
         progressBar.fillAmount = (float)Math.Round(progress/100f,0);
-
+        
         progressPercent.text = progress + "%";
         downloadingText.text = "Downloading "+ Math.Round(e.BytesReceived/1048576f,2) + "MB" + "/" + Math.Round(e.TotalBytesToReceive/1048576f,2) + "MB";
     }
+    
+    //TODO: Finish check size asset bundle before download ---------------------------------------------------------
+    
     public int CompareVersion(string version1, string version2)
     {
         string[] s1 = version1.Split('.'); 
@@ -472,8 +412,8 @@ public class ReadJSON : MonoBehaviour
     {
         progressBar.fillAmount = 1f;
         progressPercent.text = "100%";
-        yield return new WaitForSeconds(1f);
-        DownLoadAsset();
+        yield return new WaitForSeconds(0.5f);
+        DownloadMultipleFileAssetBundle();
     }
     IEnumerator FinishLoading()
     {
@@ -490,8 +430,120 @@ public class ReadJSON : MonoBehaviour
         loadingPanel.SetActive(false);
     }
 
-    public static void LoadScene(int index)
+    public void CheckVersion(string[] nameAssetBundle, string date,int i)
     {
-        SceneManager.LoadSceneAsync(assetBundle.GetAllScenePaths()[index]);
+        string name = nameAssetBundle[i];
+        switch (name)
+        {
+            case "scenebundle":
+                if (!PlayerPrefs.HasKey("date scenebundle")) 
+                {
+                    PlayerPrefs.SetString("date scenebundle", date);
+                    SaveMultipleAssetBundle(name);
+                }
+                else
+                {
+                    if (CompareDate(PlayerPrefs.GetString("date scenebundle"), date))
+                    {
+                        fileToUpdatedList.Add(name);
+                        if (!File.Exists(Path.Combine(Application.persistentDataPath, "AB/" + name)))
+                        {
+                            File.Delete(Application.persistentDataPath + "/AB/"+name);    
+                        }
+                        PlayerPrefs.SetString("date scenebundle", date);
+                        SaveMultipleAssetBundle(name);
+                    }
+                    else
+                    {
+                        Debug.Log("khong co file can update ten " + name );
+                    }
+                } 
+                break;
+            case "audioclip":
+                if (!PlayerPrefs.HasKey("date audioclip"))
+                {
+                    PlayerPrefs.SetString("date audioclip", date);
+                    SaveMultipleAssetBundle(name);
+                }
+                else
+                {
+                    if (CompareDate(PlayerPrefs.GetString("date audioclip"), date))
+                    {
+                        fileToUpdatedList.Add(name);
+                        if (!File.Exists(Path.Combine(Application.persistentDataPath, "AB/" + name)))
+                        {
+                            File.Delete(Application.persistentDataPath + "/AB/"+name);    
+                        }
+                        PlayerPrefs.SetString("date audioclip", date);
+                        SaveMultipleAssetBundle(name);
+                    }
+                    else
+                    {
+                        Debug.Log("khong co file can update ten " + name );
+                    }
+                }
+                break;
+            case "energybundle":
+                if (!PlayerPrefs.HasKey("date energybundle"))
+                {
+                    PlayerPrefs.SetString("date energybundle", date);
+                    SaveMultipleAssetBundle(name);
+                }
+                else
+                {
+                    if (CompareDate(PlayerPrefs.GetString("date energybundle"), date))
+                    {
+                        fileToUpdatedList.Add(name);
+                        if (!File.Exists(Path.Combine(Application.persistentDataPath, "AB/" + name)))
+                        {
+                            File.Delete(Application.persistentDataPath + "/AB/"+name);    
+                        }
+                        PlayerPrefs.SetString("date energybundle", date);
+                        SaveMultipleAssetBundle(name);
+                    }
+                    else
+                    {
+                        Debug.Log("khong co file can update ten " + name );
+                    }
+                }
+                break;
+            case "materialbundle":
+                if (!PlayerPrefs.HasKey("date materialbundle"))
+                {
+                    PlayerPrefs.SetString("date materialbundle", date);
+                    SaveMultipleAssetBundle(name);
+                }
+                else
+                {
+                    if (CompareDate(PlayerPrefs.GetString("date materialbundle"), date))
+                    {
+                        fileToUpdatedList.Add(name);
+                        if (!File.Exists(Path.Combine(Application.persistentDataPath, "AB/" + name)))
+                        {
+                            File.Delete(Application.persistentDataPath + "/AB/"+name);    
+                        }
+                        PlayerPrefs.SetString("date materialbundle", date);
+                        SaveMultipleAssetBundle(name);
+                    }
+                    else
+                    {
+                        Debug.Log("khong co file can update ten " + name );
+                    }
+                }
+                break;
+            default:
+                return;
+        }
+    }
+
+    public bool CompareDate(string savedDate, string lastModifiedDate)
+    {
+        DateTime convertSavedDate = DateTime.Parse(savedDate);
+        DateTime convertLastModified = DateTime.Parse(lastModifiedDate);
+        if (DateTime.Compare(convertSavedDate,convertLastModified) < 0)
+        {
+            return true;
+        }
+        return false;
     }
 }
