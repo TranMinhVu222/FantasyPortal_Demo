@@ -126,10 +126,10 @@ MonoBehaviour:
   currentPortal: 0
   entryPortalAnim: {fileID: 1947090594604086263}
   enterPortalAnim: {fileID: 1947090594090796987}
-  entryPortal: {fileID: 0}
-  enterPortal: {fileID: 0}
-  enterPosition: {fileID: 0}
-  entryPosition: {fileID: 0}
+  entryPortal: {fileID: 130527149935902428, guid: 21ec3929e87534e02b9f4acef8811e36, type: 3}
+  enterPortal: {fileID: 5056885121421806521, guid: b7d327412b1c54b2d9d98907a14273f6, type: 3}
+  enterPosition: {fileID: 6201841639795644004, guid: d80351b173c664c8895b8f502ebb6c50, type: 3}
+  entryPosition: {fileID: 3782253252224226104, guid: 6ea2ebd4ed54b46cab0af4a8b391dbe3, type: 3}
   angle: 0
   direction: {x: 0, y: 0}
 --- !u!95 &1945718235936867274

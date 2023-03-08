@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,9 @@ public class AssetBundleManager : MonoBehaviour
     public static string[] prefab;
 
     private static string sceneGameToLoadAB;
-    
+
+    static AssetBundle assetBundle;
+
     public static void UseAssetBundle(string typeOfAssetBundle)
     {
         switch (typeOfAssetBundle)
@@ -55,10 +58,25 @@ public class AssetBundleManager : MonoBehaviour
 
     public static void AssetBundleAvailable()
     {
-        scene = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/scenebundle")).GetAllScenePaths();
-        audioClip = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/audioclip")).GetAllAssetNames();
-        material = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/materialbundle")).GetAllAssetNames();
-        prefab = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/energybundle")).GetAllAssetNames();
+        try
+        {
+            if (scene != null || audioClip != null || material != null || prefab != null)
+            {
+                AssetBundle.UnloadAllAssetBundles(false);
+            }
+            else
+            {
+                scene = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/scenebundle")).GetAllScenePaths();
+                audioClip = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/audioclip")).GetAllAssetNames();
+                material = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/materialbundle")).GetAllAssetNames();
+                prefab = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/energybundle")).GetAllAssetNames();    
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
     public static void LoadScene(int index)
     {

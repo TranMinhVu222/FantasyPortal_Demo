@@ -23,8 +23,8 @@ public class SystemEvent : MonoBehaviour
     {
         upgradeCount = PlayerPrefs.GetInt("The number of upgrades");
         starsToUpgrade = PlayerPrefs.GetInt("Star To Upgrade",1);
-        upgradeText.text = " Upgrade x " + ReadJSON.upgradeList.upgrade[upgradeCount].star;
-        manaIncreased = ReadJSON.upgradeList.upgrade[upgradeCount].mana;
+        upgradeText.text = " Upgrade x " + DownloadData.upgradeList.upgrade[upgradeCount].star;
+        manaIncreased = DownloadData.upgradeList.upgrade[upgradeCount].mana;
         manaIncreasedText.text = " " + manaIncreased;
         totalMana = PlayerPrefs.GetInt("Total Mana",10);
         totalManaText.text = "" + PlayerPrefs.GetInt("Total Mana",10);
@@ -36,20 +36,20 @@ public class SystemEvent : MonoBehaviour
     
     public void Upgrade()
     {
-        if (starOwns >= ReadJSON.upgradeList.upgrade[upgradeCount].star && starOwns > 0)
+        if (starOwns >= DownloadData.upgradeList.upgrade[upgradeCount].star && starOwns > 0)
         {
-            starOwns -= ReadJSON.upgradeList.upgrade[upgradeCount].star;
-            totalUpgrade += ReadJSON.upgradeList.upgrade[upgradeCount].star;
+            starOwns -= DownloadData.upgradeList.upgrade[upgradeCount].star;
+            totalUpgrade += DownloadData.upgradeList.upgrade[upgradeCount].star;
             PlayerPrefs.SetInt("Total Upgrade", totalUpgrade);
-            totalMana += ReadJSON.upgradeList.upgrade[upgradeCount].mana;
+            totalMana += DownloadData.upgradeList.upgrade[upgradeCount].mana;
             PlayerPrefs.SetInt("Total Mana",totalMana);
-            if (upgradeCount < ReadJSON.upgradeList.upgrade.Length - 1)
+            if (upgradeCount < DownloadData.upgradeList.upgrade.Length - 1)
             {
                 upgradeCount += 1;
             }
             else
             {
-                upgradeCount = ReadJSON.upgradeList.upgrade.Length - 1;
+                upgradeCount = DownloadData.upgradeList.upgrade.Length - 1;
             }
             PlayerPrefs.SetInt("The number of upgrades", upgradeCount);
         }
