@@ -68,7 +68,7 @@ public class ObstacleController : MonoBehaviour
             if (angle >= -95f && angle <= -80f)
             {
                 completeMonster = true;
-                audioManager.PlaySFX("DefeatMonster");
+                AudioManager.AudioManger.PlaySFX("defeatmonsters");
                 questManager.countKillMonster++;
                 gameObject.SetActive(false);
             }
@@ -83,7 +83,7 @@ public class ObstacleController : MonoBehaviour
             if (angle >= -95f && angle <= -88f)
             {
                 completeMonster = true;
-                audioManager.PlaySFX("DefeatMonster");
+                audioManager.PlaySFX("defeatmonsters");
                 questManager.countKillMonster++;
                 gameObject.SetActive(false);
             }
@@ -92,7 +92,7 @@ public class ObstacleController : MonoBehaviour
         if (other.gameObject.CompareTag("DeathZone"))
         {
             completeMonster = true;
-            audioManager.PlaySFX("DefeatMonster");
+            audioManager.PlaySFX("defeatmonsters");
             questManager.countKillMonster++;
             gameObject.SetActive(false);
         }

@@ -1,55 +1,92 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
+    private static AudioManager audioManager;
+    public static  AudioManager AudioManger {get => audioManager;}
+    
     public Sound[] musicSounds, sfxSounds;
-    public AudioSource musicSource, sfxSource;
+    public AudioSource musicSource, sfxSource, temp;
     private bool mutedSFX = false;
     private bool mutedMusic = false;
     public Text musicText, sfxText;
-    public string musicStatus, sfxStatus;
-    private void Start()
+    public string musicStatus, sfxStatus, nameAudioClipAssetBundle;
+    public int count;
+
+    private void Awake()
     {
-       PlayMusic("SoundBackground");
-       if (!PlayerPrefs.HasKey("Muted Music"))
-       {
-           PlayerPrefs.SetInt("Muted Music",0);
-           LoadMusic();
-           musicText.text = "On";
-           PlayerPrefs.SetString("Music Status","On");
-       }
-       if (!PlayerPrefs.HasKey("Muted SFX"))
-       {
-           PlayerPrefs.SetInt("Muted SFX",0);
-           LoadSFX();
-           sfxText.text = "On";
-           PlayerPrefs.SetString("SFX Status", "On");
-       }
-       else
-       {
-           LoadMusic();
-           LoadSFX();
-       }
-       musicText.text = PlayerPrefs.GetString("Music Status");
-       sfxText.text = PlayerPrefs.GetString("SFX Status");
-       musicSource.mute = mutedMusic;
-       sfxSource.mute = mutedSFX;
+        if (audioManager != null)
+        {
+            Debug.LogError("Only 1 Object allow to exist");
+        }
+        audioManager = this;
+    }
+
+    public void LoadAudioAssetBundle()
+    {
+        if (AssetBundleManager.audioClipArray != null)
+        {
+            musicSounds = new Sound[AssetBundleManager.audioClipArray.Length];
+            sfxSounds = new Sound[AssetBundleManager.audioClipArray.Length];
+            for (int i = 0; i < musicSounds.Length; i++)
+            {
+                musicSounds[i] = new Sound();
+                sfxSounds[i] = new Sound();
+                
+                nameAudioClipAssetBundle = Path.GetFileNameWithoutExtension(AssetBundleManager.audioClipArray[i]);
+                
+                musicSounds[i].InputSound(nameAudioClipAssetBundle,AssetBundleManager.audioClipList[i]);
+                sfxSounds[i].InputSound(nameAudioClipAssetBundle,AssetBundleManager.audioClipList[i]);
+                count += 1;
+            }
+
+            if (count == musicSounds.Length)
+            {
+                PlayMusic("soundbackground_2");
+                musicSource.mute = mutedMusic;
+                sfxSource.mute = mutedSFX;
+                Debug.Log("da chay nhac background ");
+            }
+            
+            if (!PlayerPrefs.HasKey("Muted Music"))
+            {
+                PlayerPrefs.SetInt("Muted Music",0);
+                LoadMusic();
+                musicText.text = "On";
+                PlayerPrefs.SetString("Music Status","On");
+            }
+            if (!PlayerPrefs.HasKey("Muted SFX"))
+            {
+                PlayerPrefs.SetInt("Muted SFX",0);
+                LoadSFX();
+                sfxText.text = "On";
+                PlayerPrefs.SetString("SFX Status", "On");
+            }
+            else
+            {
+                LoadMusic();
+                LoadSFX();
+            } 
+            musicText.text = PlayerPrefs.GetString("Music Status");
+            sfxText.text = PlayerPrefs.GetString("SFX Status");
+        }
     }
 
     public void PlayMusic(string name)
     {
-        Sound soundArray = Array.Find(musicSounds, x => x.nameState == name);
+        Sound soundArray = Array.Find(musicSounds, x => x.nameSound == name);
         if (soundArray == null)
         {
             Debug.Log("Sound Not Found");
         }
         else
         {
-            musicSource.clip = soundArray.clip;
+            musicSource.clip = soundArray.SoundAssetBundle;
             musicSource.loop = true;
             musicSource.Play();
         }
@@ -57,14 +94,14 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySFX(string name)
     {
-        Sound soundArray = Array.Find(sfxSounds, x => x.nameState == name);
+        Sound soundArray = Array.Find(sfxSounds, x => x.nameSound == name);
         if (soundArray == null)
         {
             Debug.Log("Sound Not Found");
         }
         else
         {
-            sfxSource.PlayOneShot(soundArray.clip);
+            sfxSource.PlayOneShot(soundArray.SoundAssetBundle);
         }
     }
 

@@ -18,6 +18,7 @@ TagManager:
   - Target1
   - Target2
   - Target3
+  - Music
   layers:
   - Default
   - TransparentFX

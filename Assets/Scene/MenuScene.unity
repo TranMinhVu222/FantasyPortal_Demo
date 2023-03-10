@@ -10273,7 +10273,7 @@ GameObject:
   - component: {fileID: 786905792}
   m_Layer: 0
   m_Name: SFX Source
-  m_TagString: Untagged
+  m_TagString: Music
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11391,8 +11391,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef4f6b23c57c54dffaba1472a38d771d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  count: 0
-  countFinish: 0
   downloadingText: {fileID: 1621854104}
   progressPercent: {fileID: 2026035296}
   downloadAssetBundleText: {fileID: 2090768700}
@@ -11400,10 +11398,6 @@ MonoBehaviour:
   loadingPanel: {fileID: 2034282023}
   warningPanel: {fileID: 490402835}
   FTUE: {fileID: 1575770064}
-  temp: 0
-  totalByteDownload: 0
-  byteDownloaded: 0
-  saveByteDownloaded: 0
   sizeList: []
   fileToUpdatedList:
   - null
@@ -11412,7 +11406,6 @@ MonoBehaviour:
   - audioclip
   - energybundle
   - materialbundle
-  urlDownload: 
 --- !u!4 &854926995
 Transform:
   m_ObjectHideFlags: 0
@@ -12101,7 +12094,7 @@ GameObject:
   - component: {fileID: 942643746}
   m_Layer: 0
   m_Name: AudioManager
-  m_TagString: Untagged
+  m_TagString: Music
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12118,36 +12111,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bad95e8bdd724835ab4a5007f7d13de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSounds:
-  - nameState: SoundBackground
-    clip: {fileID: 8300000, guid: a4e49c36566a14ae6a86ea092e564b71, type: 3}
-  sfxSounds:
-  - nameState: CastingSpell
-    clip: {fileID: 8300000, guid: c3ee1705352684e32889f901fe7100d3, type: 3}
-  - nameState: ControlObject
-    clip: {fileID: 8300000, guid: b6fe92453037849ca8156048fd3a8dd6, type: 3}
-  - nameState: ThrowObject
-    clip: {fileID: 8300000, guid: b6fe92453037849ca8156048fd3a8dd6, type: 3}
-  - nameState: DefeatMonster
-    clip: {fileID: 8300000, guid: b75e10e047a644bfc8223b2572204691, type: 3}
-  - nameState: BeKilled
-    clip: {fileID: 8300000, guid: f66d24b948d244e3d89d114681f1a398, type: 3}
-  - nameState: GameOver
-    clip: {fileID: 8300000, guid: 4dd9619cd8d624764bfe2cbe3d90bb37, type: 3}
-  - nameState: FirstSoundBackground
-    clip: {fileID: 8300000, guid: a4e49c36566a14ae6a86ea092e564b71, type: 3}
-  - nameState: SoundBackground
-    clip: {fileID: 8300000, guid: f8bc09ae7cd5340089d1fca8de73570e, type: 3}
-  - nameState: Victory
-    clip: {fileID: 8300000, guid: e0e3034b0b3a04974bab38d3038f8ca8, type: 3}
-  - nameState: MagicShardCollect
-    clip: {fileID: 8300000, guid: 6ce42c5cc2a0a4d7baaa6d7db6a339b8, type: 3}
   musicSource: {fileID: 1571853054}
   sfxSource: {fileID: 786905792}
+  temp: {fileID: 0}
   musicText: {fileID: 2063116552}
   sfxText: {fileID: 769114514}
   musicStatus: 
   sfxStatus: 
+  nameAudioClipAssetBundle: 
+  count: 0
 --- !u!4 &942643747
 Transform:
   m_ObjectHideFlags: 0
@@ -23246,7 +23218,7 @@ GameObject:
   - component: {fileID: 1571853054}
   m_Layer: 0
   m_Name: Music Source
-  m_TagString: Untagged
+  m_TagString: Music
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

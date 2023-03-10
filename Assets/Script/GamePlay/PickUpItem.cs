@@ -31,7 +31,7 @@ public class PickUpItem : MonoBehaviour
         if (point && itemIsPicked && readToThrow)
         {
             forceMulti += 300 * Time.deltaTime;
-            audioManager.PlaySFX("ThrowObject");
+            AudioManager.AudioManger.PlaySFX("controlorthrowobject");
         }
         if (playerController.checkGrab)
         {
@@ -43,7 +43,7 @@ public class PickUpItem : MonoBehaviour
                 transform.parent = GameObject.Find("PickUpPoint").transform;
                 itemIsPicked = true;
                 forceMulti = 0;
-                audioManager.PlaySFX("ControlObject");
+                AudioManager.AudioManger.PlaySFX("controlorthrowobject");
                 completeGrab = true;
             }
         }

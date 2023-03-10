@@ -5,16 +5,23 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.SceneManagement;
 
+
+
 public class AssetBundleManager : MonoBehaviour
 {
+   
     public static string[] scene;
-    public static string[] audioClip;
+    public static string[] audioClipArray; 
     public static string[] material;
     public static string[] prefab;
 
+    public static List<AudioClip> audioClipList = new List<AudioClip>();
+    
     private static string sceneGameToLoadAB;
 
-    static AssetBundle assetBundle;
+    public static AssetBundle sceneBundle, audioClipBundle, materialBundle, prefabBundle;
+
+    public static dynamic audioClips;
 
     public static void UseAssetBundle(string typeOfAssetBundle)
     {
@@ -30,11 +37,18 @@ public class AssetBundleManager : MonoBehaviour
                 }
                 break;
             case "audioclip":
-                audioClip = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/audioclip")).GetAllAssetNames();
-                foreach (string audioClipName in audioClip)
+                audioClipBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/audioclip"));
+                audioClipArray = audioClipBundle.GetAllAssetNames();
+                foreach (string audioClipName in audioClipArray)
                 {
-                    sceneGameToLoadAB = Path.GetFileNameWithoutExtension(audioClipName).ToString();
                     Debug.Log("NameInPath(foreach): " + Path.GetFileNameWithoutExtension(audioClipName));
+                }
+                for (int i = 0; i < audioClipArray.Length; i++)
+                {
+                    audioClips = audioClipBundle.LoadAsset(audioClipBundle.GetAllAssetNames()[i]);
+                    audioClipList.Add(audioClips);
+                    if(i == audioClipArray.Length - 1)
+                        AudioManager.AudioManger.LoadAudioAssetBundle();
                 }
                 break;
             case "materialbundle":
@@ -58,28 +72,45 @@ public class AssetBundleManager : MonoBehaviour
 
     public static void AssetBundleAvailable()
     {
-        try
+        if (scene != null || audioClipArray != null || material != null || prefab != null)
         {
-            if (scene != null || audioClip != null || material != null || prefab != null)
+            AssetBundle.UnloadAllAssetBundles(false);
+            if (audioClipArray != null)
             {
-                AssetBundle.UnloadAllAssetBundles(false);
-            }
-            else
-            {
-                scene = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/scenebundle")).GetAllScenePaths();
-                audioClip = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/audioclip")).GetAllAssetNames();
-                material = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/materialbundle")).GetAllAssetNames();
-                prefab = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/energybundle")).GetAllAssetNames();    
+                AudioManager.AudioManger.LoadAudioAssetBundle();    
             }
         }
-        catch (Exception e)
+        else
         {
-            Console.WriteLine(e);
-            throw;
+            scene = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/scenebundle")).GetAllScenePaths();
+            audioClipBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/audioclip"));
+            materialBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/materialbundle"));
+            prefabBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/energybundle"));  
+            UseAssetBundle();
         }
     }
     public static void LoadScene(int index)
     {
         SceneManager.LoadSceneAsync(scene[index]);
+    }
+
+    public static void UseAssetBundle()
+    {
+        audioClipArray = audioClipBundle.GetAllAssetNames();
+        if (audioClipArray != null)
+        {
+            audioClipArray = audioClipBundle.GetAllAssetNames();    
+        }
+        foreach (string audioClipName in audioClipArray)
+        {
+            Debug.Log("NameInPath(foreach): " + Path.GetFileNameWithoutExtension(audioClipName));
+        }
+        for (int i = 0; i < audioClipArray.Length; i++)
+        {
+            audioClips = audioClipBundle.LoadAsset(audioClipBundle.GetAllAssetNames()[i]);
+            audioClipList.Add(audioClips);    
+            if(i == audioClipArray.Length - 1)
+                AudioManager.AudioManger.LoadAudioAssetBundle();
+        }
     }
 }

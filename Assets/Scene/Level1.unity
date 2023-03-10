@@ -23996,36 +23996,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bad95e8bdd724835ab4a5007f7d13de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSounds:
-  - nameState: SoundBackground
-    clip: {fileID: 8300000, guid: a4e49c36566a14ae6a86ea092e564b71, type: 3}
-  sfxSounds:
-  - nameState: CastingSpell
-    clip: {fileID: 8300000, guid: c3ee1705352684e32889f901fe7100d3, type: 3}
-  - nameState: ControlObject
-    clip: {fileID: 8300000, guid: b6fe92453037849ca8156048fd3a8dd6, type: 3}
-  - nameState: ThrowObject
-    clip: {fileID: 8300000, guid: b6fe92453037849ca8156048fd3a8dd6, type: 3}
-  - nameState: DefeatMonster
-    clip: {fileID: 8300000, guid: b75e10e047a644bfc8223b2572204691, type: 3}
-  - nameState: BeKilled
-    clip: {fileID: 8300000, guid: f66d24b948d244e3d89d114681f1a398, type: 3}
-  - nameState: GameOver
-    clip: {fileID: 8300000, guid: 4dd9619cd8d624764bfe2cbe3d90bb37, type: 3}
-  - nameState: FirstSoundBackground
-    clip: {fileID: 8300000, guid: a4e49c36566a14ae6a86ea092e564b71, type: 3}
-  - nameState: SoundBackground
-    clip: {fileID: 8300000, guid: f8bc09ae7cd5340089d1fca8de73570e, type: 3}
-  - nameState: Victory
-    clip: {fileID: 8300000, guid: e0e3034b0b3a04974bab38d3038f8ca8, type: 3}
-  - nameState: MagicShardCollect
-    clip: {fileID: 8300000, guid: 6ce42c5cc2a0a4d7baaa6d7db6a339b8, type: 3}
   musicSource: {fileID: 1117961185}
   sfxSource: {fileID: 542000220}
+  temp: {fileID: 0}
   musicText: {fileID: 1079798551}
   sfxText: {fileID: 1831875430}
   musicStatus: 
   sfxStatus: 
+  nameAudioClipAssetBundle: 
+  count: 0
 --- !u!4 &2030938013
 Transform:
   m_ObjectHideFlags: 0

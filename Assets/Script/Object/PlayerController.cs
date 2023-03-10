@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
         completeWin = false;
         deathFTUE = false;
         checkColliderObj = false;
-        // assetBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/scenes"));
+        AudioManager.AudioManger.LoadAudioAssetBundle();
     }
 
     // Update is called once per frame
@@ -263,7 +263,7 @@ public class PlayerController : MonoBehaviour
         }
         if (PlayerPrefs.GetInt("Completed FTUE") == 1)
         {
-            audioManager.PlaySFX("BeKilled");
+            AudioManager.AudioManger.PlaySFX("beingdefeatedbymonsters");
             PlayerPrefs.SetInt("Used booster",1);
             dead = true;
             boxCollider2D.isTrigger = true;
@@ -329,7 +329,7 @@ public class PlayerController : MonoBehaviour
             {
                 completeWin = true;
                 Time.timeScale = 1;
-                audioManager.PlaySFX("Victory");
+                AudioManager.AudioManger.PlaySFX("victorysound");
             }
             if (PlayerPrefs.GetInt("Completed FTUE") == 1)
             {
@@ -337,7 +337,7 @@ public class PlayerController : MonoBehaviour
                 Time.timeScale = 0;
                 unlockLevel.Pass();
                 PlayerPrefs.SetInt("Used booster",1);
-                audioManager.PlaySFX("Victory");
+                AudioManager.AudioManger.PlaySFX("victorysound");
                 winPanel.SetActive(true);    
                 // noCastSpell.SetActive(true);
             }
@@ -348,7 +348,7 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         Time.timeScale = 0;
-        audioManager.PlaySFX("GameOver");
+        AudioManager.AudioManger.PlaySFX("gameover");
         gameOverPanel.SetActive(true);
         // noCastSpell.SetActive(true);
     }

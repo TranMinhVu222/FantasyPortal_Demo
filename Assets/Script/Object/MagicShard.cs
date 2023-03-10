@@ -46,7 +46,7 @@ public class MagicShard : MonoBehaviour
         {
             completeMagicShard = true;
             questManager.countCollectMagicShard += 1;
-            audioManager.PlaySFX("MagicShardCollect");
+            AudioManager.AudioManger.PlaySFX("magicshardsound");
             gameObject.SetActive(false);
         }
 

@@ -86,7 +86,7 @@ public class Trajectory: MonoBehaviour
 
             if (Input.GetMouseButtonUp(0) && UI.GetComponent<IsTouchUI>().countTouchUI == 2 && !cancelSkill.checkCancel)
             {
-                audioManager.PlaySFX("CastingSpell");
+                AudioManager.AudioManger.PlaySFX("castingspells");
                 enegryPortal.gameObject.SetActive(true);
                 cancelButton.SetActive(false);
                 Vector2 endDragPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
