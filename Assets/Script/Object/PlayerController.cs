@@ -13,7 +13,8 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     public BoxCollider2D boxCollider2D;
     public Animator animator;
-    public GameObject entryPortal, enterPortal, grabButton,pauseMenuScreen, gameOverPanel, winPanel;
+    public GameObject grabButton,pauseMenuScreen, gameOverPanel, winPanel;
+    public GameObject entryPortal, enterPortal;
     public Transform rayPoint, exitPosition, enterPosition;
     public float rayDistance, boost, speed, horizontalMove, jumpSpeed, deathEffect = 20f;
     private int layerIndex, magicShardes;
@@ -232,7 +233,7 @@ public class PlayerController : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("Completed FTUE") == 1)
         {
-            AssetBundleManager.LoadScene(PlayerPrefs.GetInt("Present Level"));
+            AssetBundleManager.Instance.LoadScene(PlayerPrefs.GetInt("Present Level"));
         }
     }
 
@@ -240,16 +241,15 @@ public class PlayerController : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("Completed FTUE") == 1)
         {
-            if (PlayerPrefs.GetInt("Present Level") == AssetBundleManager.scene.Length - 1)
+            if (PlayerPrefs.GetInt("Present Level") == AssetBundleManager.scene.Length - 1 || PlayerPrefs.GetInt("Present Level") == LevelManager.totalLevel)
             {
                 SceneManager.LoadScene("MenuScene");
             }
             else
             {
-                Debug.Log("Present Level: " + PlayerPrefs.GetInt("Present Level") + 1) ;
                 int nextLevel = PlayerPrefs.GetInt("Present Level") + 1;
                 PlayerPrefs.SetInt("Present Level", nextLevel);
-                AssetBundleManager.LoadScene(nextLevel);
+                AssetBundleManager.Instance.LoadScene(nextLevel);
             }
         }
     }

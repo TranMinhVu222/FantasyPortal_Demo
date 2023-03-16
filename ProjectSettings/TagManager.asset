@@ -19,6 +19,8 @@ TagManager:
   - Target2
   - Target3
   - Music
+  - ExitPosition
+  - EnterPosition
   layers:
   - Default
   - TransparentFX

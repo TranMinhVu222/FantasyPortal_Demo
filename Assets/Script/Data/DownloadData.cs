@@ -375,7 +375,7 @@ public class DownloadData : MonoBehaviour
                     {
                         StartCoroutine(FinishLoading());
                     }
-                    AssetBundleManager.UseAssetBundle(urlDownload);
+                    AssetBundleManager.Instance.UseAssetBundle(urlDownload);
                 }
                 catch (Exception e)
                 {
@@ -432,10 +432,10 @@ public class DownloadData : MonoBehaviour
     IEnumerator FinishLoading()
     {
         yield return new WaitForSeconds(0);
-        AssetBundleManager.AssetBundleAvailable();
+        AssetBundleManager.Instance.AssetBundleAvailable();
         if (!PlayerPrefs.HasKey("Completed FTUE") || PlayerPrefs.GetInt("Completed FTUE") == 0)
         {
-            SceneManager.LoadScene(1);
+            AssetBundleManager.Instance.LoadScene(0);
             FTUE.SetActive(true);
         }
         if (PlayerPrefs.GetInt("Complete Menu FTUE") == 1)

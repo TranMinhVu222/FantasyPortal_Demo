@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2181032791
+CRC: 75528339
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 2a005a99e9b03bf54237cdcf78343c11
+    Hash: 4d54f7d2714880eeda8859c272568c58
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 8984c621004d3dbf2f813c45326a037b
+    Hash: 8216f99f39d5fb923aa98cd0bd9e645b
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -75,6 +75,8 @@ ClassTypes:
   Script: {fileID: 11500000, guid: a4db2aa78fb4e4fd38df181155bb3ce7, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 24dad1318790c4ef88b60846122075ee, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 2e6bf434ba38b4aac8d5cc0c7612a55c, type: 3}
 - Class: 114
@@ -153,11 +155,11 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
+- Assets/Scene/FTUE.unity
 - Assets/Scene/Level3.unity
 - Assets/Scene/Level2.unity
 - Assets/Scene/Level5.unity
 - Assets/Scene/Level1.unity
 - Assets/Scene/Level4.unity
 Dependencies:
-- /Users/gearinc/InternProject/FantasyPortal_Demo/Assets/../AssetsBundles/audioclip
 - /Users/gearinc/InternProject/FantasyPortal_Demo/Assets/../AssetsBundles/energybundle

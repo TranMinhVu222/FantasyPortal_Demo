@@ -8,26 +8,20 @@ using UnityEngine;
 
 public class Energy : MonoBehaviour
 {
+    
+    
     public int countPortal;
     public int completeCastSpell;
     public Portal currentPortal = Portal.EnterPortal;
     public GameObject entryPortalAnim;
     public GameObject enterPortalAnim;
-    public GameObject entryPortal;
-    public GameObject enterPortal;
-    public Transform enterPosition;
-    public Transform entryPosition;
-    
+    public GameObject entryPortal,enterPortal;
+    public Transform enterPosition, entryPosition;
+
     // public PlayerController playerController;
     public float angle;
     public Vector2 direction;
-
-    private void Awake()
-    {
-        entryPortal.SetActive(false);
-        enterPortal.SetActive(false);
-    }
-
+    
     public enum Portal
     {
         EnterPortal,
@@ -40,7 +34,7 @@ public class Energy : MonoBehaviour
         entryPosition = entryPortal.transform.Find("Exit Position");
         enterPosition = enterPortal.transform.Find("Enter Position");
     }
-
+    
     private void Update()
     {
         switch (currentPortal)
@@ -64,6 +58,13 @@ public class Energy : MonoBehaviour
             default:
                 return;
         }
+        
+    }
+
+    public void GetPortalAnim()
+    {
+        enterPortalAnim = PoolEnergy.Instance.enterPortal;
+        entryPortalAnim = PoolEnergy.Instance.entryPortal;
     }
     private void ChangePortal(Portal portal)
     {
@@ -73,7 +74,7 @@ public class Energy : MonoBehaviour
         EnterNewPortal();
         // Debug.Log(currentPortal);
     }
-
+    
     public void EnterNewPortal()
     {
         switch (currentPortal)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ public class LevelManager : MonoBehaviour
 
     public Button[] buttons;
     public GameObject[] locks;
+    public static int totalLevel;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -21,20 +24,35 @@ public class LevelManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("levelsUnlocked", 1);
         }
+        
         levelsUnlocked = PlayerPrefs.GetInt("levelsUnlocked");
         for (int i = 0; i < buttons.Length; i++)
         {
             buttons[i].interactable = false;
         }
+
+        totalLevel = buttons.Length;
         //FIX: them -1 28/02
         if (levelsUnlocked >= buttons.Length)
         {
             levelsUnlocked = buttons.Length;
         }
-        for (int i = 0; i < levelsUnlocked; i++)
+        
+        if (levelsUnlocked == 1 || levelsUnlocked == buttons.Length)
         {
-            buttons[i].interactable = true;
-            locks[i].SetActive(false);
+            for (int i = 0; i < levelsUnlocked; i++)
+            {
+                buttons[i].interactable = true;
+                locks[i].SetActive(false);
+            }   
+        }
+        else
+        {
+            for (int i = 0; i < levelsUnlocked; i++)
+            {
+                buttons[i].interactable = true;
+                locks[i].SetActive(false);
+            }    
         }
     }
 

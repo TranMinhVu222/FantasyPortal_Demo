@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2553644012
+CRC: 315068027
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3b1268dd97c964d5860b181e31163fc9
+    Hash: 6caaaf310c7ba26bfa2b89dcba672173
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 01c9f7f3dd9ff9f60bc90e2189ece079
+    Hash: 87d8350b46029255406d612579664277
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -15,34 +15,13 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 21
   Script: {instanceID: 0}
-- Class: 28
-  Script: {instanceID: 0}
-- Class: 48
-  Script: {instanceID: 0}
-- Class: 50
-  Script: {instanceID: 0}
-- Class: 61
-  Script: {instanceID: 0}
-- Class: 91
-  Script: {instanceID: 0}
-- Class: 95
-  Script: {instanceID: 0}
-- Class: 114
-  Script: {fileID: 11500000, guid: 101143e76fdf5420eb6c841c1a205ab3, type: 3}
-- Class: 115
-  Script: {instanceID: 0}
 - Class: 198
   Script: {instanceID: 0}
 - Class: 199
   Script: {instanceID: 0}
-- Class: 212
-  Script: {instanceID: 0}
-- Class: 213
-  Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Prefab/EntryPortal.prefab
-- Assets/Prefab/Energy.prefab
 - Assets/Prefab/EnterPortal.prefab
 Dependencies:
 - /Users/gearinc/InternProject/FantasyPortal_Demo/Assets/../AssetsBundles/materialbundle

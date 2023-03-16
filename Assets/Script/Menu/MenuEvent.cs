@@ -32,7 +32,7 @@ public class MenuEvent : MonoBehaviour
     public void LoadLevel(int index)
     {
         PlayerPrefs.SetInt("Present Level",index);
-        AssetBundleManager.LoadScene(index);
+        AssetBundleManager.Instance.LoadScene(index);
         if (PlayerPrefs.GetInt("Used booster") == 2)
         {
             boosterTotal = PlayerPrefs.GetInt("Booster total");

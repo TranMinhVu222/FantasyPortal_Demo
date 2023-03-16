@@ -10,9 +10,9 @@ public class Level : MonoBehaviour
         if (PlayerPrefs.GetInt("Completed FTUE") == 1)
         {
             int currentLevel =  PlayerPrefs.GetInt("levelsUnlocked");
-            if (PlayerPrefs.GetInt("Present Level") + 1 == PlayerPrefs.GetInt("levelsUnlocked"))
+            if (PlayerPrefs.GetInt("Present Level") == PlayerPrefs.GetInt("levelsUnlocked"))
             {
-                if (PlayerPrefs.GetInt("levelsUnlocked") < AssetBundleManager.scene.Length)
+                if (PlayerPrefs.GetInt("levelsUnlocked") < LevelManager.totalLevel)
                 {
                     PlayerPrefs.SetInt("levelsUnlocked",currentLevel + 1);    
                 }

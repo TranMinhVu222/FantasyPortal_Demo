@@ -12,7 +12,7 @@ public class Trajectory: MonoBehaviour
     LineRenderer lr;
     Rigidbody2D rb;
     Vector2 startDragPos;
-    private Energy enegryPortal;
+    private GameObject enegryPortal;
     public PoolEnergy poolEnergy;
     public Vector3 energyPos;
     public GameObject UI,cancelButton;
