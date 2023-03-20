@@ -28,7 +28,9 @@ public class AssetBundleManager : MonoBehaviour
 
     public static AssetBundle sceneBundle, audioClipBundle, materialBundle, prefabBundle;
 
-    public dynamic audioClips, materials, prefabs;
+    public GameObject materials, prefabs;
+
+    public AudioClip audioClips;
 
     private void Awake()
     {
@@ -56,7 +58,7 @@ public class AssetBundleManager : MonoBehaviour
                 audioClipArray = audioClipBundle.GetAllAssetNames();
                 for (int i = 0; i < audioClipArray.Length; i++)
                 {
-                    audioClips = audioClipBundle.LoadAsset(audioClipBundle.GetAllAssetNames()[i]);
+                    audioClips = audioClipBundle.LoadAsset<AudioClip>(audioClipBundle.GetAllAssetNames()[i]);
                     audioClipList.Add(audioClips);
                     if(i == audioClipArray.Length - 1)
                         AudioManager.AudioManger.LoadAudioAssetBundle();
@@ -126,7 +128,7 @@ public class AssetBundleManager : MonoBehaviour
         
         for (int i = 0; i < audioClipArray.Length; i++)
         {
-            audioClips = audioClipBundle.LoadAsset(audioClipBundle.GetAllAssetNames()[i]);
+            audioClips = audioClipBundle.LoadAsset<AudioClip>(audioClipBundle.GetAllAssetNames()[i]);
             audioClipList.Add(audioClips);    
             if(i == audioClipArray.Length - 1) AudioManager.AudioManger.LoadAudioAssetBundle();
         }
