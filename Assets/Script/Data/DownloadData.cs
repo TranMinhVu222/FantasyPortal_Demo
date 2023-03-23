@@ -40,7 +40,7 @@ public class DownloadData : MonoBehaviour
 
     public List<double> sizeList = new List<double>();
     public List<string> fileToUpdatedList = new List<string>{"null"};
-    public string[] bundleArray = {"scenebundle","audioclip","energybundle","materialbundle"};
+    public string[] bundleArray = {"scenebundle","audioclip","prefabbundle","materialbundle","texturebundle"};
     
     // Start is called before the first frame update
     [System.Serializable]
@@ -220,6 +220,7 @@ public class DownloadData : MonoBehaviour
     {
         for (int i = 0; i < bundleArray.Length; i++)
         {
+            Debug.Log(bundleArray[i]);
             //Check => chua co file Asset bundle
             if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "AB/" + bundleArray[i])))
             {
@@ -365,7 +366,6 @@ public class DownloadData : MonoBehaviour
                 try
                 {
                     countFinish += 1;
-                    Debug.Log("check" + fileToUpdatedList.Count);
                     if (fileToUpdatedList.Count - 1 == countFinish && fileToUpdatedList.Count > 1)
                     {
                         StartCoroutine(FinishLoading());
@@ -502,22 +502,22 @@ public class DownloadData : MonoBehaviour
                     }
                 }
                 break;
-            case "energybundle":
-                if (!PlayerPrefs.HasKey("date energybundle"))
+            case "prefabbundle":
+                if (!PlayerPrefs.HasKey("date prefabbundle"))
                 {
-                    PlayerPrefs.SetString("date energybundle", date);
+                    PlayerPrefs.SetString("date prefabbundle", date);
                     SaveMultipleAssetBundle(name);
                 }
                 else
                 {
-                    if (CompareDate(PlayerPrefs.GetString("date energybundle"), date))
+                    if (CompareDate(PlayerPrefs.GetString("date prefabbundle"), date))
                     {
                         fileToUpdatedList.Add(name);
                         if (File.Exists(Path.Combine(Application.persistentDataPath, "AB/" + name)))
                         {
                             File.Delete(Application.persistentDataPath + "/AB/"+name);    
                         }
-                        PlayerPrefs.SetString("date energybundle", date);
+                        PlayerPrefs.SetString("date prefabbundle", date);
                         SaveMultipleAssetBundle(name);
                     }
                     else
@@ -544,6 +544,32 @@ public class DownloadData : MonoBehaviour
                             File.Delete(Application.persistentDataPath + "/AB/"+name);    
                         }
                         PlayerPrefs.SetString("date materialbundle", date);
+                        SaveMultipleAssetBundle(name);
+                    }
+                    else
+                    {
+                        countFinalize += 1;
+                        FinishLoadingAsset(countFinalize);
+                        Debug.Log("khong co file can update ten " + name );
+                    }
+                }
+                break;
+            case "texturebundle":
+                if (!PlayerPrefs.HasKey("date texturebundle"))
+                {
+                    PlayerPrefs.SetString("date texturebundle", date);
+                    SaveMultipleAssetBundle(name);
+                }
+                else
+                {
+                    if (CompareDate(PlayerPrefs.GetString("date texturebundle"), date))
+                    {
+                        fileToUpdatedList.Add(name);
+                        if (File.Exists(Path.Combine(Application.persistentDataPath, "AB/" + name)))
+                        {
+                            File.Delete(Application.persistentDataPath + "/AB/"+name);    
+                        }
+                        PlayerPrefs.SetString("date texturebundle", date);
                         SaveMultipleAssetBundle(name);
                     }
                     else

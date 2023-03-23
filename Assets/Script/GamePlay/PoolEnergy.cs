@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PoolEnergy : MonoBehaviour
 {
@@ -28,16 +30,22 @@ public class PoolEnergy : MonoBehaviour
         {
             portalAnimList = new List<GameObject>();
             portalAnimList = AssetBundleManager.Instance.InstancePrefabsBundle(enegryPortal);
+            Debug.Log(portalAnimList.Count + " ------");
             for (int i = 0; i < portalAnimList.Count; i++)
             {
-                if (portalAnimList[i].name == "EntryPortal(Clone)")
+                if (portalAnimList[i] != null)
                 {
-                    entryPortal = portalAnimList[i];
-                }
+                    if (portalAnimList[i].name == "EntryPortal(Clone)")
+                    {
+                        // FixShadersForEditor(entryPortal);
+                        entryPortal = portalAnimList[i];
+                    }
 
-                if (portalAnimList[i].name == "EnterPortal(Clone)")
-                {
-                    enterPortal = portalAnimList[i];
+                    if (portalAnimList[i].name == "EnterPortal(Clone)")
+                    {
+                        // FixShadersForEditor(enterPortal);
+                        enterPortal = portalAnimList[i];
+                    }
                 }
             }
             energy.GetPortalAnim();
@@ -75,4 +83,63 @@ public class PoolEnergy : MonoBehaviour
         newEnergy = CreateNewEnergy();
         return newEnergy;
     }
+       // TODO: Show texture object load from asset bundle
+// #if UNITY_EDITOR
+//     public void FixShadersForEditor(GameObject prefab)
+//          {
+//              var renderers = prefab.GetComponentsInChildren<Renderer>(true);
+//              foreach (var renderer in renderers)
+//              {
+//                  ReplaceShaderForEditor(renderer.sharedMaterials);
+//              }
+//
+//              var tmps = prefab.GetComponentsInChildren<TextMeshProUGUI>(true);
+//              foreach (var tmp in tmps)
+//              {
+//                  ReplaceShaderForEditor(tmp.material);
+//                  ReplaceShaderForEditor(tmp.materialForRendering);
+//              }
+//              
+//              var spritesRenderers = prefab.GetComponentsInChildren<SpriteRenderer>(true);
+//              foreach (var spriteRenderer in spritesRenderers)
+//              {
+//                  ReplaceShaderForEditor(spriteRenderer.sharedMaterials);
+//              }
+//
+//              var images = prefab.GetComponentsInChildren<Image>(true);
+//              foreach (var image in images)
+//              {
+//                  ReplaceShaderForEditor(image.material);
+//              }
+//              
+//              var particleSystemRenderers = prefab.GetComponentsInChildren<ParticleSystemRenderer>(true);
+//              foreach (var particleSystemRenderer in particleSystemRenderers)
+//              {
+//                  ReplaceShaderForEditor(particleSystemRenderer.sharedMaterials);
+//              }
+//
+//              var particles = prefab.GetComponentsInChildren<ParticleSystem>(true);
+//              foreach (var particle in particles)
+//              {
+//                  var renderer = particle.GetComponent<Renderer>();
+//                  if (renderer != null) ReplaceShaderForEditor(renderer.sharedMaterials);
+//              }
+//          }
+//
+//          public void ReplaceShaderForEditor(Material[] materials)
+//          {
+//              for (int i = 0; i < materials.Length; i++)
+//              {
+//                  ReplaceShaderForEditor(materials[i]);
+//              }
+//          }
+//
+//          public void ReplaceShaderForEditor(Material material)
+//          {
+//              if (material == null) return;
+//              var shaderName = material.shader.name;
+//              var shader = Shader.Find(shaderName);
+//              if (shader != null) material.shader = shader;
+//          }
+// #endif
 }

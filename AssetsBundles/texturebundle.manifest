@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 4013398972
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 5c2032fc7953ec65c6b316f554355bcc
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 4df8c69f2c8a6ad9e3cbf82bb83e4dc3
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Art/2D Casual UI/Sprite/GUI.png
+- Assets/Art/Background/background2.png
+- Assets/Art/Background/background.png
+Dependencies: []

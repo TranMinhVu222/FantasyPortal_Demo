@@ -19,6 +19,7 @@ public class AssetBundleManager : MonoBehaviour
     public static string[] audioClipArray; 
     public static string[] nameMaterialArray;
     public static string[] namePrefabArray;
+    public static string[] nameTextureArray;
 
     public static List<AudioClip> audioClipList = new List<AudioClip>();
     public static List<GameObject> prefabList = new List<GameObject>();
@@ -26,11 +27,13 @@ public class AssetBundleManager : MonoBehaviour
     private string sceneGameToLoadAB;
     private GameObject instancePrefabBundle, energyPrefabBundle;
 
-    public static AssetBundle sceneBundle, audioClipBundle, materialBundle, prefabBundle;
+    public static AssetBundle sceneBundle, audioClipBundle, materialBundle, prefabBundle, textureBundle;
 
     public GameObject materials, prefabs;
 
     public AudioClip audioClips;
+
+    public Sprite[] spritesBundleArray;
 
     private void Awake()
     {
@@ -73,13 +76,22 @@ public class AssetBundleManager : MonoBehaviour
                     Debug.Log("NameInPath(foreach): " + Path.GetFileNameWithoutExtension(materialName));
                 }
                 break;
-            case "energybundle":
-                prefabBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/energybundle"));
+            case "prefabbundle":
+                prefabBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/prefabbundle"));
                 namePrefabArray = prefabBundle.GetAllAssetNames();
                 foreach (string prefabName in namePrefabArray)
                 {
                     sceneGameToLoadAB = Path.GetFileNameWithoutExtension(prefabName).ToString();
                     Debug.Log("NameInPath(foreach): " + Path.GetFileNameWithoutExtension(prefabName));
+                }
+                break;
+            case "texturebundle":
+                textureBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/texturebundle"));
+                nameTextureArray = textureBundle.GetAllAssetNames();
+                foreach (string textureName in nameTextureArray)
+                {
+                    sceneGameToLoadAB = Path.GetFileNameWithoutExtension(textureName).ToString();
+                    Debug.Log("NameInPath(foreach): " + Path.GetFileNameWithoutExtension(textureName));
                 }
                 break;
         }
@@ -101,9 +113,10 @@ public class AssetBundleManager : MonoBehaviour
             sceneBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/scenebundle"));
             audioClipBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/audioclip"));
             materialBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/materialbundle"));
+            textureBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/texturebundle"));
             if (materialBundle != null)
             {
-                prefabBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/energybundle")); 
+                prefabBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/prefabbundle")); 
             }
             if (prefabBundle == null)
             {
@@ -119,8 +132,13 @@ public class AssetBundleManager : MonoBehaviour
         audioClipArray = audioClipBundle.GetAllAssetNames();
         nameMaterialArray = materialBundle.GetAllAssetNames();
         namePrefabArray = prefabBundle.GetAllAssetNames();
+        nameTextureArray = textureBundle.GetAllAssetNames();
+        
+        //---- Get sprite from asset bundle
+        spritesBundleArray = textureBundle.LoadAllAssets<Sprite>();
         
         //---- Get Audio Clip from asset bundle
+        
         if (audioClipArray != null)
         {
             audioClipArray = audioClipBundle.GetAllAssetNames();    
@@ -134,31 +152,25 @@ public class AssetBundleManager : MonoBehaviour
         }
     }
     
+    //Get sprites in multiple sprite
+
+    
+    //------------------------------
+    
     //Use scene from asset bundle
     public void LoadScene(int index)
     {
         Debug.Log(index + " va " + scene.Length);
         SceneManager.LoadSceneAsync(scene[index]);
+        
     }
 
     //TODO: Get energy prefab. Now, it have pink material 
-    // public void LoadPrefabAssetBundle()
-    // {
-    //     if (materialBundle != null)
-    //     {
-    //         prefabBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/energybundle")); 
-    //     }
-    //     if (prefabBundle == null)
-    //     {
-    //         Debug.Log("Failed to load AssetBundle!");
-    //     }
-    //     nameMaterialArray = materialBundle.GetAllAssetNames();
-    //     namePrefabArray = prefabBundle.GetAllAssetNames();
-    // }
     public List<GameObject> InstancePrefabsBundle(GameObject energy)
     {
         foreach (string namePrefab in namePrefabArray)
         {
+            Debug.Log(namePrefab);
             if (Path.GetFileNameWithoutExtension(namePrefab) == "entryportal" || Path.GetFileNameWithoutExtension(namePrefab) == "enterportal")
             {
                 prefabs = prefabBundle.LoadAsset<GameObject>(namePrefab);
@@ -167,72 +179,7 @@ public class AssetBundleManager : MonoBehaviour
                 prefabList.Add(instancePrefabBundle);
                 Path.GetFileNameWithoutExtension(namePrefab);
             }
-            // FixShadersForEditor(prefabs);
         }
         return prefabList;
     }
-    
-    //TODO: Show material object load from asset bundle
-//     #if UNITY_EDITOR
-//     
-//         public void FixShadersForEditor(GameObject prefab)
-//         {
-//             var renderers = prefab.GetComponentsInChildren<Renderer>(true);
-//             foreach (var renderer in renderers)
-//             {
-//                 ReplaceShaderForEditor(renderer.sharedMaterials);
-//             }
-//
-//             var tmps = prefab.GetComponentsInChildren<TextMeshProUGUI>(true);
-//             foreach (var tmp in tmps)
-//             {
-//                 ReplaceShaderForEditor(tmp.material);
-//                 ReplaceShaderForEditor(tmp.materialForRendering);
-//             }
-//             
-//             var spritesRenderers = prefab.GetComponentsInChildren<SpriteRenderer>(true);
-//             foreach (var spriteRenderer in spritesRenderers)
-//             {
-//                 ReplaceShaderForEditor(spriteRenderer.sharedMaterials);
-//             }
-//
-//             var images = prefab.GetComponentsInChildren<Image>(true);
-//             foreach (var image in images)
-//             {
-//                 ReplaceShaderForEditor(image.material);
-//             }
-//             
-//             var particleSystemRenderers = prefab.GetComponentsInChildren<ParticleSystemRenderer>(true);
-//             foreach (var particleSystemRenderer in particleSystemRenderers)
-//             {
-//                 ReplaceShaderForEditor(particleSystemRenderer.sharedMaterials);
-//             }
-//
-//             var particles = prefab.GetComponentsInChildren<ParticleSystem>(true);
-//             foreach (var particle in particles)
-//             {
-//                 var renderer = particle.GetComponent<Renderer>();
-//                 if (renderer != null) ReplaceShaderForEditor(renderer.sharedMaterials);
-//             }
-//         }
-//
-//         public void ReplaceShaderForEditor(Material[] materials)
-//         {
-//             for (int i = 0; i < materials.Length; i++)
-//             {
-//                 ReplaceShaderForEditor(materials[i]);
-//             }
-//         }
-//
-//         public void ReplaceShaderForEditor(Material material)
-//         {
-//             if (material == null) return;
-//
-//             var shaderName = material.shader.name;
-//             var shader = Shader.Find(shaderName);
-//
-//             if (shader != null) material.shader = shader;
-//         }
-//     
-// #endif
 }

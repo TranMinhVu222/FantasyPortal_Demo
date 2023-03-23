@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 75528339
+CRC: 3285943361
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 4d54f7d2714880eeda8859c272568c58
+    Hash: 7ed453bcd587c2d23d57e00658cee8aa
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 8216f99f39d5fb923aa98cd0bd9e645b
+    Hash: aad31a43ebfddb69503507d0fe75a70b
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -40,8 +40,6 @@ ClassTypes:
 - Class: 81
   Script: {instanceID: 0}
 - Class: 82
-  Script: {instanceID: 0}
-- Class: 83
   Script: {instanceID: 0}
 - Class: 91
   Script: {instanceID: 0}
@@ -119,6 +117,8 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 0b61d7ed9a45d4a9b9165b3e9cd81116, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 2d92dc8112e994969a37d706dc6645e3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ba0206ea54fe242b48eb93da373e77ff, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 120
@@ -162,4 +162,5 @@ Assets:
 - Assets/Scene/Level1.unity
 - Assets/Scene/Level4.unity
 Dependencies:
-- /Users/gearinc/InternProject/FantasyPortal_Demo/Assets/../AssetsBundles/energybundle
+- /Users/gearinc/InternProject/FantasyPortal_Demo/Assets/../AssetsBundles/prefabbundle
+- /Users/gearinc/InternProject/FantasyPortal_Demo/Assets/../AssetsBundles/texturebundle

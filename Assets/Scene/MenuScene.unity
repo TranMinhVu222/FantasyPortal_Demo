@@ -11483,8 +11483,9 @@ MonoBehaviour:
   bundleArray:
   - scenebundle
   - audioclip
-  - energybundle
+  - prefabbundle
   - materialbundle
+  - texturebundle
 --- !u!4 &854926995
 Transform:
   m_ObjectHideFlags: 0
@@ -28361,6 +28362,7 @@ MonoBehaviour:
   materials: {fileID: 0}
   prefabs: {fileID: 0}
   audioClips: {fileID: 0}
+  textures: {fileID: 0}
 --- !u!4 &1981646581
 Transform:
   m_ObjectHideFlags: 0
