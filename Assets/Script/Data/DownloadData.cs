@@ -12,7 +12,7 @@ using UnityEngine.Networking;
 using System.Net;
 using Firebase;
 using Firebase.Extensions;
-using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 public class DownloadData : MonoBehaviour
 {
@@ -23,14 +23,13 @@ public class DownloadData : MonoBehaviour
     private double progress, totalBytes, bytes;
     private int count, countFinish, countFinalize;
     public Text downloadingText, progressPercent, downloadAssetBundleText;
-    
     private FirebaseStorage storage;
     private StorageReference storageReference;
 
     static AssetBundle assetBundle;
     
     public Image progressBar;
-    public GameObject loadingPanel, warningPanel,FTUE;
+    public GameObject loadingPanel, warningPanel;
     
 
     public static UpgradeList upgradeList = new UpgradeList();
@@ -40,7 +39,7 @@ public class DownloadData : MonoBehaviour
 
     public List<double> sizeList = new List<double>();
     public List<string> fileToUpdatedList = new List<string>{"null"};
-    public string[] bundleArray = {"scenebundle","audioclip","prefabbundle","materialbundle","texturebundle"};
+    public string[] bundleArray = {"audioclip","prefabbundle","materialbundle","texturebundle","scenebundle"};
     
     // Start is called before the first frame update
     [System.Serializable]
@@ -153,7 +152,7 @@ public class DownloadData : MonoBehaviour
             // Tai xong va khong co mang
             if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError || unityWebRequest.result == UnityWebRequest.Result.ProtocolError)
             {
-                Debug.Log("Error: " + unityWebRequest.error);
+                // Debug.Log("Error: " + unityWebRequest.error);
                 warningPanel.SetActive(true);
             }
             // tai xong va co ket noi mang
@@ -261,13 +260,14 @@ public class DownloadData : MonoBehaviour
         string date = uwr.GetResponseHeader("Last-Modified");
         if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.ProtocolError)
         {
+            //check trong trang thai khong co mang xem co du file assetbundle hay chua ?
             if (!Directory.Exists(Path.Combine(Application.persistentDataPath, "AB/" + bundleArray[order - 1])))
             {
-                warningPanel.SetActive(true);
+                warningPanel.SetActive(true); //khong du hien canh bao loi
             }
             else
             {
-                StartCoroutine(FinishLoading());
+                StartCoroutine(FinishLoading()); //da du tat man hinh loading
             }
             Debug.Log("Error While Getting Length: " + uwr.error);
             if (results != null)
@@ -280,17 +280,18 @@ public class DownloadData : MonoBehaviour
             {
                 results(Math.Round((double)Convert.ToInt64(size) / 1048576, 2));
             }
+            // check version cua tung asset bundle trong trang thai co mang
             CheckVersion(bundleArray, date,order-1);
         }
         else
         {
+            Debug.Log("chuyen tat man hinh load chua ro li do");
             StartCoroutine(FinishLoading());
         }
     }
     
     private void SaveMultipleAssetBundle(string urlDownload)
     {
-        Debug.Log(urlDownload);
         //initialize storage reference
         storage = FirebaseStorage.DefaultInstance;
         storageReference = storage.GetReferenceFromUrl("gs://fantasy-portal-92666532.appspot.com");
@@ -305,7 +306,7 @@ public class DownloadData : MonoBehaviour
                 {
                     temp += results;
                     downloadAssetBundleText.text = temp + "MB"; 
-                    Debug.Log("total size" + temp);
+                    // Debug.Log("total size" + temp);
                 }));
                 StartCoroutine(DownLoadedMultipleFileAssetBundle(Convert.ToString(task.Result), urlDownload));
             }
@@ -433,16 +434,6 @@ public class DownloadData : MonoBehaviour
     {
         yield return new WaitForSeconds(0);
         AssetBundleManager.Instance.AssetBundleAvailable();
-        if (!PlayerPrefs.HasKey("Completed FTUE") || PlayerPrefs.GetInt("Completed FTUE") == 0)
-        {
-            AssetBundleManager.Instance.LoadScene(0);
-            FTUE.SetActive(true);
-        }
-        if (PlayerPrefs.GetInt("Complete Menu FTUE") == 1)
-        {
-            FTUE.SetActive(false);
-        }
-        loadingPanel.SetActive(false);
     }
 
     public void CheckVersion(string[] nameAssetBundle, string date,int i)
@@ -453,13 +444,16 @@ public class DownloadData : MonoBehaviour
             case "scenebundle":
                 if (!PlayerPrefs.HasKey("date scenebundle")) 
                 {
+                    //chua ton tai date duoc luu thuc hien luu thoi gian va luu assetbundle
                     PlayerPrefs.SetString("date scenebundle", date);
                     SaveMultipleAssetBundle(name);
                 }
                 else
                 {
+                    //check xem co phien ban moi hay khong
                     if (CompareDate(PlayerPrefs.GetString("date scenebundle"), date))
                     {
+                        // co phien ban moi
                         fileToUpdatedList.Add(name);
                         if (File.Exists(Path.Combine(Application.persistentDataPath, "AB/" + name)))
                         {
@@ -470,9 +464,10 @@ public class DownloadData : MonoBehaviour
                     }
                     else
                     {
+                        //khong co phien ban moi
                         countFinalize += 1;
                         FinishLoadingAsset(countFinalize);
-                        Debug.Log("khong co file can update ten " + name );
+                        //Debug.Log("khong co file can update ten " + name );
                     }
                 } 
                 break;
@@ -498,7 +493,7 @@ public class DownloadData : MonoBehaviour
                     {
                         countFinalize += 1;
                         FinishLoadingAsset(countFinalize);
-                        Debug.Log("khong co file can update ten " + name );
+                        //Debug.Log("khong co file can update ten " + name );
                     }
                 }
                 break;
@@ -524,7 +519,7 @@ public class DownloadData : MonoBehaviour
                     {
                         countFinalize += 1;
                         FinishLoadingAsset(countFinalize);
-                        Debug.Log("khong co file can update ten " + name );
+                        //Debug.Log("khong co file can update ten " + name );
                     }
                 }
                 break;
@@ -550,7 +545,7 @@ public class DownloadData : MonoBehaviour
                     {
                         countFinalize += 1;
                         FinishLoadingAsset(countFinalize);
-                        Debug.Log("khong co file can update ten " + name );
+                        //Debug.Log("khong co file can update ten " + name );
                     }
                 }
                 break;
@@ -576,7 +571,7 @@ public class DownloadData : MonoBehaviour
                     {
                         countFinalize += 1;
                         FinishLoadingAsset(countFinalize);
-                        Debug.Log("khong co file can update ten " + name );
+                        //Debug.Log("khong co file can update ten " + name );
                     }
                 }
                 break;

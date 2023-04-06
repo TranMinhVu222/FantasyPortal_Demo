@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3629969415
+CRC: 1241345873
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e2de4656e604beeeecbcbe457eafe7d1
+    Hash: 776d2da23f5f2f5091b96b762e6246ed
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 4506e2cf3d5ee6f4e2b0bf56ea6ac409
+    Hash: 87d8350b46029255406d612579664277
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -14,10 +14,6 @@ ClassTypes:
 - Class: 4
   Script: {instanceID: 0}
 - Class: 21
-  Script: {instanceID: 0}
-- Class: 28
-  Script: {instanceID: 0}
-- Class: 48
   Script: {instanceID: 0}
 - Class: 198
   Script: {instanceID: 0}
@@ -27,4 +23,5 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Prefab/EntryPortal.prefab
 - Assets/Prefab/EnterPortal.prefab
-Dependencies: []
+Dependencies:
+- /Users/gearinc/InternProject/FantasyPortal_Demo/Assets/../AssetsBundles/texturebundle

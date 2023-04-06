@@ -73,7 +73,14 @@ public class MenuEvent : MonoBehaviour
     {
         if (loadingPanel.activeInHierarchy)
         {
-            effect = true;
+            if (!PlayerPrefs.HasKey("Completed FTUE") || PlayerPrefs.GetInt("Completed FTUE") == 0)
+            {
+                effect = false;
+            }
+            else
+            {
+                effect = true;   
+            }
         }
 
         if (effect)
@@ -119,11 +126,9 @@ public class MenuEvent : MonoBehaviour
             }
             yield return new WaitForEndOfFrame();
         }
-
         progressBar.fillAmount = 1f;
         progressPercent.text = 100 + "%";
         checkDone = true ;
         effect = false;
-        Debug.Log("Done");
     }
 }

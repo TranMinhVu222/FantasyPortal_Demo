@@ -1,21 +1,41 @@
 ManifestFileVersion: 0
-CRC: 4013398972
+CRC: 717708662
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5c2032fc7953ec65c6b316f554355bcc
+    Hash: 2bd7cf50490220d002e9151a2f06696b
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 4df8c69f2c8a6ad9e3cbf82bb83e4dc3
+    Hash: f2013514fe9cc708c84fd1a7cbf968bb
 HashAppended: 0
 ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
 - Class: 28
+  Script: {instanceID: 0}
+- Class: 48
   Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/Art/2D Casual UI/Sprite/GUI.png
+- Assets/Art/Background/Screen_Shot_2022-12-21_at_16.50.46-removebg-preview.png
+- Assets/Art/UI/Panel/tutorial panel.png
+- Assets/Art/UI/Item/booster.png
+- Assets/Art/UI/FTUE/Tutorial.png
+- Assets/Art/UI/Button/png-white-round-close-x-icon-31631915144pef3ypqffj-removebg-preview
+  (1).png
+- Assets/Art/Slimes/SlimeGreen/SlimeBasic_00025.png
+- Assets/Art/Mossy Tileset/Mossy - Hanging Plants.png
+- Assets/Art/UI/FTUE/welcome panel.png
+- Assets/Animation/Effect Skill/Procedural fire/Materials/FireSphere1.mat
+- Assets/Art/Background/download.png
 - Assets/Art/Background/background2.png
+- Assets/Animation/Effect Skill/Procedural fire/Shaders/FireSphere.shadergraph
+- Assets/Art/Mossy Tileset/Mossy - FloatingPlatforms.png
+- Assets/Art/UI/Button/download-removebg-preview.png
 - Assets/Art/Background/background.png
+- Assets/Art/UI/FTUE/pointer.png
+- Assets/Art/UI/Item/meter_icon_holder_purple 1.png
+- Assets/Art/Mossy Tileset/Mossy - TileSet.png
 Dependencies: []

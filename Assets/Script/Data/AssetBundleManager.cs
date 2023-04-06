@@ -4,10 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.SceneManagement;
-using TMPro;
-using System.Net;
-using UnityEngine.UI;
-using Object = UnityEngine.Object;
 
 
 public class AssetBundleManager : MonoBehaviour
@@ -29,7 +25,7 @@ public class AssetBundleManager : MonoBehaviour
 
     public static AssetBundle sceneBundle, audioClipBundle, materialBundle, prefabBundle, textureBundle;
 
-    public GameObject materials, prefabs;
+    public GameObject materials, prefabs, loadingPanel, FTUE;
 
     public AudioClip audioClips;
 
@@ -101,7 +97,7 @@ public class AssetBundleManager : MonoBehaviour
     {
         if (sceneBundle != null || audioClipBundle != null)
         {
-            Debug.Log("da unload");
+            SpriteControllers.Instance.GetSpriteBundle(spritesBundleArray);
             if (audioClipArray != null)
             {
                 AudioManager.AudioManger.LoadAudioAssetBundle();    
@@ -109,11 +105,14 @@ public class AssetBundleManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("da load");
-            sceneBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/scenebundle"));
+            textureBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/texturebundle"));
             audioClipBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/audioclip"));
             materialBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/materialbundle"));
-            textureBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/texturebundle"));
+           
+            if (textureBundle != null )
+            {
+                sceneBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/scenebundle"));
+            }
             if (materialBundle != null)
             {
                 prefabBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/prefabbundle")); 
@@ -122,13 +121,13 @@ public class AssetBundleManager : MonoBehaviour
             {
                 Debug.Log("Failed to load AssetBundle!");
             }
-            UseAssetBundle();
+            UseAssetBundles();
         }
     }
     
-    public void UseAssetBundle()
+    public void UseAssetBundles()
     {
-        scene = sceneBundle.GetAllScenePaths();
+        
         audioClipArray = audioClipBundle.GetAllAssetNames();
         nameMaterialArray = materialBundle.GetAllAssetNames();
         namePrefabArray = prefabBundle.GetAllAssetNames();
@@ -137,6 +136,14 @@ public class AssetBundleManager : MonoBehaviour
         //---- Get sprite from asset bundle
         spritesBundleArray = textureBundle.LoadAllAssets<Sprite>();
         
+        SpriteControllers.Instance.GetSpriteBundle(spritesBundleArray);
+        
+        scene = sceneBundle.GetAllScenePaths();
+        for (int i = 0; i < scene.Length; i++)
+        {
+            Debug.Log(scene[i]);
+        }
+
         //---- Get Audio Clip from asset bundle
         
         if (audioClipArray != null)
@@ -150,19 +157,27 @@ public class AssetBundleManager : MonoBehaviour
             audioClipList.Add(audioClips);    
             if(i == audioClipArray.Length - 1) AudioManager.AudioManger.LoadAudioAssetBundle();
         }
+        if (!PlayerPrefs.HasKey("Completed FTUE") || PlayerPrefs.GetInt("Completed FTUE") == 0)
+        {
+            Debug.Log("VAR");
+            LoadScene(0);
+            FTUE.SetActive(true);
+        }
+        if (PlayerPrefs.GetInt("Complete Menu FTUE") == 1)
+        {
+            FTUE.SetActive(false);
+        }
+        else
+        {
+            loadingPanel.SetActive(false);    
+        }
     }
-    
-    //Get sprites in multiple sprite
-
-    
-    //------------------------------
     
     //Use scene from asset bundle
     public void LoadScene(int index)
     {
-        Debug.Log(index + " va " + scene.Length);
-        SceneManager.LoadSceneAsync(scene[index]);
-        
+        // SceneManager.LoadSceneAsync(scene[index]);
+        SceneManager.LoadScene(scene[index]);
     }
 
     //TODO: Get energy prefab. Now, it have pink material 

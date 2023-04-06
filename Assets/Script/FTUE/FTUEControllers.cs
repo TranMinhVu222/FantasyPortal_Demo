@@ -9,6 +9,7 @@ using System.Text;
 using Unity.Mathematics;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 public class FTUEControllers : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class FTUEControllers : MonoBehaviour
     public PlayerController playerController;
 
     public State currentState = State.Welcome;
-
+    
     public IsTouchUI isTouchUI;
     public Text tutorialText;
     // Start is called before the first frame update
