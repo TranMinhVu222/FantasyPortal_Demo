@@ -97,11 +97,12 @@ public class AssetBundleManager : MonoBehaviour
     {
         if (sceneBundle != null || audioClipBundle != null)
         {
-            SpriteControllers.Instance.GetSpriteBundle(spritesBundleArray);
             if (audioClipArray != null)
             {
                 AudioManager.AudioManger.LoadAudioAssetBundle();    
             }
+
+            UseAssetBundles();
         }
         else
         {
@@ -127,7 +128,6 @@ public class AssetBundleManager : MonoBehaviour
     
     public void UseAssetBundles()
     {
-        
         audioClipArray = audioClipBundle.GetAllAssetNames();
         nameMaterialArray = materialBundle.GetAllAssetNames();
         namePrefabArray = prefabBundle.GetAllAssetNames();
@@ -159,12 +159,12 @@ public class AssetBundleManager : MonoBehaviour
         }
         if (!PlayerPrefs.HasKey("Completed FTUE") || PlayerPrefs.GetInt("Completed FTUE") == 0)
         {
-            Debug.Log("VAR");
             LoadScene(0);
             FTUE.SetActive(true);
         }
         if (PlayerPrefs.GetInt("Complete Menu FTUE") == 1)
         {
+            loadingPanel.SetActive(false); 
             FTUE.SetActive(false);
         }
         else
