@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2598201553
+CRC: 2299299793
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d84d6f444b083077967207dbb0bfbb91
+    Hash: fcc8099a9def93e4c0ce6ebc0d2fb3bd
   TypeTreeHash:
     serializedVersion: 2
     Hash: f2013514fe9cc708c84fd1a7cbf968bb
@@ -26,19 +26,20 @@ Assets:
 - Assets/Art/UI/Button/png-white-round-close-x-icon-31631915144pef3ypqffj-removebg-preview
   (1).png
 - Assets/Art/Slimes/SlimeGreen/SlimeBasic_00025.png
-- Assets/Art/2D Casual UI/GUI.png
+- Assets/Art/Background/download.png
 - Assets/Art/UI/FTUE/welcome panel.png
 - Assets/Animation/Effect Skill/Procedural fire/Materials/FireSphere1.mat
-- Assets/Art/Mossy Tileset/Mossy - Hanging Plants.png
 - Assets/Art/Background/background2.png
 - Assets/Animation/Effect Skill/Procedural fire/Shaders/FireSphere.shadergraph
-- Assets/Art/Mossy Tileset/Mossy - FloatingPlatforms.png
 - Assets/Art/UI/Button/download-removebg-preview.png
-- Assets/Art/Background/download.png
 - Assets/Art/Background/background.png
 - Assets/Art/UI/FTUE/pointer.png
+- Assets/Art/UI/Store/2stars.png
+- Assets/Art/UI/chat-png-9.png
+- Assets/Art/UI/Store/50stars.png
 - Assets/Art/UI/Item/usebooster.png
-- Assets/Art/UI/Item/meter_icon_holder_purple.png
+- Assets/Art/Background/pngwing.com (9).png
 - Assets/Art/UI/Item/meter_icon_holder_purple 1.png
-- Assets/Art/Mossy Tileset/Mossy - TileSet.png
+- Assets/Art/UI/Item/meter_icon_holder_purple.png
+- Assets/Art/UI/Store/20stars.png
 Dependencies: []

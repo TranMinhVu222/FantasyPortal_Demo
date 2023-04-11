@@ -9,11 +9,10 @@ public class SpriteControllers : MonoBehaviour
     public static SpriteControllers instance;
     public static SpriteControllers Instance { get => instance; }
     public GameObject adPanel,_2stars,_20stars,_50stars,starTotal, starSystem, starUpgrade;
-    public GameObject[] UILevelArray;
     public GameObject[] boosterArray;
     private Image adImageForPanel, _2starsImage,_20starsImage,_50starsImage, starTotalImage, starSystemImage, starUpgradeImage;
     private Image[] imageStar,imageBooster;
-    private Sprite[] spritesArray;
+    private List <Sprite> spritesList;
     private Sprite starSprite, starBackSprite, lockSprite, useBoosterSprite, idleBoosterSprite;
     private List<Image> levelImagesList = new List<Image>();
     private List<Image> boosterImagesList = new List<Image>();
@@ -36,12 +35,6 @@ public class SpriteControllers : MonoBehaviour
         starTotalImage = starTotal.GetComponent<Image>();
         starSystemImage = starSystem.GetComponent<Image>();
         starUpgradeImage = starUpgrade.GetComponent<Image>();
-        for (int i = 0; i < UILevelArray.Length; i++)
-        {
-            imageStar = UILevelArray[i].GetComponentsInChildren<Image>();
-            AddImageToList(imageStar,levelImagesList);
-        }
-
         for (int i = 0; i < boosterArray.Length; i++)
         {
             imageBooster = boosterArray[i].GetComponentsInChildren<Image>();
@@ -49,17 +42,17 @@ public class SpriteControllers : MonoBehaviour
         }
     }
 
-    public void GetSpriteBundle(Sprite[] spritesBundleArray)
+    public void GetSpriteBundle(List<Sprite> spritesBundleList)
     {
-        spritesArray = spritesBundleArray;
-        SetSpriteBundle(spritesArray);
+        spritesList = spritesBundleList;
+        SetSpriteBundle(spritesList);
     }
 
-    public void SetSpriteBundle(Sprite[] spritesArray)
+    public void SetSpriteBundle(List <Sprite> spritesList)
     {
-        for (int i = 0; i < spritesArray.Length; i++)
+        for (int i = 0; i < spritesList.Count; i++)
         {
-            AddSprite(spritesArray[i]);
+            AddSprite(spritesList[i]);
         }
         AddSpriteForGameObject(levelImagesList,starSprite,starBackSprite,lockSprite);
         AddSpriteForBooster(boosterImagesList, useBoosterSprite, idleBoosterSprite);
@@ -85,25 +78,7 @@ public class SpriteControllers : MonoBehaviour
         {
             _50starsImage.sprite = sprite;
         }
-
-        if (sprite.name == "GUI_24")
-        {
-            starTotalImage.sprite = sprite;
-            starSprite = sprite;
-            starSystemImage.sprite = sprite;
-            starUpgradeImage.sprite = sprite;
-        }
         
-        if (sprite.name == "GUI_25")
-        {
-            starBackSprite = sprite;
-        }
-
-        if (sprite.name == "GUI_0")
-        {
-            lockSprite = sprite;
-        }
-
         if (sprite.name == "meter_icon_holder_purple")
         {
             idleBoosterSprite = sprite;

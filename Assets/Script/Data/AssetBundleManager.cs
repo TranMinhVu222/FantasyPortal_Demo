@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Linq;
+using UnityEditor;
 using UnityEngine.SceneManagement;
 
 
@@ -19,6 +21,7 @@ public class AssetBundleManager : MonoBehaviour
 
     public static List<AudioClip> audioClipList = new List<AudioClip>();
     public static List<GameObject> prefabList = new List<GameObject>();
+    public List<Sprite> spritesList = new List<Sprite>();
 
     private string sceneGameToLoadAB;
     private GameObject instancePrefabBundle, energyPrefabBundle;
@@ -29,8 +32,10 @@ public class AssetBundleManager : MonoBehaviour
 
     public AudioClip audioClips;
 
-    public Sprite[] spritesBundleArray;
+    public Sprite sprite2D;
 
+    public Sprite[] spritesBundleArray;
+    
     private void Awake()
     {
         if (instance != null)
@@ -49,7 +54,7 @@ public class AssetBundleManager : MonoBehaviour
                 scene = sceneBundle.GetAllScenePaths();
                 foreach (string sceneName in scene)
                 {
-                    sceneGameToLoadAB = Path.GetFileNameWithoutExtension(sceneName).ToString();
+                    sceneGameToLoadAB = Path.GetFileNameWithoutExtension(sceneName);
                 }
                 break;
             case "audioclip":
@@ -68,7 +73,7 @@ public class AssetBundleManager : MonoBehaviour
                 nameMaterialArray = materialBundle.GetAllAssetNames();
                 foreach (string materialName in nameMaterialArray)
                 {
-                    sceneGameToLoadAB = Path.GetFileNameWithoutExtension(materialName).ToString();
+                    sceneGameToLoadAB = Path.GetFileNameWithoutExtension(materialName);
                     Debug.Log("NameInPath(foreach): " + Path.GetFileNameWithoutExtension(materialName));
                 }
                 break;
@@ -77,7 +82,7 @@ public class AssetBundleManager : MonoBehaviour
                 namePrefabArray = prefabBundle.GetAllAssetNames();
                 foreach (string prefabName in namePrefabArray)
                 {
-                    sceneGameToLoadAB = Path.GetFileNameWithoutExtension(prefabName).ToString();
+                    sceneGameToLoadAB = Path.GetFileNameWithoutExtension(prefabName);
                     Debug.Log("NameInPath(foreach): " + Path.GetFileNameWithoutExtension(prefabName));
                 }
                 break;
@@ -86,7 +91,7 @@ public class AssetBundleManager : MonoBehaviour
                 nameTextureArray = textureBundle.GetAllAssetNames();
                 foreach (string textureName in nameTextureArray)
                 {
-                    sceneGameToLoadAB = Path.GetFileNameWithoutExtension(textureName).ToString();
+                    sceneGameToLoadAB = Path.GetFileNameWithoutExtension(textureName);
                     Debug.Log("NameInPath(foreach): " + Path.GetFileNameWithoutExtension(textureName));
                 }
                 break;
@@ -134,16 +139,23 @@ public class AssetBundleManager : MonoBehaviour
         nameTextureArray = textureBundle.GetAllAssetNames();
         
         //---- Get sprite from asset bundle
-        spritesBundleArray = textureBundle.LoadAllAssets<Sprite>();
-        
-        SpriteControllers.Instance.GetSpriteBundle(spritesBundleArray);
-        
-        scene = sceneBundle.GetAllScenePaths();
-        for (int i = 0; i < scene.Length; i++)
+        for (int i = 0; i < nameTextureArray.Length; i++)
         {
-            Debug.Log(scene[i]);
+            sprite2D = textureBundle.LoadAsset<Sprite>(nameTextureArray[i]);
+            if (sprite2D != null)
+            {
+                spritesList.Add(sprite2D);    
+            }
         }
 
+        if (spritesList.Count == nameTextureArray.Length)
+        {
+            SpriteControllers.Instance.GetSpriteBundle(spritesList);
+        }
+        // SpriteControllers.Instance.GetSpriteBundle(spritesList);
+        
+        scene = sceneBundle.GetAllScenePaths();
+        
         //---- Get Audio Clip from asset bundle
         
         if (audioClipArray != null)
@@ -157,6 +169,8 @@ public class AssetBundleManager : MonoBehaviour
             audioClipList.Add(audioClips);    
             if(i == audioClipArray.Length - 1) AudioManager.AudioManger.LoadAudioAssetBundle();
         }
+        
+        //Finish Load Asset Bundle
         if (!PlayerPrefs.HasKey("Completed FTUE") || PlayerPrefs.GetInt("Completed FTUE") == 0)
         {
             LoadScene(0);
@@ -171,6 +185,7 @@ public class AssetBundleManager : MonoBehaviour
         {
             loadingPanel.SetActive(false);    
         }
+        
     }
     
     //Use scene from asset bundle
@@ -180,12 +195,11 @@ public class AssetBundleManager : MonoBehaviour
         SceneManager.LoadScene(scene[index]);
     }
 
-    //TODO: Get energy prefab. Now, it have pink material 
+    //Get energy prefab. Now, it have pink material 
     public List<GameObject> InstancePrefabsBundle(GameObject energy)
     {
         foreach (string namePrefab in namePrefabArray)
         {
-            Debug.Log(namePrefab);
             if (Path.GetFileNameWithoutExtension(namePrefab) == "entryportal" || Path.GetFileNameWithoutExtension(namePrefab) == "enterportal")
             {
                 prefabs = prefabBundle.LoadAsset<GameObject>(namePrefab);
