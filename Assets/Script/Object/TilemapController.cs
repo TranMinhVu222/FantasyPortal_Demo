@@ -9,7 +9,6 @@ public class TilemapController : MonoBehaviour
 {
     public Sprite[] spritesArray;
     
-    public AssetBundle sceneBundle;
     private Vector3Int pos;
     
     void Start()
@@ -22,7 +21,6 @@ public class TilemapController : MonoBehaviour
     public void GetTilesInTilemap()
     {
         Tilemap tileMap = GetComponent<Tilemap>();
-        
         BoundsInt bounds = tileMap.cellBounds;
         tileMap.CompressBounds();
         // tileMap.tileAnchor = new Vector3(-47f, -47f, 0);
@@ -36,25 +34,26 @@ public class TilemapController : MonoBehaviour
                     pos = new Vector3Int(x, y, 0);
                     Debug.Log("Tile name: " + tileDle.name);
                     Debug.Log("Tile sprite: " + tileDle.sprite);
-                    SetSprite(tileDle.name,spritesArray,tileMap,pos);
+                    
+                    // SetSprite(tileDle.name,spritesArray,tileMap,pos);
                 }
             }
         }
         //
     }
     
-    public void SetSprite(string nameTile, Sprite[] spritesArray, Tilemap tileMap, Vector3Int position)
-    {
-        Tile tiles = ScriptableObject.CreateInstance<Tile>();
-        for (int i = 0; i < spritesArray.Length; i++)
-        {
-            if (spritesArray[i].name == nameTile)
-            {
-                tiles.sprite = spritesArray[i];
-                tileMap.SetTile(position, tiles);
-                Debug.Log("f:/ " + nameTile + " == " + spritesArray[i]);
-                tileMap.RefreshTile(position);
-            }
-        }
-    }
+    // public void SetSprite(string nameTile, Sprite[] spritesArray, Tilemap tileMap, Vector3Int position)
+    // {
+    //     Tile tiles = ScriptableObject.CreateInstance<Tile>();
+    //     for (int i = 0; i < spritesArray.Length; i++)
+    //     {
+    //         if (spritesArray[i].name == nameTile)
+    //         {
+    //             tiles.sprite = spritesArray[i];
+    //             tileMap.SetTile(position, tiles);
+    //             Debug.Log("f:/ " + nameTile + " == " + spritesArray[i]);
+    //             tileMap.RefreshTile(position);
+    //         }
+    //     }
+    // }
 }

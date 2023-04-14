@@ -23,6 +23,7 @@ public class AssetBundleManager : MonoBehaviour
     public static List<GameObject> prefabList = new List<GameObject>();
     public List<Sprite> spritesList = new List<Sprite>();
 
+    private int countNullSprite;
     private string sceneGameToLoadAB;
     private GameObject instancePrefabBundle, energyPrefabBundle;
 
@@ -146,9 +147,13 @@ public class AssetBundleManager : MonoBehaviour
             {
                 spritesList.Add(sprite2D);    
             }
+            else
+            {
+                countNullSprite += 1;
+            }
         }
 
-        if (spritesList.Count == nameTextureArray.Length)
+        if (spritesList.Count == nameTextureArray.Length - countNullSprite)
         {
             SpriteControllers.Instance.GetSpriteBundle(spritesList);
         }

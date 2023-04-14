@@ -7,6 +7,12 @@ using UnityEngine.UI;
 
 public class TouchControllers : MonoBehaviour
 {
+    private void Start()
+    {
+        Debug.Log("chay touch");
+    }
+
+   
     void Update()
     {
         PointerEventData pointer = new PointerEventData(EventSystem.current);

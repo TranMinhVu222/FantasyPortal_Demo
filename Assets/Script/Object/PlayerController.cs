@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using System.IO;
 using UnityEngine.SceneManagement;
 //NOTE: gravityScale anh huong toi trajectory
