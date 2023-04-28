@@ -1,20 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Services.Core;
+using Unity.Services.Core.Environments;
 using UnityEngine;
 
 public class StoreManager : MonoBehaviour
 {
     private int starPurchase;
-    private void Awake()
+    private void Start()
     {
+        
         if (!PlayerPrefs.HasKey("Star Purchase"))
         {
             PlayerPrefs.SetInt("Star Purchase",0);
         }
         starPurchase = PlayerPrefs.GetInt("Star Purchase");
     }
-
+    public string environment = "production";
+    
     public void On2StarsPurchaseComplete()
     {
         starPurchase += 2;

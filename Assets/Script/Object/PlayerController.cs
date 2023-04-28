@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     public BoxCollider2D boxCollider2D;
     public Animator animator;
-    public GameObject grabButton,pauseMenuScreen, gameOverPanel, winPanel;
+    public GameObject grabButton,pauseMenuScreen, gameOverPanel, winPanel, finishGame;
     public GameObject entryPortal, enterPortal;
     public Transform rayPoint, exitPosition, enterPosition;
     public float rayDistance, boost, speed, horizontalMove, jumpSpeed, deathEffect = 20f;
@@ -245,7 +245,8 @@ public class PlayerController : MonoBehaviour
         {
             if (PlayerPrefs.GetInt("Present Level") == AssetBundleManager.scene.Length - 1 || PlayerPrefs.GetInt("Present Level") == LevelManager.totalLevel)
             {
-                SceneManager.LoadScene("MenuScene");
+                // FinishGame.Instance.ActiveGameObject();
+                finishGame.SetActive(true);
             }
             else
             {

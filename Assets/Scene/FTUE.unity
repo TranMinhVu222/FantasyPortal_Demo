@@ -286,7 +286,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 46187110}
-  - component: {fileID: 46187109}
   m_Layer: 0
   m_Name: Ads
   m_TagString: Untagged
@@ -294,19 +293,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &46187109
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 46187108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92657316d75e3404fb467cf7acb0c074, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  appKey: 17f491ebd
 --- !u!4 &46187110
 Transform:
   m_ObjectHideFlags: 0
@@ -2477,7 +2463,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 46187109}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AdsControllers, Assembly-CSharp
         m_MethodName: Rewarded
         m_Mode: 1
@@ -8492,7 +8478,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1174049002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.24, y: 1.1400001, z: -10}
+  m_LocalPosition: {x: -3.93, y: 1.1400001, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 659444896}
@@ -10226,7 +10212,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1420595340}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.24, y: -1.56, z: 0}
+  m_LocalPosition: {x: -3.93, y: -1.56, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children:
   - {fileID: 396059929}
@@ -10305,6 +10291,7 @@ MonoBehaviour:
   pauseMenuScreen: {fileID: 702460693}
   gameOverPanel: {fileID: 652514227}
   winPanel: {fileID: 657638396}
+  finishGame: {fileID: 0}
   entryPortal: {fileID: 577992405}
   enterPortal: {fileID: 1530102124}
   rayPoint: {fileID: 396059929}

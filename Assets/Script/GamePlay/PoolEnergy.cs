@@ -30,7 +30,6 @@ public class PoolEnergy : MonoBehaviour
         {
             portalAnimList = new List<GameObject>();
             portalAnimList = AssetBundleManager.Instance.InstancePrefabsBundle(enegryPortal);
-            Debug.Log(portalAnimList.Count + " ------");
             for (int i = 0; i < portalAnimList.Count; i++)
             {
                 if (portalAnimList[i] != null)

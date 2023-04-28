@@ -37,8 +37,7 @@ public class LevelManager : MonoBehaviour
         {
             levelsUnlocked = buttons.Length;
         }
-
-        Debug.Log("level unlocked: "+levelsUnlocked);
+        
         if (levelsUnlocked == 1 || levelsUnlocked == buttons.Length)
         {
             for (int i = 0; i < levelsUnlocked; i++)

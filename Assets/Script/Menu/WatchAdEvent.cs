@@ -9,6 +9,21 @@ public class WatchAdEvent : MonoBehaviour
     public int boosterReward = 1;
     private int boosterTotal;
     public bool checkMultiply2Stars ;
+    private static WatchAdEvent instance;
+    public static WatchAdEvent Instance
+    {
+        get => instance;
+    }
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            
+        }
+
+        instance = this;
+    }
 
     private void Start()
     {
@@ -21,27 +36,23 @@ public class WatchAdEvent : MonoBehaviour
 
     public void PressWatchAdButton()
     {
-        if (IronSource.Agent.isRewardedVideoAvailable())
-        {
-            boosterTotal = PlayerPrefs.GetInt("Booster total");
-            boosterTotal += boosterReward;
-            PlayerPrefs.SetInt("Booster total", boosterTotal);    
-        }
+        Debug.Log("them booster");
+        boosterTotal = PlayerPrefs.GetInt("Booster total");
+        boosterTotal += boosterReward;
+        PlayerPrefs.SetInt("Booster total", boosterTotal);
     }
 
     public void PressWatchAdStarButton()
     {
-        if (IronSource.Agent.isRewardedVideoAvailable())
-        {
-            PlayerPrefs.SetInt("Star by Ads", PlayerPrefs.GetInt("Star by Ads") + starReward);
-        }
+        Debug.Log("thuong sao");
+        int temp = PlayerPrefs.GetInt("Star by Ads") + starReward;
+        Debug.Log(temp);
+        PlayerPrefs.SetInt("Star by Ads", temp);
     }
 
     public void PressWatchAdsDoubleStars()
     {
-        if (PlayerPrefs.GetInt("Completed FTUE") == 1)
-        {
-            checkMultiply2Stars = true;    
-        }
+        Debug.Log("nhan doi sao");
+        checkMultiply2Stars = true;
     }
 }

@@ -51,7 +51,7 @@ public class AssetBundleManager : MonoBehaviour
         switch (typeOfAssetBundle)
         {
             case "scenebundle":
-                sceneBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/scenebundle"));
+                sceneBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "File AB/scenebundle"));
                 scene = sceneBundle.GetAllScenePaths();
                 foreach (string sceneName in scene)
                 {
@@ -59,7 +59,7 @@ public class AssetBundleManager : MonoBehaviour
                 }
                 break;
             case "audioclip":
-                audioClipBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/audioclip"));
+                audioClipBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "File AB/audioclip"));
                 audioClipArray = audioClipBundle.GetAllAssetNames();
                 for (int i = 0; i < audioClipArray.Length; i++)
                 {
@@ -70,30 +70,27 @@ public class AssetBundleManager : MonoBehaviour
                 }
                 break;
             case "materialbundle":
-                materialBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/materialbundle"));
+                materialBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "File AB/materialbundle"));
                 nameMaterialArray = materialBundle.GetAllAssetNames();
                 foreach (string materialName in nameMaterialArray)
                 {
                     sceneGameToLoadAB = Path.GetFileNameWithoutExtension(materialName);
-                    Debug.Log("NameInPath(foreach): " + Path.GetFileNameWithoutExtension(materialName));
                 }
                 break;
             case "prefabbundle":
-                prefabBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/prefabbundle"));
+                prefabBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "File AB/prefabbundle"));
                 namePrefabArray = prefabBundle.GetAllAssetNames();
                 foreach (string prefabName in namePrefabArray)
                 {
                     sceneGameToLoadAB = Path.GetFileNameWithoutExtension(prefabName);
-                    Debug.Log("NameInPath(foreach): " + Path.GetFileNameWithoutExtension(prefabName));
                 }
                 break;
             case "texturebundle":
-                textureBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/texturebundle"));
+                textureBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "File AB/texturebundle"));
                 nameTextureArray = textureBundle.GetAllAssetNames();
                 foreach (string textureName in nameTextureArray)
                 {
                     sceneGameToLoadAB = Path.GetFileNameWithoutExtension(textureName);
-                    Debug.Log("NameInPath(foreach): " + Path.GetFileNameWithoutExtension(textureName));
                 }
                 break;
         }
@@ -112,17 +109,17 @@ public class AssetBundleManager : MonoBehaviour
         }
         else
         {
-            textureBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/texturebundle"));
-            audioClipBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/audioclip"));
-            materialBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/materialbundle"));
+            textureBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "File AB/texturebundle"));
+            audioClipBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "File AB/audioclip"));
+            materialBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "File AB/materialbundle"));
            
             if (textureBundle != null )
             {
-                sceneBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/scenebundle"));
+                sceneBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "File AB/scenebundle"));
             }
             if (materialBundle != null)
             {
-                prefabBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "AB/prefabbundle")); 
+                prefabBundle = AssetBundle.LoadFromFile(Path.Combine(Application.persistentDataPath, "File AB/prefabbundle")); 
             }
             if (prefabBundle == null)
             {
