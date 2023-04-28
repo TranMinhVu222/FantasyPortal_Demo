@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class WatchAdEvent : MonoBehaviour
 {
-    public int starReward;
+    private int starReward = 1;
     public int boosterReward = 1;
     private int boosterTotal;
     public bool checkMultiply2Stars ;
@@ -46,7 +46,7 @@ public class WatchAdEvent : MonoBehaviour
     {
         Debug.Log("thuong sao");
         int temp = PlayerPrefs.GetInt("Star by Ads") + starReward;
-        Debug.Log(temp);
+        Debug.Log(temp +" " + starReward);
         PlayerPrefs.SetInt("Star by Ads", temp);
     }
 

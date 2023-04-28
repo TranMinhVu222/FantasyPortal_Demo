@@ -163,6 +163,7 @@ public class MenuFTUE : MonoBehaviour
                         exitGameButton.SetActive(true);
                         pointer.gameObject.SetActive(false);
                         tapToNext.gameObject.SetActive(false);
+                        watchAdsButton.gameObject.SetActive(true);
                         tutorialPanel.gameObject.SetActive(false);
                         nextButton.SetActive(true);
                         exitLevel1.SetActive(true);

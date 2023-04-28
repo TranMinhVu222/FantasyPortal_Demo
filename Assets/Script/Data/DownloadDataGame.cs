@@ -242,6 +242,7 @@ public class DownloadDataGame : MonoBehaviour
     private void CheckDateAndSizeForLoad(string nameFile)
     {
         checkGetSize = false;
+        Debug.LogError("check file name: " + nameFile);
         switch (nameFile)
         {
             case "audioclip":
@@ -377,6 +378,7 @@ public class DownloadDataGame : MonoBehaviour
             PlayerPrefs.SetString(dateFile, date);
             updateFileList.Add(dateFile);
             checkGetSize = true;
+            Debug.LogError("add file " + dateFile);
         }
         else
         {
@@ -385,6 +387,7 @@ public class DownloadDataGame : MonoBehaviour
                 PlayerPrefs.SetString(dateFile, date);
                 checkGetSize = true;
                 updateFileList.Add(dateFile);
+                Debug.LogError("add file " + dateFile);
             }
         }
     }
@@ -484,6 +487,7 @@ public class DownloadDataGame : MonoBehaviour
                     client.DownloadProgressChanged += DownloadProgressChanged;
                     client.DownloadFileCompleted += new AsyncCompletedEventHandler(OnDownloadFileCompleted);
                     client.DownloadFileAsync(uri, Application.persistentDataPath + "/" + nameFolder + "/" + nameFile);
+                    Debug.LogError("start download: " +uri);
 
                     while (client.IsBusy)
                     {
