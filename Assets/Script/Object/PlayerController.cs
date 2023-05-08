@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public Transform rayPoint, exitPosition, enterPosition;
     public float rayDistance, boost, speed, horizontalMove, jumpSpeed, deathEffect = 20f;
     private int layerIndex, magicShardes;
-    public bool checkGrab, checkGround, checkWin, dead, moveLeft, moveRight, pointingButton, pressKey, pressSpace, completeWin, deathFTUE, checkColliderObj;
+    public bool checkGrab, checkGround, checkWin, dead, moveLeft, moveRight, pointingButton, pressKey, pressSpace, completeWin, deathFTUE, checkColliderObj, xEnterPortal,xEntryPortal;
     public Level unlockLevel;
     public string nameScene, sceneNextLevel, SceneGameToLoadAB;
     public AudioManager audioManager;
@@ -29,6 +29,10 @@ public class PlayerController : MonoBehaviour
     {
         get { return transform.position;  }
     }
+
+    private static PlayerController instance;
+    public static PlayerController Instance { get => instance; }
+    
     private void Awake()
     {
         rb = transform.GetComponent<Rigidbody2D>();
@@ -37,6 +41,11 @@ public class PlayerController : MonoBehaviour
         moveLeft = false;
         moveRight = false;
         gameOverPanel.SetActive(false);
+        if (instance != null)
+        {
+            Debug.LogError("Error !!!");
+        }
+        instance = this;
         // noCastSpell.SetActive(false);
     }
     
@@ -305,12 +314,20 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("EnterPortal") && entryPortal.activeInHierarchy && enterPortal.activeInHierarchy)
         {
             transform.position = exitPosition.position;
-            rb.AddForce(exitPosition.localPosition * boost);
+            if (xEntryPortal)
+            {
+                Debug.Log("buff");
+                rb.AddForce(exitPosition.localPosition * boost);
+            }
         }
         if (other.gameObject.CompareTag("EntryPortal") && entryPortal.activeInHierarchy && enterPortal.activeInHierarchy)
         {
             transform.position = enterPosition.position;
-            rb.AddForce(enterPosition.localPosition * boost);
+            if (xEnterPortal)
+            {
+                rb.AddForce(enterPosition.localPosition * boost);
+                Debug.Log("buff");
+            }
         }
 
         if (other.gameObject.CompareTag("DeathZone"))

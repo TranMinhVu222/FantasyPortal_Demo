@@ -286,7 +286,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 46187110}
-  - component: {fileID: 46187109}
   - component: {fileID: 46187111}
   m_Layer: 0
   m_Name: Ads
@@ -295,19 +294,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &46187109
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 46187108}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92657316d75e3404fb467cf7acb0c074, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  appKey: 17f491ebd
 --- !u!4 &46187110
 Transform:
   m_ObjectHideFlags: 0
@@ -14230,7 +14216,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d92dc8112e994969a37d706dc6645e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starReward: 0
   boosterReward: 1
   checkMultiply2Stars: 0
 --- !u!114 &1947040421

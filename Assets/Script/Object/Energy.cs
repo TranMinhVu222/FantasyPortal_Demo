@@ -125,14 +125,30 @@ public class Energy : MonoBehaviour
                 {
                     enterPortal.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                     enterPosition.localPosition = new Vector3(0f, direction.y * 20f, 0);
-                    // Debug.Log("ngang " + angle);
+                    if (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg > 0)
+                    {
+                        PlayerController.Instance.xEnterPortal = true;
+                    }
+                    else
+                    {
+                        PlayerController.Instance.xEnterPortal = false;
+                    }
+                    Debug.Log("ngang " + Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
                 }
 
                 if (currentPortal == Portal.EntryPortal)
                 {
                     entryPortal.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                     entryPosition.localPosition = new Vector3(0f, direction.y * 20f, 0);
-                    // Debug.Log("ngang " + angle);
+                    if (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg > 0)
+                    {
+                        PlayerController.Instance.xEntryPortal = true;
+                    }
+                    else
+                    {
+                        PlayerController.Instance.xEntryPortal = false;
+                    }
+                    Debug.Log("ngang " + Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
                 }
             }
             else
@@ -141,6 +157,7 @@ public class Energy : MonoBehaviour
                 {
                     enterPortal.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
                     enterPosition.localPosition = new Vector3(0f, direction.x * -18f, 0f);
+                    PlayerController.Instance.xEnterPortal = false;
                     // Debug.Log("doc " + angle);
                 }
 
@@ -148,6 +165,7 @@ public class Energy : MonoBehaviour
                 {
                     entryPortal.transform.rotation = Quaternion.Euler(0f, 0f, 90f);
                     entryPosition.localPosition = new Vector3(0f, direction.x * -18f, 0f);
+                    PlayerController.Instance.xEntryPortal = false;
                     // Debug.Log("doc " + angle);
                 }
             }

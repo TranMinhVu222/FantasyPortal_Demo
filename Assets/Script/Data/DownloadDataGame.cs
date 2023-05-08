@@ -174,6 +174,7 @@ public class DownloadDataGame : MonoBehaviour
 
     private IEnumerator SaveLoadFileJSON(string url)
     {
+        Debug.Log(url);
         UnityWebRequest unityWebRequest = UnityWebRequest.Get(url);
         unityWebRequest.SendWebRequest();
         while (!unityWebRequest.isDone)
@@ -241,8 +242,8 @@ public class DownloadDataGame : MonoBehaviour
     }
     private void CheckDateAndSizeForLoad(string nameFile)
     {
+        Debug.Log(nameFile);
         checkGetSize = false;
-        Debug.LogError("check file name: " + nameFile);
         switch (nameFile)
         {
             case "audioclip":
@@ -378,7 +379,6 @@ public class DownloadDataGame : MonoBehaviour
             PlayerPrefs.SetString(dateFile, date);
             updateFileList.Add(dateFile);
             checkGetSize = true;
-            Debug.LogError("add file " + dateFile);
         }
         else
         {
@@ -387,7 +387,6 @@ public class DownloadDataGame : MonoBehaviour
                 PlayerPrefs.SetString(dateFile, date);
                 checkGetSize = true;
                 updateFileList.Add(dateFile);
-                Debug.LogError("add file " + dateFile);
             }
         }
     }
@@ -406,23 +405,14 @@ public class DownloadDataGame : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < updateFileList.Count; i++)
-            {
-                if (updateFileList[countDownload] == "PurchaseDatas.json")
-                {
-                    CheckFile("File JSON", updateFileList[countDownload]);
-                }
-                else
-                {
-                    CheckFile("File AB", updateFileList[countDownload]);
-                }
-            }
+            CheckFile("File AB", updateFileList[countDownload]);
         }
     }
 
     void CheckFile(string folder, string nameFile)
     {
         //initialize storage reference
+        Debug.Log(nameFile);
         storage = FirebaseStorage.DefaultInstance;
         storageReference = storage.GetReferenceFromUrl("gs://fantasy-portal-92666532.appspot.com");
         //get reference of assetbundle
@@ -438,6 +428,7 @@ public class DownloadDataGame : MonoBehaviour
                 }
                 progressBarPar.SetActive(true);
                 percentText.SetActive(true);
+                Debug.LogWarning(nameFile);
                 StartCoroutine(DownloadFile(Convert.ToString(task.Result),nameFile, folder));
             }
             else
@@ -456,49 +447,72 @@ public class DownloadDataGame : MonoBehaviour
     
     IEnumerator DownloadFile(string url, string nameFile, string nameFolder)
     {
+        Debug.LogWarning(url);
         string urlDownload = url;
-        UnityWebRequest unityWebRequest = UnityWebRequest.Get(urlDownload);
-        unityWebRequest.SendWebRequest();
-        while (!unityWebRequest.isDone)
+        if (!Directory.Exists(Application.persistentDataPath + "/"+nameFolder))
         {
-            yield return null;
+            Directory.CreateDirectory(Application.persistentDataPath + "/"+nameFolder);
         }
-
-        if (unityWebRequest.result == UnityWebRequest.Result.Success)
+        if (!File.Exists(Path.Combine(Application.persistentDataPath, nameFolder + "/" + nameFile)))
         {
-            if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError ||
-                unityWebRequest.result == UnityWebRequest.Result.ProtocolError)
-            {
-                warningPanel.SetActive(true);
-            }
-            else
-            {
-                if (!Directory.Exists(Application.persistentDataPath + "/"+nameFolder))
-                {
-                    Directory.CreateDirectory(Application.persistentDataPath + "/"+nameFolder);
-                }
-                if (!File.Exists(Path.Combine(Application.persistentDataPath, nameFolder + "/" + nameFile)))
-                {
                     
-                    Uri uri = new Uri(urlDownload);
+            Uri uri = new Uri(urlDownload);
 
-                    WebClient client = new WebClient();
+            WebClient client = new WebClient();
                     
-                    client.DownloadProgressChanged += DownloadProgressChanged;
-                    client.DownloadFileCompleted += new AsyncCompletedEventHandler(OnDownloadFileCompleted);
-                    client.DownloadFileAsync(uri, Application.persistentDataPath + "/" + nameFolder + "/" + nameFile);
-                    Debug.LogError("start download: " +uri);
+            client.DownloadProgressChanged += DownloadProgressChanged;
+            client.DownloadFileCompleted += new AsyncCompletedEventHandler(OnDownloadFileCompleted);
+            client.DownloadFileAsync(uri, Application.persistentDataPath + "/" + nameFolder + "/" + nameFile);
 
-                    while (client.IsBusy)
-                    {
-                        checkCompleted = false;
-                        yield return null;
-                    }
-
-                    checkCompleted = true;
-                }
+            while (client.IsBusy)
+            {
+                checkCompleted = false;
+                yield return null;
             }
+
+            checkCompleted = true;
         }
+        // UnityWebRequest unityWebRequest = UnityWebRequest.Get(urlDownload);
+        // unityWebRequest.SendWebRequest();
+        // while (!unityWebRequest.isDone)
+        // {
+        //     yield return null;
+        // }
+        //
+        // if (unityWebRequest.result == UnityWebRequest.Result.Success)
+        // {
+        //     if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError ||
+        //         unityWebRequest.result == UnityWebRequest.Result.ProtocolError)
+        //     {
+        //         warningPanel.SetActive(true);
+        //     }
+        //     else
+        //     {
+        //         if (!Directory.Exists(Application.persistentDataPath + "/"+nameFolder))
+        //         {
+        //             Directory.CreateDirectory(Application.persistentDataPath + "/"+nameFolder);
+        //         }
+        //         if (!File.Exists(Path.Combine(Application.persistentDataPath, nameFolder + "/" + nameFile)))
+        //         {
+        //             
+        //             Uri uri = new Uri(urlDownload);
+        //
+        //             WebClient client = new WebClient();
+        //             
+        //             client.DownloadProgressChanged += DownloadProgressChanged;
+        //             client.DownloadFileCompleted += new AsyncCompletedEventHandler(OnDownloadFileCompleted);
+        //             client.DownloadFileAsync(uri, Application.persistentDataPath + "/" + nameFolder + "/" + nameFile);
+        //
+        //             while (client.IsBusy)
+        //             {
+        //                 checkCompleted = false;
+        //                 yield return null;
+        //             }
+        //
+        //             checkCompleted = true;
+        //         }
+        //     }
+        // }
     }
     
     void OnDownloadFileCompleted(object sender, AsyncCompletedEventArgs asyncCompletedEventArgs)
@@ -511,12 +525,6 @@ public class DownloadDataGame : MonoBehaviour
                 temp3 = 0;
                 DownloadFiles(countDownloadFile);
             }
-            
-            // else if (countDownloadFile == updateFileList.Count && checkCompleted)
-            // {
-            //     LoadAssetBundle();
-            // }
-        
     }
     private void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
     {
