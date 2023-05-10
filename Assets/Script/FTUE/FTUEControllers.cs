@@ -19,9 +19,9 @@ public class FTUEControllers : MonoBehaviour
         canMove;
     public Vector2 startVector, endVector;
     private int countNext, countGrab;
-    public GameObject upPanel, movePanel, manaBar, monsterStatus, magicShardStatus, pauseButton,winPanel, noButton,target1,target2,target3, target4, 
+    public GameObject upPanel, movePanel, manaBar, monsterStatus, magicShardStatus, pauseButton,winPanel, noButton,target1,target2,target3, target4,pointer, 
         rightButton, leftButton, magicShards, grabButton, victoryZone, menuButton, unTrajectory,jumpPlant,exitMenu,nextButton,replayButton,watchAdsButton, enterPortal, entryPortal;
-    public Image welcomeImg, blurImg, pointer, tutorialPanel;
+    public Image welcomeImg, blurImg, tutorialPanel;
     public Text TapToNext;
     
     public MagicShard magicShard;
@@ -203,13 +203,17 @@ public class FTUEControllers : MonoBehaviour
                 time += Time.deltaTime;
                 time %= timeSE;
                 pointer.gameObject.transform.position = Parabola(startVector, endVector * 10f, height, time / timeSE);
-                StartCoroutine(Delay());
-                if ((Input.touchCount > 1 ||  Input.GetMouseButton(0) || Input.GetMouseButtonDown(0)) && delayCast)
+                
+                if ((Input.touchCount > 0 ||  Input.GetMouseButton(0) || Input.GetMouseButtonDown(0)))
                 {
-                    unTrajectory.SetActive(false);
-                    tutorialPanel.gameObject.SetActive(false);
                     pointer.gameObject.SetActive(false);
                     TapToNext.gameObject.SetActive(false);
+                    StartCoroutine(Delay());
+                    if (delayCast)
+                    {
+                        tutorialPanel.gameObject.SetActive(false);
+                        unTrajectory.SetActive(false);
+                    }
                 }
 
                 if (!target1.activeSelf && !target2.activeSelf)

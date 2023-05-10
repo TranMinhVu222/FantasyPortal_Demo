@@ -18,6 +18,7 @@ public class InitializeUnityServices : MonoBehaviour
         }
         catch (Exception exception)
         {
+            Debug.Log(exception);
             // An error occurred during services initialization.
         }
     }

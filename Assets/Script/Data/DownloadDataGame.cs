@@ -29,9 +29,8 @@ public class DownloadDataGame : MonoBehaviour
     private double subtotalSize,totalSize, progress, totalBytes, bytes, bytesDownloading, temp1, temp2,temp3, progressDownloaded, progressDataText;
     private string dateOfFile, sizeOfFile;
     public Text downloadingText, progressPercent, downloadAssetBundleText;
-    public Image progressBar;
-    public GameObject loadingPanel, warningPanel, progressBarPar, percentText;
-    private bool checkGetSize;
+    public GameObject loadingPanel, warningPanel, progressBarPar, percentText, progressBar;
+    private bool checkGetSize, checkDownloadJSON;
     private string nameFile = "audioclip";
     private string[] fileInFireBaseArray =
         {"audioclip", "prefabbundle", "materialbundle", "texturebundle", "scenebundle"};
@@ -69,6 +68,7 @@ public class DownloadDataGame : MonoBehaviour
         checkGetSize = true;
         countDownloadFile = 0;
         chek = true;
+        checkDownloadJSON = false;
         // CheckDateAndSizeForLoad(nameFile);
         // RequestDownloadFileJSON(storageReference);
         StorageReference fileJSON = storageReference.Child("PurchaseDatas.json");
@@ -160,6 +160,8 @@ public class DownloadDataGame : MonoBehaviour
                         {
                             progressBarPar.SetActive(true);
                             percentText.SetActive(true);
+                            checkDownloadJSON = true;
+                            PlayerPrefs.SetString("Present Version", dateJSON);
                             StartCoroutine(SaveLoadFileJSON(url));
                         }
                         else
@@ -174,7 +176,6 @@ public class DownloadDataGame : MonoBehaviour
 
     private IEnumerator SaveLoadFileJSON(string url)
     {
-        Debug.Log(url);
         UnityWebRequest unityWebRequest = UnityWebRequest.Get(url);
         unityWebRequest.SendWebRequest();
         while (!unityWebRequest.isDone)
@@ -187,7 +188,7 @@ public class DownloadDataGame : MonoBehaviour
                 downloadingText.text = "Downloading " + bytes + "KB" + "/" + totalBytes + "KB";
             }
             
-            progressBar.fillAmount = unityWebRequest.downloadProgress;
+            progressBar.transform.localScale = new Vector3((unityWebRequest.downloadProgress),1f,0);
             progressPercent.text = progress + "%";
             yield return null;
         }
@@ -204,7 +205,7 @@ public class DownloadDataGame : MonoBehaviour
             // tai xong va co ket noi mang
             else
             {
-                progressBar.fillAmount = 1;
+                progressBar.transform.localScale = new Vector3(1,1,0);
                 progressPercent.text = "100%";
                 downloadingText.text = "Downloading " +  Math.Round((double)Convert.ToInt64(sizeJSON) / 1048576, 2) + "MB" + "/" +  Math.Round((double)Convert.ToInt64(sizeJSON) / 1048576, 2) + "MB";
                 UseFileJSON(unityWebRequest);
@@ -223,7 +224,7 @@ public class DownloadDataGame : MonoBehaviour
         tempUpgradeList = JsonUtility.FromJson<UpgradeList>(fileDataTemp);
         GUIUtility.systemCopyBuffer = dir;
         fullPath = Application.persistentDataPath + SaveDirectory + FileName;
-        if (!File.Exists(fullPath))
+        if (!File.Exists(fullPath) || checkDownloadJSON)
         {
             fileDataTemp = unityWebRequest.downloadHandler.text;
             File.WriteAllText(dir + FileName, fileDataTemp);
@@ -242,7 +243,6 @@ public class DownloadDataGame : MonoBehaviour
     }
     private void CheckDateAndSizeForLoad(string nameFile)
     {
-        Debug.Log(nameFile);
         checkGetSize = false;
         switch (nameFile)
         {
@@ -412,7 +412,6 @@ public class DownloadDataGame : MonoBehaviour
     void CheckFile(string folder, string nameFile)
     {
         //initialize storage reference
-        Debug.Log(nameFile);
         storage = FirebaseStorage.DefaultInstance;
         storageReference = storage.GetReferenceFromUrl("gs://fantasy-portal-92666532.appspot.com");
         //get reference of assetbundle
@@ -428,7 +427,6 @@ public class DownloadDataGame : MonoBehaviour
                 }
                 progressBarPar.SetActive(true);
                 percentText.SetActive(true);
-                Debug.LogWarning(nameFile);
                 StartCoroutine(DownloadFile(Convert.ToString(task.Result),nameFile, folder));
             }
             else
@@ -447,7 +445,6 @@ public class DownloadDataGame : MonoBehaviour
     
     IEnumerator DownloadFile(string url, string nameFile, string nameFolder)
     {
-        Debug.LogWarning(url);
         string urlDownload = url;
         if (!Directory.Exists(Application.persistentDataPath + "/"+nameFolder))
         {
@@ -538,9 +535,9 @@ public class DownloadDataGame : MonoBehaviour
             progressDataText = Math.Round(progress * 100f / subtotalSize,2);
             progressPercent.text = progressDataText + "%";
             downloadingText.text = "Downloading " + Math.Round(progress / 1048576, 2) + "MB" +  "/" +  Math.Round(subtotalSize/ 1048576, 2) + "MB";
-            progressBar.fillAmount = (float)Math.Round(progress/subtotalSize,1);
+            progressBar.transform.localScale = new Vector3((float)Math.Round(progress/subtotalSize,1),1,0);
             // Debug.Log(Math.Round(percent,2)+"%");
-            if (progressBar.fillAmount== 1)
+            if (progressBar.transform.localScale.x == 1f)
             {
                 LoadAssetBundle();
                 StartCoroutine(FinishLoading());

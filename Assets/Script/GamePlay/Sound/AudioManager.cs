@@ -109,6 +109,7 @@ public class AudioManager : MonoBehaviour
         }
         catch (Exception e)
         {
+            Debug.Log(e);
             sfxSource.PlayOneShot(audioNULL);
         }
     }

@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 52690201}
   - component: {fileID: 52690200}
   m_Layer: 5
-  m_Name: Bar
+  m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -405,16 +405,16 @@ RectTransform:
   m_GameObject: {fileID: 52690198}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1959660110}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 4913, y: 49}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 47, y: 0}
+  m_SizeDelta: {x: 4867.915, y: 46.017105}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &52690200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,11 +436,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 25786e893d376024586c1dcc288af13e, type: 3}
-  m_Type: 3
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -2616,7 +2616,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d92dc8112e994969a37d706dc6645e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starReward: 1
   boosterReward: 1
   checkMultiply2Stars: 0
 --- !u!114 &247553788
@@ -3728,7 +3727,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 454}
-  m_SizeDelta: {x: 302.6, y: 112.4}
+  m_SizeDelta: {x: 241.89, y: 112.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &304304090
 GameObject:
@@ -5911,8 +5910,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1733, y: -58}
-  m_SizeDelta: {x: 110, y: 110}
+  m_AnchoredPosition: {x: 1689.6409, y: -100.612885}
+  m_SizeDelta: {x: 191.1902, y: 187.5106}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &497373312
 MonoBehaviour:
@@ -6213,7 +6212,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d92dc8112e994969a37d706dc6645e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starReward: 0
   boosterReward: 1
   checkMultiply2Stars: 0
 --- !u!114 &505680616
@@ -6483,8 +6481,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 46.999023, y: -23.000244}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 88.75708, y: -33.428772}
+  m_SizeDelta: {x: 162.0622, y: 162.7408}
   m_Pivot: {x: 1.11, y: 0.45}
 --- !u!114 &523626819
 MonoBehaviour:
@@ -6643,7 +6641,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d92dc8112e994969a37d706dc6645e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starReward: 0
   boosterReward: 1
   checkMultiply2Stars: 0
 --- !u!114 &527350143
@@ -11785,11 +11782,11 @@ MonoBehaviour:
   downloadingText: {fileID: 1621854104}
   progressPercent: {fileID: 2026035296}
   downloadAssetBundleText: {fileID: 285968676}
-  progressBar: {fileID: 52690200}
   loadingPanel: {fileID: 2034282023}
   warningPanel: {fileID: 490402835}
   progressBarPar: {fileID: 291647406}
   percentText: {fileID: 2026035294}
+  progressBar: {fileID: 52690198}
   updateFileList: []
   sizeUpdateList: []
 --- !u!1 &857636886
@@ -12103,7 +12100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d92dc8112e994969a37d706dc6645e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starReward: 0
   boosterReward: 1
   checkMultiply2Stars: 0
 --- !u!114 &900391089
@@ -16216,8 +16212,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -64, y: -68}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -88.75745, y: -114.56326}
+  m_SizeDelta: {x: 164.813, y: 167.9289}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1377042591
 MonoBehaviour:
@@ -26409,7 +26405,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d92dc8112e994969a37d706dc6645e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starReward: 0
   boosterReward: 1
   checkMultiply2Stars: 0
 --- !u!114 &1712907360
@@ -27597,8 +27592,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -61, y: -62}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -107, y: -103}
+  m_SizeDelta: {x: 204.2508, y: 192.6675}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1821242779
 MonoBehaviour:
@@ -28017,7 +28012,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d92dc8112e994969a37d706dc6645e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starReward: 0
   boosterReward: 1
   checkMultiply2Stars: 0
 --- !u!1 &1843379536
@@ -28810,8 +28804,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2, y: 0}
-  m_SizeDelta: {x: 5249, y: 143.58}
+  m_AnchoredPosition: {x: 8.776207, y: 0}
+  m_SizeDelta: {x: 4959.2295, y: 143.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1959660111
 MonoBehaviour:
@@ -28834,7 +28828,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: ccd95534f15ed1a438ae1fddd52fe493, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -29747,7 +29741,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d92dc8112e994969a37d706dc6645e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starReward: 1
   boosterReward: 1
   checkMultiply2Stars: 0
 --- !u!1 &2049694701

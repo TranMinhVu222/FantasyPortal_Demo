@@ -20,6 +20,7 @@ public class Trajectory: MonoBehaviour
     public Image manaBar;
     public int manaTotal;
     public AudioManager audioManager;
+    public RectTransform canvasRectTransform;
     void Start()
     {
         lr = GetComponent<LineRenderer>();
@@ -56,9 +57,9 @@ public class Trajectory: MonoBehaviour
                 enegryPortal = poolEnergy.GetEnergy();
                 enegryPortal.transform.position = transform.position + energyPos;
                 lr.enabled = true;
-
+                
                 Vector2 endDragPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
+                
                 Vector2 _velocity = (endDragPos - startDragPos) * power;
 
                 Vector2[] trajectory = Plot(rb, (Vector2)enegryPortal.transform.position, _velocity, 500);
@@ -103,7 +104,10 @@ public class Trajectory: MonoBehaviour
                     }
                 }
                 enegryPortal.GetComponent<Rigidbody2D>().velocity = _velocity;
-                currentMana -= 1f;
+                if (PlayerPrefs.GetInt("Complete Menu FTUE") != 0)
+                {
+                    currentMana -= 1f;
+                }
                 manaBar.fillAmount = currentMana / manaTotal;
             }
         }

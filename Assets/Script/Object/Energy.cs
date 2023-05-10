@@ -133,7 +133,6 @@ public class Energy : MonoBehaviour
                     {
                         PlayerController.Instance.xEnterPortal = false;
                     }
-                    Debug.Log("ngang " + Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
                 }
 
                 if (currentPortal == Portal.EntryPortal)
@@ -148,7 +147,6 @@ public class Energy : MonoBehaviour
                     {
                         PlayerController.Instance.xEntryPortal = false;
                     }
-                    Debug.Log("ngang " + Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
                 }
             }
             else
