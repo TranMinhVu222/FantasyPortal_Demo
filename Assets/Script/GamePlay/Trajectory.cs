@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class Trajectory: MonoBehaviour
 {
     public float power = 5f;
-
+    private bool checkUn, checki;
     LineRenderer lr;
     Rigidbody2D rb;
     Vector2 startDragPos;
@@ -28,15 +28,29 @@ public class Trajectory: MonoBehaviour
         manaBar.fillAmount = 1f;
         manaTotal = PlayerPrefs.GetInt("Total Mana");
         currentMana = manaTotal;
+        checkUn = false;
+        checki = false;
     }
 
     private float currentMana;
     void Update()
     {
-        if (UI.GetComponent<IsTouchUI>().checkTouch == false && currentMana > 0f)
+        if (PlayerPrefs.GetInt("Completed FTUE") == 0)
+        {
+            if (FTUEControllers.Instance.unTrajectory.activeInHierarchy)
+            {
+                checkUn = true;
+            }
+            else
+            {
+                checkUn = false;
+            }
+        }
+        if (UI.GetComponent<IsTouchUI>().checkTouch == false && currentMana > 0f && !checkUn)
         {
             if (Input.GetMouseButtonDown(0))
             {
+                Debug.Log("VAR");
                 startDragPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 energyPos = new Vector3(0, 0.3f, 0);
                 enegryPortal = poolEnergy.GetEnergy();
@@ -44,15 +58,17 @@ public class Trajectory: MonoBehaviour
                 UI.GetComponent<IsTouchUI>().countTouchUI = 2;
                 cancelSkill.checkCancel = false;
                 cancelButton.gameObject.SetActive(true);
+                checki = true;
             }
 
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) && checki)
             {
                 if (EventSystem.current.IsPointerOverGameObject())
                 {
                     return;
                 }
-                
+
+                Debug.Log("sd");
                 energyPos = new Vector3(0, 0.3f, 0);
                 enegryPortal = poolEnergy.GetEnergy();
                 enegryPortal.transform.position = transform.position + energyPos;
@@ -108,6 +124,8 @@ public class Trajectory: MonoBehaviour
                 {
                     currentMana -= 1f;
                 }
+
+                checki = false;
                 manaBar.fillAmount = currentMana / manaTotal;
             }
         }

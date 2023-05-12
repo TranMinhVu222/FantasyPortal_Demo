@@ -34,8 +34,18 @@ public class FTUEControllers : MonoBehaviour
     public IsTouchUI isTouchUI;
     public Text tutorialText;
     // Start is called before the first frame update
+    private static FTUEControllers instance;
+    public static FTUEControllers Instance
+    {
+        get => instance;
+    }
     private void Awake()
     {
+        if (instance != null)
+        {
+            Debug.LogError("Error !!!");
+        }
+        instance = this;
         if (PlayerPrefs.GetInt("Completed FTUE") == 1)
         {
             SceneManager.UnloadSceneAsync(0);
@@ -198,6 +208,7 @@ public class FTUEControllers : MonoBehaviour
                 }
                 break;
             case State.CastSpell:
+                unTrajectory.SetActive(false);
                 tutorialText.text = "Swipe the screen to shoot the energy to open the portal at the arrow position";
                 pointer.gameObject.SetActive(true);
                 time += Time.deltaTime;
@@ -209,11 +220,7 @@ public class FTUEControllers : MonoBehaviour
                     pointer.gameObject.SetActive(false);
                     TapToNext.gameObject.SetActive(false);
                     StartCoroutine(Delay());
-                    if (delayCast)
-                    {
-                        tutorialPanel.gameObject.SetActive(false);
-                        unTrajectory.SetActive(false);
-                    }
+                    tutorialPanel.gameObject.SetActive(false);
                 }
 
                 if (!target1.activeSelf && !target2.activeSelf)
