@@ -19,6 +19,7 @@ public class StoreManager : MonoBehaviour
     }
     public string environment = "production";
     
+    //được gọi trong sự kiện onclick ở từng button mua thành công trong store
     public void On2StarsPurchaseComplete()
     {
         starPurchase += 2;
@@ -34,4 +35,5 @@ public class StoreManager : MonoBehaviour
         starPurchase += 50;
         PlayerPrefs.SetInt("Star Purchase",starPurchase);
     }
+    //--------------------------------------------------------------------------
 }

@@ -154,8 +154,7 @@ public class AssetBundleManager : MonoBehaviour
         {
             SpriteControllers.Instance.GetSpriteBundle(spritesList);
         }
-        // SpriteControllers.Instance.GetSpriteBundle(spritesList);
-        
+
         scene = sceneBundle.GetAllScenePaths();
         
         //---- Get Audio Clip from asset bundle

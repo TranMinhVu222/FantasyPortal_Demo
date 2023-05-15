@@ -61,6 +61,7 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener, IU
         Advertisement.Load("Interstitial_Android", this);
     }
 
+    //Được gọi trong sự kiện OnClick trong button để load Ads
     public void LoadRewardedAd()
     {
         Advertisement.Load("Rewarded_Android", this);
@@ -72,6 +73,7 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener, IU
         // Advertisement.Show(placementId,this);
     }
 
+    //Được gọi trong sự kiện OnClick trong button đồng ý xem để show Ads
     public void PlayRewardAds()
     {
         Advertisement.Show("Rewarded_Android",this);
@@ -133,6 +135,7 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener, IU
 
     }
 
+    //
     public void RewardPlayer(string type)
     {
         switch (type)
@@ -148,11 +151,8 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener, IU
                 break;
         }
     }
-    // void OnDestroy()
-    // {
-    //     // Clean up the button listeners:
-    //     _showAdButton.onClick.RemoveAllListeners();
-    // }
+    
+    //Tên của loại thưởng set trong nút button
     public void NameTypeReward(string name)
     {
         typeOfReward = name;
