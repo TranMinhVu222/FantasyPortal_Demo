@@ -73,14 +73,17 @@ public class MenuEvent : MonoBehaviour
     {
         if (loadingPanel.activeInHierarchy)
         {
-            if (!PlayerPrefs.HasKey("Completed FTUE") || PlayerPrefs.GetInt("Completed FTUE") == 0)
-            {
-                effect = false;
-            }
-            else
-            {
-                effect = true;   
-            }
+            // if (!PlayerPrefs.HasKey("Completed FTUE") || PlayerPrefs.GetInt("Completed FTUE") == 0)
+            // {
+            //     Debug.Log("2");
+            //     effect = false;
+            // }
+            // else
+            // {
+            //     Debug.Log("1");
+            //     effect = true;   
+            // }
+            effect = true;   
         }
 
         if (effect)
@@ -88,6 +91,7 @@ public class MenuEvent : MonoBehaviour
             StartCoroutine(FadeCanvasGroup(uiElement, uiElement.alpha, 0));
         }
 
+        Debug.Log(uiElement.alpha);
         if (uiElement.alpha == 0)
         {
             holdingPanel.SetActive(false);

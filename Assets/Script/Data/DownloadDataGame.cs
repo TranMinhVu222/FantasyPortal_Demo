@@ -524,7 +524,6 @@ public class DownloadDataGame : MonoBehaviour
             progressDataText = Math.Round(progress * 100f / subtotalSize,2);
             progressPercent.text = progressDataText + "%";
             downloadingText.text = "Downloading " + Math.Round(progress / 1048576, 2) + "MB" +  "/" +  Math.Round(subtotalSize/ 1048576, 2) + "MB";
-            Debug.Log((float)Math.Round(progress/subtotalSize,2));
             progressBar.transform.localScale = new Vector3((float)Math.Round(progress/subtotalSize,2),1,0);
             // Debug.Log(Math.Round(percent,2)+"%");
             if (progressBar.transform.localScale.x == 1f)
