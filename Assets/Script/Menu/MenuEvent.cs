@@ -76,6 +76,7 @@ public class MenuEvent : MonoBehaviour
             if (!PlayerPrefs.HasKey("Completed FTUE") || PlayerPrefs.GetInt("Completed FTUE") == 0)
             {
                 effect = false;
+                Debug.Log("VAR");
             }
             else
             {
@@ -85,9 +86,11 @@ public class MenuEvent : MonoBehaviour
 
         if (effect)
         {
+            Debug.Log("1");
             StartCoroutine(FadeCanvasGroup(uiElement, uiElement.alpha, 0));
         }
 
+        Debug.Log(uiElement.alpha + " 4");
         if (uiElement.alpha == 0)
         {
             holdingPanel.SetActive(false);
@@ -108,6 +111,7 @@ public class MenuEvent : MonoBehaviour
     }
     IEnumerator FadeCanvasGroup(CanvasGroup canvasGroup, float start, float end, float lerpTime = 1f)
     {
+        Debug.Log("2");
         float timeStartedLerp = Time.time;
         float timeSinceStarted = Time.time - timeStartedLerp;
         float percentageComplete = timeSinceStarted / lerpTime;
@@ -117,13 +121,16 @@ public class MenuEvent : MonoBehaviour
             percentageComplete = timeSinceStarted / lerpTime;
 
             float currentValue = Mathf.Lerp(start, end, percentageComplete);
-            
+
+            Debug.Log(currentValue);
             canvasGroup.alpha = currentValue;
 
             if (percentageComplete >= 1)
             {
                 break;
             }
+
+            Debug.Log("3");
             yield return new WaitForEndOfFrame();
         }
         progressBar.fillAmount = 1f;

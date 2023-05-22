@@ -189,9 +189,8 @@ public class AssetBundleManager : MonoBehaviour
         }
         else
         {
-            loadingPanel.SetActive(false);    
+            loadingPanel.SetActive(false);
         }
-        
     }
     
     //Use scene from asset bundle
@@ -205,7 +204,6 @@ public class AssetBundleManager : MonoBehaviour
             {
                 SceneManager.LoadScene(scene[i]);
             }
-
         }
         // SceneManager.LoadSceneAsync(scene[index]); 
     }
