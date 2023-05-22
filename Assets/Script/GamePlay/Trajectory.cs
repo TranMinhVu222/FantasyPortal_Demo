@@ -50,7 +50,6 @@ public class Trajectory: MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("VAR");
                 startDragPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 energyPos = new Vector3(0, 0.3f, 0);
                 enegryPortal = poolEnergy.GetEnergy();
