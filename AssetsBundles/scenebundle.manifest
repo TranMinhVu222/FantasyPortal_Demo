@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1710381555
+CRC: 2042451427
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f0cd2dc960a7ffe5da9c237aefee7be8
+    Hash: 7741f32825252d1dbbdf53abb089d7e0
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 75d47802226a4fe8070bcbbabad49fb2
+    Hash: 34997888bb368232c716399fbdebddfe
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -57,6 +57,8 @@ ClassTypes:
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 101143e76fdf5420eb6c841c1a205ab3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ea42f0f9f7c8b23468a6123dfdd5097c, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: b18ea5776b4be493e91ff212fafa3994, type: 3}
 - Class: 114
@@ -155,12 +157,22 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
+- Assets/Scene/Level 6.unity
 - Assets/Scene/FTUE.unity
-- Assets/Scene/Level3.unity
-- Assets/Scene/Level2.unity
-- Assets/Scene/Level5.unity
-- Assets/Scene/Level1.unity
-- Assets/Scene/Level4.unity
+- Assets/Scene/Level 13.unity
+- Assets/Scene/Level 3.unity
+- Assets/Scene/Level 2.unity
+- Assets/Scene/Level 7.unity
+- Assets/Scene/Level 11.unity
+- Assets/Scene/Level 4.unity
+- Assets/Scene/Level 8.unity
+- Assets/Scene/Level 15.unity
+- Assets/Scene/Level 12.unity
+- Assets/Scene/Level 9.unity
+- Assets/Scene/Level 14.unity
+- Assets/Scene/Level 5.unity
+- Assets/Scene/Level 1.unity
+- Assets/Scene/Level 10.unity
 Dependencies:
-- /Users/gearinc/InternProject/FantasyPortal_Demo/Assets/../AssetsBundles/prefabbundle
-- /Users/gearinc/InternProject/FantasyPortal_Demo/Assets/../AssetsBundles/texturebundle
+- C:/Users/ASUS/Desktop/FantasyPortal_Demo/Assets/../AssetsBundles/prefabbundle
+- C:/Users/ASUS/Desktop/FantasyPortal_Demo/Assets/../AssetsBundles/texturebundle

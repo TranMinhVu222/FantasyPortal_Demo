@@ -156,9 +156,14 @@ public class AssetBundleManager : MonoBehaviour
         }
 
         scene = sceneBundle.GetAllScenePaths();
-        
+        foreach (string sceneName in scene)
+        {
+            string nameSceneOA = Path.GetFileNameWithoutExtension(sceneName);
+            Debug.Log(nameSceneOA);
+        }
+
         //---- Get Audio Clip from asset bundle
-        
+
         if (audioClipArray != null)
         {
             audioClipArray = audioClipBundle.GetAllAssetNames();    
@@ -192,8 +197,17 @@ public class AssetBundleManager : MonoBehaviour
     //Use scene from asset bundle
     public void LoadScene(int index)
     {
-        // SceneManager.LoadSceneAsync(scene[index]);
-        SceneManager.LoadScene(scene[index]);
+        string level = "Level "+index;
+        for(int i = 0; i < scene.Length; i++)
+        {
+            string nameScene = Path.GetFileNameWithoutExtension(scene[i]);
+            if (level == nameScene)
+            {
+                SceneManager.LoadScene(scene[i]);
+            }
+
+        }
+        // SceneManager.LoadSceneAsync(scene[index]); 
     }
 
     //Get energy prefab. Now, it have pink material 

@@ -3,7 +3,7 @@ CRC: 3789151474
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 94b2eb5af7e4ac2a6d7d4622777eee45
+    Hash: 47618e67d861e84e9a33048453a2cc9f
   TypeTreeHash:
     serializedVersion: 2
     Hash: 87d8350b46029255406d612579664277
@@ -24,4 +24,4 @@ Assets:
 - Assets/Prefab/EntryPortal.prefab
 - Assets/Prefab/EnterPortal.prefab
 Dependencies:
-- /Users/gearinc/InternProject/FantasyPortal_Demo/Assets/../AssetsBundles/texturebundle
+- C:/Users/ASUS/Desktop/FantasyPortal_Demo/Assets/../AssetsBundles/texturebundle

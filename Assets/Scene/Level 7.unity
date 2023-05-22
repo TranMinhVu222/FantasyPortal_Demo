@@ -4365,7 +4365,7 @@ MonoBehaviour:
     goalKillMonster: 3
     starReward: 0
   - questProgress: 1
-    goalMagicShard: 4
+    goalMagicShard: 3
     goalKillMonster: 0
     starReward: 0
   watchAdEvent: {fileID: 1947040420}
@@ -8135,7 +8135,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1174049002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.95, y: 1.7899992, z: -10}
+  m_LocalPosition: {x: -1.1300001, y: 2.1299994, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 659444896}
@@ -9294,7 +9294,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1339924850}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.553805, y: 1.6023104, z: -10}
+  m_LocalPosition: {x: 2.5578356, y: 2.0289192, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -9708,7 +9708,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1420595340}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.1, y: 4.2, z: 0}
+  m_LocalPosition: {x: -1.28, y: 4.54, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children:
   - {fileID: 396059929}
