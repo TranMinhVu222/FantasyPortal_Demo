@@ -179,7 +179,7 @@ public class AssetBundleManager : MonoBehaviour
         //Finish Load Asset Bundle
         if (!PlayerPrefs.HasKey("Completed FTUE") || PlayerPrefs.GetInt("Completed FTUE") == 0)
         {
-            LoadScene(0);
+            SceneManager.LoadSceneAsync(scene[0]); 
             FTUE.SetActive(true);
         }
         if (PlayerPrefs.GetInt("Complete Menu FTUE") == 1)

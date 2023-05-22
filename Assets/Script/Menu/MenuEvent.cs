@@ -73,15 +73,16 @@ public class MenuEvent : MonoBehaviour
     {
         if (loadingPanel.activeInHierarchy)
         {
-            if (!PlayerPrefs.HasKey("Completed FTUE") || PlayerPrefs.GetInt("Completed FTUE") == 0)
-            {
-                effect = false;
-                Debug.Log("VAR");
-            }
-            else
-            {
-                effect = true;   
-            }
+            // if (!PlayerPrefs.HasKey("Completed FTUE") || PlayerPrefs.GetInt("Completed FTUE") == 0)
+            // {
+            //     effect = false;
+            //     Debug.Log("VAR");
+            // }
+            // else
+            // {
+            //     effect = true;   
+            // }
+            effect = true; 
         }
 
         if (effect)
