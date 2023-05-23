@@ -152,11 +152,12 @@ public class MenuFTUE : MonoBehaviour
                 pointer.gameObject.SetActive(true);
                 pointer.transform.position = Vector3.MoveTowards(pointer.transform.position, 
                     boosterButton.transform.position, pointerSpeed * Time.deltaTime);
-                if (pointer.transform.position == boosterButton.transform.position)
+               
+                if (pointer.transform.position.x / boosterButton.transform.position.x >= 0.8f)
                 {
                     tutorialText.text = "This is a mana booster, it will help you to increase X2 the amount of mana you get when you pick up Magic Shards in this level";
                     tutorialPanel.gameObject.SetActive(true);
-                    if (Input.touchCount > 0 || Input.GetMouseButtonDown(0))
+                    if (Input.touchCount > 0 || Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
                     {
                         optionButton.SetActive(true);
                         storeButton.SetActive(true);

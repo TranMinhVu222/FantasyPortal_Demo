@@ -207,6 +207,7 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -233,7 +234,7 @@ PlayerSettings:
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
   AndroidBundleVersionCode: 28
-  AndroidMinSdkVersion: 31
+  AndroidMinSdkVersion: 19
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
   aotOptions: 
@@ -319,7 +320,7 @@ PlayerSettings:
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: '{dedicated}: Desktop/Portal.keystore'
+  AndroidKeystoreName: '{dedicated}: Downloads/Portal.keystore'
   AndroidKeyaliasName: chugaumeomeo
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
