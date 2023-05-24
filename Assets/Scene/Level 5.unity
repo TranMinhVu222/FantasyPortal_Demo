@@ -2872,7 +2872,6 @@ Transform:
   m_LocalPosition: {x: 26.64, y: 5.81, z: -1}
   m_LocalScale: {x: 0.4885855, y: 0.47869325, z: 1}
   m_Children:
-  - {fileID: 938711162}
   - {fileID: 1330795738}
   m_Father: {fileID: 960639374}
   m_RootOrder: 7
@@ -6342,11 +6341,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 938711161}
-  m_LocalRotation: {x: -0, y: -0, z: -0.6320565, w: 0.77492243}
-  m_LocalPosition: {x: -1.24, y: 1.4, z: 0}
-  m_LocalScale: {x: 0.28118858, y: 0.229936, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.864254, w: 0.50305575}
+  m_LocalPosition: {x: 238.1845, y: 47.013084, z: -1}
+  m_LocalScale: {x: 1.347155, y: 1.1225151, z: 1}
   m_Children: []
-  m_Father: {fileID: 476954942}
+  m_Father: {fileID: 103259311}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &938711163
@@ -9078,7 +9077,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 476954942}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!68 &1330795739
 EdgeCollider2D:

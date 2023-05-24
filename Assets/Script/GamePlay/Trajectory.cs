@@ -10,7 +10,6 @@ public class Trajectory: MonoBehaviour
     public float power = 5f;
     private bool checkUn, checki;
     LineRenderer lr;
-    Rigidbody2D rb;
     Vector2 startDragPos;
     private GameObject enegryPortal;
     public PoolEnergy poolEnergy;
@@ -24,7 +23,6 @@ public class Trajectory: MonoBehaviour
     void Start()
     {
         lr = GetComponent<LineRenderer>();
-        rb = GetComponent<Rigidbody2D>();
         manaBar.fillAmount = 1f;
         manaTotal = PlayerPrefs.GetInt("Total Mana");
         currentMana = manaTotal;
@@ -77,7 +75,7 @@ public class Trajectory: MonoBehaviour
                 
                 Vector2 _velocity = (endDragPos - startDragPos) * power;
 
-                Vector2[] trajectory = Plot(rb, (Vector2)enegryPortal.transform.position, _velocity, 500);
+                Vector2[] trajectory = Plot((Vector2)enegryPortal.transform.position, _velocity, 400);
 
                 lr.positionCount = trajectory.Length;
 
@@ -129,13 +127,15 @@ public class Trajectory: MonoBehaviour
             }
         }
     }
-    public Vector2[] Plot(Rigidbody2D rigidbody, Vector2 pos, Vector2 velocity, int steps)
+    public Vector2[] Plot(Vector2 pos, Vector2 velocity, int steps)
     {
         Vector2[] results = new Vector2[steps];
 
-        float timestep = Time.fixedDeltaTime / Physics2D.velocityIterations;
-        Vector2 gravityAccel = Physics2D.gravity * 1f * timestep * timestep;
-        
+        float timestep = (Time.fixedDeltaTime / 8);
+        float timeSteps = timestep * timestep;
+        Vector2 gravity = new Vector2(0.0f, -9.8f);
+        Vector2 gravityAccel = gravity * timeSteps;
+        Debug.Log( gravity + " " );
         float drag = 1f;
         Vector2 moveStep = velocity * timestep;
         for (int i = 0; i < steps; i++)
