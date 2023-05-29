@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene/MenuScene.unity
     guid: 5ba101a8fd88646f9b9538c5505990a2
+  - enabled: 1
+    path: Assets/Scene/Timeline.unity
+    guid: 6313e46201a7843c6831dfd3d37c742a
   - enabled: 0
     path: Assets/Scene/FTUE.unity
     guid: 111f1514871ea4ee38813e5441e0894c

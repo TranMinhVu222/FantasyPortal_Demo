@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
         gameOverPanel.SetActive(false);
         if (instance != null)
         {
-            Debug.LogError("Error !!!");
+            // Debug.LogError("Error !!!");
         }
         instance = this;
         // noCastSpell.SetActive(false);
@@ -255,7 +255,8 @@ public class PlayerController : MonoBehaviour
             if (PlayerPrefs.GetInt("Present Level") == AssetBundleManager.scene.Length - 1 || PlayerPrefs.GetInt("Present Level") == LevelManager.totalLevel)
             {
                 // FinishGame.Instance.ActiveGameObject();
-                finishGame.SetActive(true);
+                // finishGame.SetActive(true);
+                SceneManager.LoadScene(1);
             }
             else
             {

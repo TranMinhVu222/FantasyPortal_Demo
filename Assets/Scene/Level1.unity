@@ -8540,7 +8540,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 6cbcb63821f984798a7bd0f1882fddec, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -10203,6 +10203,8 @@ MonoBehaviour:
   completeWin: 0
   deathFTUE: 0
   checkColliderObj: 0
+  xEnterPortal: 0
+  xEntryPortal: 0
   unlockLevel: {fileID: 242454548}
   nameScene: Level1
   sceneNextLevel: Level2
@@ -10336,6 +10338,7 @@ MonoBehaviour:
   manaBar: {fileID: 33455839}
   manaTotal: 0
   audioManager: {fileID: 2030938012}
+  canvasRectTransform: {fileID: 0}
 --- !u!1 &1438075906
 GameObject:
   m_ObjectHideFlags: 0

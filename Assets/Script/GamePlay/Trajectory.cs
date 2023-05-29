@@ -10,7 +10,6 @@ public class Trajectory: MonoBehaviour
     public float power = 5f;
     private bool checkUn, checki;
     LineRenderer lr;
-    Rigidbody2D rb;
     Vector2 startDragPos;
     private GameObject enegryPortal;
     public PoolEnergy poolEnergy;
@@ -24,7 +23,6 @@ public class Trajectory: MonoBehaviour
     void Start()
     {
         lr = GetComponent<LineRenderer>();
-        rb = GetComponent<Rigidbody2D>();
         manaBar.fillAmount = 1f;
         manaTotal = PlayerPrefs.GetInt("Total Mana");
         currentMana = manaTotal;
@@ -46,16 +44,15 @@ public class Trajectory: MonoBehaviour
                 checkUn = false;
             }
         }
-        if (UI.GetComponent<IsTouchUI>().checkTouch == false && currentMana > 0f && !checkUn)
+        if (IsTouchUI.Instance.checkTouch == false && currentMana > 0f && !checkUn)
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("VAR");
                 startDragPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 energyPos = new Vector3(0, 0.3f, 0);
                 enegryPortal = poolEnergy.GetEnergy();
                 enegryPortal.transform.position = transform.position + energyPos;
-                UI.GetComponent<IsTouchUI>().countTouchUI = 2;
+                IsTouchUI.Instance.countTouchUI = 2;
                 cancelSkill.checkCancel = false;
                 cancelButton.gameObject.SetActive(true);
                 checki = true;
@@ -67,8 +64,6 @@ public class Trajectory: MonoBehaviour
                 {
                     return;
                 }
-
-                Debug.Log("sd");
                 energyPos = new Vector3(0, 0.3f, 0);
                 enegryPortal = poolEnergy.GetEnergy();
                 enegryPortal.transform.position = transform.position + energyPos;
@@ -78,7 +73,7 @@ public class Trajectory: MonoBehaviour
                 
                 Vector2 _velocity = (endDragPos - startDragPos) * power;
 
-                Vector2[] trajectory = Plot(rb, (Vector2)enegryPortal.transform.position, _velocity, 500);
+                Vector2[] trajectory = Plot((Vector2)enegryPortal.transform.position, _velocity, 500);
 
                 lr.positionCount = trajectory.Length;
 
@@ -101,7 +96,7 @@ public class Trajectory: MonoBehaviour
                 cancelButton.SetActive(false);
             }
 
-            if (Input.GetMouseButtonUp(0) && UI.GetComponent<IsTouchUI>().countTouchUI == 2 && !cancelSkill.checkCancel)
+            if (Input.GetMouseButtonUp(0) &&  IsTouchUI.Instance.countTouchUI == 2 && !cancelSkill.checkCancel)
             {
                 AudioManager.AudioManger.PlaySFX("castingspells");
                 enegryPortal.gameObject.SetActive(true);
@@ -130,12 +125,14 @@ public class Trajectory: MonoBehaviour
             }
         }
     }
-    public Vector2[] Plot(Rigidbody2D rigidbody, Vector2 pos, Vector2 velocity, int steps)
+    public Vector2[] Plot( Vector2 pos, Vector2 velocity, int steps)
     {
         Vector2[] results = new Vector2[steps];
 
-        float timestep = Time.fixedDeltaTime / Physics2D.velocityIterations;
-        Vector2 gravityAccel = Physics2D.gravity * 1f * timestep * timestep;
+        float timestep = (Time.fixedDeltaTime / Physics2D.velocityIterations);
+        float timeSteps = timestep * timestep;
+        Vector2 gravity = Physics2D.gravity;
+        Vector2 gravityAccel = gravity * timeSteps;
         
         float drag = 1f;
         Vector2 moveStep = velocity * timestep;

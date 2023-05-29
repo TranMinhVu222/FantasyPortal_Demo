@@ -222,7 +222,7 @@ public class DownloadDataGame : MonoBehaviour
             else
             {
                 progressBar.transform.localScale = new Vector3(1,1,0);
-                progressPercent.text = "100%";
+                // progressPercent.text = "100%";
                 downloadingText.text = "Downloading " +  Math.Round((double)Convert.ToInt64(sizeJSON) / 1048576, 2) + "MB" + "/" +  Math.Round((double)Convert.ToInt64(sizeJSON) / 1048576, 2) + "MB";
                 //Thực hiện truy xuất data trong file JSON đã tải xuống
                 UseFileJSON(unityWebRequest); 

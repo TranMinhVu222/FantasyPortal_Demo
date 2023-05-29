@@ -8540,7 +8540,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 6cbcb63821f984798a7bd0f1882fddec, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -8605,7 +8605,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1242023545}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.7, y: -0.103, z: 0}
+  m_LocalPosition: {x: 11.93, y: -0.103, z: 0}
   m_LocalScale: {x: 0.25, y: 0.3, z: 1}
   m_Children:
   - {fileID: 1625853815}
@@ -10203,6 +10203,8 @@ MonoBehaviour:
   completeWin: 0
   deathFTUE: 0
   checkColliderObj: 0
+  xEnterPortal: 0
+  xEntryPortal: 0
   unlockLevel: {fileID: 242454548}
   nameScene: Level4
   sceneNextLevel: Level5
@@ -10336,6 +10338,7 @@ MonoBehaviour:
   manaBar: {fileID: 33455839}
   manaTotal: 0
   audioManager: {fileID: 2030938012}
+  canvasRectTransform: {fileID: 0}
 --- !u!1 &1438075906
 GameObject:
   m_ObjectHideFlags: 0
