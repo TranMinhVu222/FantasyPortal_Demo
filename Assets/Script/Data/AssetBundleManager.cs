@@ -159,6 +159,7 @@ public class AssetBundleManager : MonoBehaviour
         foreach (string sceneName in scene)
         {
             string nameSceneOA = Path.GetFileNameWithoutExtension(sceneName);
+            Debug.Log("Var");
             Debug.Log(nameSceneOA);
         }
 
@@ -202,6 +203,7 @@ public class AssetBundleManager : MonoBehaviour
             string nameScene = Path.GetFileNameWithoutExtension(scene[i]);
             if (level == nameScene)
             {
+                Debug.Log("VAR");
                 SceneManager.LoadScene(scene[i]);
             }
         }

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2042451427
+CRC: 210328927
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 7741f32825252d1dbbdf53abb089d7e0
+    Hash: 84070b900a34a0fef64c212b630edc68
   TypeTreeHash:
     serializedVersion: 2
     Hash: 34997888bb368232c716399fbdebddfe
@@ -174,5 +174,5 @@ Assets:
 - Assets/Scene/Level 1.unity
 - Assets/Scene/Level 10.unity
 Dependencies:
-- C:/Users/ASUS/Desktop/FantasyPortal_Demo/Assets/../AssetsBundles/prefabbundle
-- C:/Users/ASUS/Desktop/FantasyPortal_Demo/Assets/../AssetsBundles/texturebundle
+- C:/Users/Admin/Documents/FantasyPortal_Demo/Assets/../AssetsBundles/prefabbundle
+- C:/Users/Admin/Documents/FantasyPortal_Demo/Assets/../AssetsBundles/texturebundle
